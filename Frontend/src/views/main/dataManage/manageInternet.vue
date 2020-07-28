@@ -1,12 +1,10 @@
 <template>
-    <div>
-      手动录入
-    </div>
+  <div>网间结算收入收集</div>
 </template>
 
 <script>
     export default {
-        name: "manualInput"
+        name: "manageInternet"
     }
 </script>
 

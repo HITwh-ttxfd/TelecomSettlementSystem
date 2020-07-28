@@ -1,12 +1,10 @@
 <template>
-    <div>
-      收入稽核
-    </div>
+  <div>网间结算收入录入</div>
 </template>
 
 <script>
     export default {
-        name: "chequesAudit"
+        name: "inputInternet"
     }
 </script>
 

@@ -1,12 +1,10 @@
 <template>
-    <div>
-      数据归集
-    </div>
+  <div>通知单收入录入</div>
 </template>
 
 <script>
     export default {
-        name: "dataManage"
+        name: "inputNotice"
     }
 </script>
 
