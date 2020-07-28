@@ -1,50 +1,22 @@
 <template>
   <el-container>
     <el-header>
-      <span style="font-size: 30px">电信结算系统</span>
+      <span>电信结算系统</span>
     </el-header>
-    <el-container style="padding-top: 3px">
-      <el-aside width="200px">
-        <el-row class="tac">
-          <el-col>
-            <el-menu
-              default-active="2"
-              class="el-menu-vertical-demo"
-              @open="handleOpen"
-              @close="handleClose">
-              <el-submenu index="1">
-                <template slot="title">
-                  <i class="el-icon-location"></i>
-                  <span>导航一</span>
-                </template>
-                <el-menu-item-group>
-                  <template slot="title">分组一</template>
-                  <el-menu-item index="1-1">选项1</el-menu-item>
-                  <el-menu-item index="1-2">选项2</el-menu-item>
-                </el-menu-item-group>
-                <el-menu-item-group title="分组2">
-                  <el-menu-item index="1-3">选项3</el-menu-item>
-                </el-menu-item-group>
-                <el-submenu index="1-4">
-                  <template slot="title">选项4</template>
-                  <el-menu-item index="1-4-1">选项1</el-menu-item>
-                </el-submenu>
-              </el-submenu>
-              <el-menu-item index="2">
-                <i class="el-icon-menu"></i>
-                <span slot="title">导航二</span>
-              </el-menu-item>
-              <el-menu-item index="3" disabled>
-                <i class="el-icon-document"></i>
-                <span slot="title">导航三</span>
-              </el-menu-item>
-              <el-menu-item index="4">
-                <i class="el-icon-setting"></i>
-                <span slot="title">导航四</span>
-              </el-menu-item>
-            </el-menu>
-          </el-col>
-        </el-row>
+    <el-container>
+      <el-aside>
+        <el-menu
+          default-active="2"
+          background-color="#343f51"
+          text-color="#eee"
+          active-text-color="#ffffff">
+          <el-submenu :index=index1 :key="index1" v-for="(feature,index1) in features">
+            <template slot="title">
+              <span>{{feature.title}}</span>
+            </template>
+            <el-menu-item v-for="(story,index2) in feature.stories" :key="index2">{{story.title}}</el-menu-item>
+          </el-submenu>
+        </el-menu>
       </el-aside>
       <el-main>Main</el-main>
     </el-container>
@@ -54,30 +26,91 @@
 <script>
   export default {
     name: "main",
-    methods: {
-      handleOpen(key, keyPath) {
-        console.log(key, keyPath);
-      },
-      handleClose(key, keyPath) {
-        console.log(key, keyPath);
+    data() {
+      return {
+        features: [
+          {
+            title: '手工收入录入',
+            stories: [
+              {
+                title: '出账收入录入',
+                path: ''
+              }, {
+                title: '卡销售收入录入',
+                path: ''
+              }, {
+                title: '预转存收入录入',
+                path: ''
+              }, {
+                title: '网间结算收入录入',
+                path: ''
+              }, {
+                title: '通知单收入录入',
+                path: ''
+              }
+            ]
+          }, {
+            title: '数据收集',
+            stories: [
+              {
+                title: '出账收入收集',
+                path: ''
+              }, {
+                title: '卡销售收入收集',
+                path: ''
+              }, {
+                title: '预转存收入收集',
+                path: ''
+              }, {
+                title: '网间结算收入收集',
+                path: ''
+              }, {
+                title: '通知单收入收集',
+                path: ''
+              }
+            ]
+          }, {
+            title: '收款稽核',
+            stories: [
+              {
+                title: '出账收入稽核',
+                path: ''
+              }, {
+                title: '卡销售收入稽核',
+                path: ''
+              }, {
+                title: '预转存收入稽核',
+                path: ''
+              }, {
+                title: '网间结算收入稽核',
+                path: ''
+              }, {
+                title: '通知单收入稽核',
+                path: ''
+              }
+            ]
+          }
+        ]
       }
-    }
+    },
+    methods: {}
   }
 </script>
 
 <style lang="scss" scoped>
   .el-header {
-    background-color: white;
+    background-color: #1a2f4d;
     box-shadow: 0px 0px 5px #333333;
-    color: #333;
+    color: #ffffff;
     /*text-align: center;*/
     line-height: 60px;
     height: 60px;
   }
 
   .el-aside {
-    background-color: white;
+    background-color: #343f51;
     color: #333;
+    flex: 1;
     /*text-align: center;*/
     /*line-height: 200px;*/
   }
@@ -85,13 +118,14 @@
   .el-main {
     background-color: #E9EEF3;
     color: #333;
+    flex: 4;
     text-align: center;
     line-height: 160px;
   }
 
   .el-container {
     /*margin-bottom: 40px;*/
-    /*display: flex;*/
+    display: flex;
     height: 100%;
     width: 100%;
     /*border: 1px solid #eee;*/
