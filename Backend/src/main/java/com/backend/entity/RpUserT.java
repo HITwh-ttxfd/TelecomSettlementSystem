@@ -10,7 +10,7 @@ public class RpUserT {
     private String passWord;//密码
     private String tureName;//姓名
     private String sex;//性别
-    private float age;//年龄
+    private double age;//年龄
     private int roleRight;//角色权限
     private String locationNo;//所属地区编号
     private String dept;//所属部门
@@ -57,11 +57,11 @@ public class RpUserT {
         this.sex = sex;
     }
 
-    public float getAge() {
+    public double getAge() {
         return age;
     }
 
-    public void setAge(float age) {
+    public void setAge(double age) {
         this.age = age;
     }
 
