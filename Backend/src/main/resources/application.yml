@@ -1,0 +1,22 @@
+server:
+  port: 8080
+spring:
+  spring:
+    jackson:
+      time-zone=GMT+8:
+  datasource:
+    url: jdbc:mysql://39.98.48.34:3306/settlementsystemdb?serverTimezone=UTC
+    username: root
+    password: 2296026
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+#mybatis的相关配置
+mybatis:
+  #mapper配置文件
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: cn.com.dhc.telereport.entity
+  #开启驼峰命名
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
