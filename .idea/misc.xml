@@ -10,4 +10,7 @@
       </list>
     </option>
   </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://D:/桌面/输出目录" />
+  </component>
 </project>
