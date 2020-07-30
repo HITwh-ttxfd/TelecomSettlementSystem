@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
 spring:
   spring:
     jackson:
@@ -15,7 +15,7 @@ spring:
 mybatis:
   #mapper配置文件
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: cn.com.dhc.telereport.entity
+  type-aliases-package: com.backend.entity
   #开启驼峰命名
   configuration:
     map-underscore-to-camel-case: true
