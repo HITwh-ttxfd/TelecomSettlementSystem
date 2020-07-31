@@ -7,39 +7,24 @@ import java.util.Date;
  * date:2020-7-30
  * purpose:预存转统一表
  */
-public class rpPreFeeRecordT {
-    String ID;                //序号
-    Date recordDate;          //销账日期
-    String cityCode;          //城市编码
-    String productCode;       //产品编码
-    String writeOffTypeCode;  //销账类型编码
-    double writeOffFee;       //销帐金额
-    String recordOperator;    //录入人员
-    String checkStatus;        //稽核状态
-    String checkPerson;       //稽核人
-    Date checkTime;            //稽核时间
+public class RpPreFeeRecordT {
+    private int ID;                //序号
+    private Date recordDate;          //销账日期
+    private String cityCode;          //城市编码
+    private String productCode;       //产品编码
+    private String writeOffTypeCode;  //销账类型编码
+    private double writeOffFee;       //销帐金额
+    private String recordOperator;    //录入人员
+    private String checkStatus;        //稽核状态
+    private String checkPerson;       //稽核人
+    private Date checkTime;            //稽核时间
 
-    public rpPreFeeRecordT() {
-    }
 
-    public rpPreFeeRecordT(String ID, Date recordDate, String cityCode, String productCode, String writeOffTypeCode, double writeOffFee, String recordOperator, String checkStatus, String checkPerson, Date checkTime) {
-        this.ID = ID;
-        this.recordDate = recordDate;
-        this.cityCode = cityCode;
-        this.productCode = productCode;
-        this.writeOffTypeCode = writeOffTypeCode;
-        this.writeOffFee = writeOffFee;
-        this.recordOperator = recordOperator;
-        this.checkStatus = checkStatus;
-        this.checkPerson = checkPerson;
-        this.checkTime = checkTime;
-    }
-
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 

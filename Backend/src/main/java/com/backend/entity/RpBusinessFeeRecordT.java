@@ -7,39 +7,24 @@ import java.util.Date;
  * date:2020-7-30
  * purpose:通知单统一表
  */
-public class rpBusinessFeeRecordT {
-    String ID;                   //序号
-    String productCode;          //产品编码
-    String cityCode;             //城市编码
-    String businessTypeCode;     //通知单类型编码
-    Date business_record_date;   //营业收款日期
-    double businessFee;          //营业收入金额
-    String recordOperator;       //录入人员
-    String checkPerson;          //稽核人员
-    Date checkTime;              //稽核时间
-    String checkStatus;          //稽核状态
+public class RpBusinessFeeRecordT {
+    private int ID;                   //序号
+    private  String productCode;          //产品编码
+    private  String cityCode;             //城市编码
+    private String businessTypeCode;     //通知单类型编码
+    private Date business_record_date;   //营业收款日期
+    private double businessFee;          //营业收入金额
+    private String recordOperator;       //录入人员
+    private String checkPerson;          //稽核人员
+    private  Date checkTime;              //稽核时间
+    private  String checkStatus;          //稽核状态
 
-    public rpBusinessFeeRecordT() {
-    }
 
-    public rpBusinessFeeRecordT(String ID, String productCode, String cityCode, String businessTypeCode, Date business_record_date, double businessFee, String recordOperator, String checkPerson, Date checkTime, String checkStatus) {
-        this.ID = ID;
-        this.productCode = productCode;
-        this.cityCode = cityCode;
-        this.businessTypeCode = businessTypeCode;
-        this.business_record_date = business_record_date;
-        this.businessFee = businessFee;
-        this.recordOperator = recordOperator;
-        this.checkPerson = checkPerson;
-        this.checkTime = checkTime;
-        this.checkStatus = checkStatus;
-    }
-
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 

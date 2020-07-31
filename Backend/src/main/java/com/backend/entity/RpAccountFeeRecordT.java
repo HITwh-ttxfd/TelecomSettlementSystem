@@ -7,40 +7,24 @@ package com.backend.entity;
 
 import java.util.Date;
 
-public class rpAccountFeeRecordT {
-    String ID;                  //序号
-    String cityCode;           //城市编码
-    String productCode;        //产品编码
-    String accountFeeTypeCode;//出账类型编码
-    Date accountRecordMonth;   //出账月份
-    double accountFee;          //出账金额
-    String accountOperator;     //录入员工用户名
-    String checkStatus;         //稽核状态
-    String checkPerson;         //稽核人
-    String checkTime;           //稽核时间
-    public rpAccountFeeRecordT()
-    {
+public class RpAccountFeeRecordT {
+    private int ID;                  //序号
+    private String cityCode;           //城市编码
+    private String productCode;        //产品编码
+    private String accountFeeTypeCode;//出账类型编码
+    private Date accountRecordMonth;   //出账月份
+    private double accountFee;          //出账金额
+    private  String accountOperator;     //录入员工用户名
+    private String checkStatus;         //稽核状态
+    private String checkPerson;         //稽核人
+    private  String checkTime;           //稽核时间
 
-    }
 
-    public rpAccountFeeRecordT(String ID, String cityCode, String productCode, String accountFeeTypeCode, Date accountRecordMonth, double accountFee, String accountOperator, String checkStatus, String checkPerson, String checkTime) {
-        this.ID = ID;
-        this.cityCode = cityCode;
-        this.productCode = productCode;
-        this.accountFeeTypeCode = accountFeeTypeCode;
-        this.accountRecordMonth = accountRecordMonth;
-        this.accountFee = accountFee;
-        this.accountOperator = accountOperator;
-        this.checkStatus = checkStatus;
-        this.checkPerson = checkPerson;
-        this.checkTime = checkTime;
-    }
-
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 

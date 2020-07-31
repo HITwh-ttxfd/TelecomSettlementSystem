@@ -7,6 +7,6 @@ import java.util.List;
 
 @Mapper
 public interface RpCityCodeTMapper {
-    public List<RpCityCodeT> selectAll(RpCityCodeT rpCityCodeT);
+    public List<RpCityCodeT> selectAll();
 
 }

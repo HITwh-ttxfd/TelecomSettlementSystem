@@ -7,45 +7,27 @@ import java.util.Date;
  * date:2020-7-30
  * purpose:卡销售统一表
  */
-public class rpCardSaleRecordT {
-    String ID;                //序号
-    String cityCode;           //城市编码
-    String productCode;       //产品编码
-    Date saleDate;            //录入日期
-    double discountRate;      //折扣率
-    double cardSaleAmount;    //卡销售数量
-    double cardParValueFee;   //面值金额
-    String recordOperator;    //录入人员
-    String checkStatus;       //稽核状态
-    String checkPerson;       //稽核人
-    Date checkTime;           //稽核时间
-    String totalFee;          //卡总金额
-    Double discountFee;       //折扣后总金额
+public class RpCardSaleRecordT {
+    private int ID;                //序号
+    private String cityCode;           //城市编码
+    private String productCode;       //产品编码
+    private Date saleDate;            //录入日期
+    private double discountRate;      //折扣率
+    private double cardSaleAmount;    //卡销售数量
+    private double cardParValueFee;   //面值金额
+    private String recordOperator;    //录入人员
+    private String checkStatus;       //稽核状态
+    private String checkPerson;       //稽核人
+    private Date checkTime;           //稽核时间
+    private String totalFee;          //卡总金额
+    private Double discountFee;       //折扣后总金额
 
-    public rpCardSaleRecordT() {
-    }
 
-    public rpCardSaleRecordT(String ID, String cityCode, String productCode, Date saleDate, double discountRate, double cardSaleAmount, double cardParValueFee, String recordOperator, String checkStatus, String checkPerson, Date checkTime, String totalFee, Double discountFee) {
-        this.ID = ID;
-        this.cityCode = cityCode;
-        this.productCode = productCode;
-        this.saleDate = saleDate;
-        this.discountRate = discountRate;
-        this.cardSaleAmount = cardSaleAmount;
-        this.cardParValueFee = cardParValueFee;
-        this.recordOperator = recordOperator;
-        this.checkStatus = checkStatus;
-        this.checkPerson = checkPerson;
-        this.checkTime = checkTime;
-        this.totalFee = totalFee;
-        this.discountFee = discountFee;
-    }
-
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 

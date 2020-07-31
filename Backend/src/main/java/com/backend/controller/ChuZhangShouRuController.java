@@ -34,8 +34,10 @@ public class ChuZhangShouRuController {
         RpCityCodeT rpCityCodeT = new RpCityCodeT();
         rpCityCodeT.setCityCode(cityCode);
         rpCityCodeT.setCityName(cityName);
+        System.out.println("输出成功2");
 
-        return rpCityCodeTMapper.selectAll(rpCityCodeT);
+        return rpCityCodeTMapper.selectAll();
+
     }
 
 

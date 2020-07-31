@@ -6,41 +6,62 @@ package com.backend.entity;
  */
 import java.util.Date;
 
-public class rpNetBalanceRecordT {
-    String ID;         //序号
-    Date balanceMonth; //结算月份
-    String cityCode;   //城市编码
-    String productCode;//产品编码
-    String balanceSpCode;//结算运营商编码
-    String balanceTypeCode;//结算类型编码
-    String recordOperator;//录入人员
-    double balanceFee;  //结算金额
-    String checkStatus; //稽核状态
-    String checkPerson; //稽核人
-    Date checkTime;     //稽核时间
+public class RpNetBalanceRecordT {
+    private int ID;         //序号
+    private Date balanceMonth; //结算月份
+    private String cityCode;   //城市编码
+    private String productCode;//产品编码
+    private String balanceSpCode;//结算运营商编码
+    private String balanceTypeCode;//结算类型编码
+    private String recordOperator;//录入人员
+    private double balanceFee;  //结算金额
+    private String checkStatus; //稽核状态
+    private String checkPerson; //稽核人
+    private Date checkTime;     //稽核时间
 
-    public rpNetBalanceRecordT() {
+    private RpCityCodeT rpCityCodeT;
+    private RpProductCodeT rpProductCodeT;
+    private  RpBalanceTypeCodeT rpBalanceTypeCodeT;
+    private  RpBalanceSpCodeT rpBalanceSpCodeT;
+
+
+    public RpCityCodeT getRpCityCodeT() {
+        return rpCityCodeT;
     }
 
-    public rpNetBalanceRecordT(String ID, Date balanceMonth, String cityCode, String productCode, String balanceSpCode, String balanceTypeCode, String recordOperator, double balanceFee, String checkStatus, String checkPerson, Date checkTime) {
-        this.ID = ID;
-        this.balanceMonth = balanceMonth;
-        this.cityCode = cityCode;
-        this.productCode = productCode;
-        this.balanceSpCode = balanceSpCode;
-        this.balanceTypeCode = balanceTypeCode;
-        this.recordOperator = recordOperator;
-        this.balanceFee = balanceFee;
-        this.checkStatus = checkStatus;
-        this.checkPerson = checkPerson;
-        this.checkTime = checkTime;
+    public void setRpCityCodeT(RpCityCodeT rpCityCodeT) {
+        this.rpCityCodeT = rpCityCodeT;
     }
 
-    public String getID() {
+    public RpProductCodeT getRpProductCodeT() {
+        return rpProductCodeT;
+    }
+
+    public void setRpProductCodeT(RpProductCodeT rpProductCodeT) {
+        this.rpProductCodeT = rpProductCodeT;
+    }
+
+    public RpBalanceTypeCodeT getRpBalanceTypeCodeT() {
+        return rpBalanceTypeCodeT;
+    }
+
+    public void setRpBalanceTypeCodeT(RpBalanceTypeCodeT rpBalanceTypeCodeT) {
+        this.rpBalanceTypeCodeT = rpBalanceTypeCodeT;
+    }
+
+    public RpBalanceSpCodeT getRpBalanceSpCodeT() {
+        return rpBalanceSpCodeT;
+    }
+
+    public void setRpBalanceSpCodeT(RpBalanceSpCodeT rpBalanceSpCodeT) {
+        this.rpBalanceSpCodeT = rpBalanceSpCodeT;
+    }
+
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 
