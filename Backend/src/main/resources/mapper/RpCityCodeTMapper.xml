@@ -4,13 +4,14 @@
 <mapper namespace="com.backend.mapper.RpCityCodeTMapper">
 
     <resultMap type="RpCityCodeT" id="Test1">
-        <result property="cityCode" jdbcType="VARCHAR" column="city_code"/>
-        <result property="cityName" jdbcType="VARCHAR" column="city_name"/>
+        <result property="cityCode" jdbcType="VARCHAR" column="CITY_NAME"/>
+        <result property="cityName" jdbcType="VARCHAR" column="CITY_CODE"/>
     </resultMap>
+
 
 <!-- 查询城市编码和城市名称 -->
     <select id="selectAll"   resultMap="Test1" >
-        select city_name ,city_code
+        select CITY_NAME,CITY_CODE
         from rp_city_code_t
 <!--        <where>-->
 <!--            &lt;!&ndash; 对于字符串来说既要判断null，也要判断空字符串 &ndash;&gt;-->
@@ -21,8 +22,6 @@
 <!--            <if test="cityName != null and cityCode != '' ">-->
 <!--                AND city_Name=#{cityName}-->
 <!--            </if>-->
-
-<!--        </where>-->
     </select>
 
 </mapper>

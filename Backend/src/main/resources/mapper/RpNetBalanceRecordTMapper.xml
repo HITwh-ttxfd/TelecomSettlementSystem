@@ -4,16 +4,18 @@
 <mapper namespace="com.backend.mapper.RpNetBalanceRecordTMapper">
 
     <resultMap type="RpNetBalanceRecordT" id="Search">
-        <result property="ID" jdbcType="int" column="ID"/>
-        <association property="location" javaType="cn.com.dhee.entity.Locations"> <id property="locationId" jdbcType="INTEGER" column="location_id"/>
-            <result property="cityName" jdbcType="CHAR" column="street_address"/>
+        <result property="ID" jdbcType="VARCHAR" column="ID"/>
+        <association property="rpCityCodeT" javaType="RpCityCodeT">
+            <result property="cityName" jdbcType="VARCHAR" column="CITY_NAME"/>
         </association>
-
+        <association property="rpProductCodeT" javaType="RpProductCodeT">
+            <result property="productName" jdbcType="VARCHAR" column="PRODUCT_NAME"/>
+        </association>
     </resultMap>
-    <!-- 查询城市编码和城市名称 -->
+    <!-- 返回所有网间结算单 -->
     <select id="selectAllRpNetBalanceRecordT"   resultMap="Search" >
-        select ID,CITY_NAME
-        from rp_net_balance_record_t natural join rp_city_code_t
+        select ID,CITY_NAME,PRODUCT_NAME
+        from (rp_net_balance_record_t natural join rp_city_code_t) natural join rp_product_Code_T
         <!--        <where>-->
         <!--            &lt;!&ndash; 对于字符串来说既要判断null，也要判断空字符串 &ndash;&gt;-->
         <!--            &lt;!&ndash; 在test属性中和＃{}中使用的是实体类（参数）中的数据域，不在这里的指的是表中的列名。 &ndash;&gt;-->
