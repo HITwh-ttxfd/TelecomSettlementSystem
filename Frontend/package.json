@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "element-ui": "^2.13.2",
+    "file-saver": "^2.0.2",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "xlsx": "^0.16.5"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

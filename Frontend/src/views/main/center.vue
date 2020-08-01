@@ -11,7 +11,7 @@
           background-color="#343f51"
           text-color="#eee"
           active-text-color="#ffffff">
-          <el-submenu :index="index1" :key="index1" v-for="(feature,index1) in features">
+          <el-submenu :index="index1+''" :key="index1" v-for="(feature,index1) in features">
             <template slot="title">
               <span>{{feature.title}}</span>
             </template>
@@ -28,7 +28,7 @@
 
 <script>
   export default {
-    name: "main",
+    name: "center",
     data() {
       return {
         features: [
@@ -36,19 +36,19 @@
             title: '手工收入录入',
             stories: [
               {
-                title: '出账收入录入',
+                title: '出账收入',
                 path: '/manualInput/inputAccount'
               }, {
-                title: '卡销售收入录入',
+                title: '卡销售收入',
                 path: '/manualInput/inputCardSaling'
               }, {
-                title: '预转存收入录入',
+                title: '预转存收入',
                 path: '/manualInput/inputTransfers'
               }, {
-                title: '网间结算收入录入',
+                title: '网间结算收入',
                 path: '/manualInput/inputInternet'
               }, {
-                title: '通知单收入录入',
+                title: '通知单收入',
                 path: '/manualInput/inputNotice'
               }
             ]
@@ -56,39 +56,39 @@
             title: '收款稽核',
             stories: [
               {
-                title: '出账收入稽核',
+                title: '出账收入',
                 path: '/checkAudit/checkAccount'
               }, {
-                title: '卡销售收入稽核',
+                title: '卡销售收入',
                 path: '/checkAudit/checkCardSaling'
               }, {
-                title: '预转存收入稽核',
+                title: '预转存收入',
                 path: '/checkAudit/checkTransfers'
               }, {
-                title: '网间结算收入稽核',
+                title: '网间结算收入',
                 path: '/checkAudit/checkInternet'
               }, {
-                title: '通知单收入稽核',
+                title: '通知单收入',
                 path: '/checkAudit/checkNotice'
               }
             ]
           }, {
-            title: '数据收集',
+            title: '数据归集',
             stories: [
               {
-                title: '出账收入收集',
+                title: '出账收入',
                 path: '/dataManage/manageAccount'
               }, {
-                title: '卡销售收入收集',
+                title: '卡销售收入',
                 path: '/dataManage/manageCardSaling'
               }, {
-                title: '预转存收入收集',
+                title: '预转存收入',
                 path: '/dataManage/manageTransfers'
               }, {
-                title: '网间结算收入收集',
+                title: '网间结算收入',
                 path: '/dataManage/manageInternet'
               }, {
-                title: '通知单收入收集',
+                title: '通知单收入',
                 path: '/dataManage/manageNotice'
               }
             ]

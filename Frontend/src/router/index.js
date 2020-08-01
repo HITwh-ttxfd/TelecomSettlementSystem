@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import main from '../views/main/main'
+import center from '../views/main/center'
 import checkAccount from "../views/main/chequesAudit/checkAccount";
 import checkCardSaling from "../views/main/chequesAudit/checkCardSaling";
 import checkInternet from "../views/main/chequesAudit/checkInternet";
@@ -16,21 +16,28 @@ import inputCardSaling from "../views/main/manualInput/inputCardSaling";
 import inputInternet from "../views/main/manualInput/inputInternet";
 import inputNotice from "../views/main/manualInput/inputNotice";
 import inputTransfers from "../views/main/manualInput/inputTransfers";
+import ro from "element-ui/src/locale/lang/ro";
 
 Vue.use(Router)
 
-export default new Router({
+const originalPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
+
+let router = new Router({
   routes: [
     {
       path: '/',
       name: 'login',
       // component: main,
-      redirect: main
+      redirect: center
     },
     {
-      path: '/main',
-      name: 'main',
-      component: main,
+      path: '/center',
+      name: 'center',
+      component: center,
       children: [
         {
           path: '/checkAudit/checkAccount',
@@ -111,3 +118,6 @@ export default new Router({
     },
   ]
 })
+
+
+export default  router;

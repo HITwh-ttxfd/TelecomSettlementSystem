@@ -1,13 +1,159 @@
 <template>
-  <div>通知单收入收集</div>
+  <div class="wrapper">
+    <div class="operations">
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item :to="{ path: '/center' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item>数据归集</el-breadcrumb-item>
+        <el-breadcrumb-item>通知单收入</el-breadcrumb-item>
+      </el-breadcrumb>
+      <el-button size="small" type="primary" @click="exportTable">导出</el-button>
+    </div>
+    <el-card shadow="always">
+      <el-table :data="table" id="table4">
+        <el-table-column
+          align="center"
+          label="城市编码"
+          prop="cityCode">
+        </el-table-column>
+        <el-table-column
+          align="center"
+          label="产品编码"
+          prop="productCode">
+        </el-table-column>
+        <el-table-column
+          align="center"
+          label="通知单类型编码"
+          prop="businessTypeCode">
+        </el-table-column>
+        <el-table-column
+          align="center"
+          label="营业收款日期"
+          prop="business_record_date">
+        </el-table-column>
+        <el-table-column
+          align="center"
+          label="营业收入金额"
+          prop="businessFee">
+        </el-table-column>
+        <el-table-column
+          align="center"
+          label="录入人员"
+          prop="recordOperator">
+        </el-table-column>
+        <el-table-column
+          align="center"
+          label="稽核状态"
+          prop="checkStatus">
+        </el-table-column>
+        <el-table-column
+          align="center"
+          label="稽核人"
+          prop="checkPerson">
+        </el-table-column>
+        <el-table-column
+          align="center"
+          label="稽核时间"
+          prop="checkTime">
+        </el-table-column>
+      </el-table>
+    </el-card>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "manageNotice"
+  import FileSaver from "file-saver";
+  import XLSX from "xlsx";
+
+  export default {
+    name: "manageNotice",
+    data() {
+      return {
+        table: [{
+          cityCode: '123',
+          productCode: '123',
+          businessTypeCode: '312',
+          business_record_date: '312',
+          businessFee: '123',
+          recordOperator: '123',
+          checkStatus: 'dfs',
+          checkPerson: 'fds',
+          checkTime: 'fds'
+        }]
+      }
+    },
+    methods: {
+      exportTable() {
+        /* 从表生成工作簿对象 */
+        var wb = XLSX.utils.table_to_book(document.querySelector("#table4"));
+        /* 获取二进制字符串作为输出 */
+        var wbout = XLSX.write(wb, {
+          bookType: "xlsx",
+          bookSST: true,
+          type: "array"
+        });
+        try {
+          FileSaver.saveAs(
+            //Blob 对象表示一个不可变、原始数据的类文件对象。
+            //Blob 表示的不一定是JavaScript原生格式的数据。
+            //File 接口基于Blob，继承了 blob 的功能并将其扩展使其支持用户系统上的文件。
+            //返回一个新创建的 Blob 对象，其内容由参数中给定的数组串联组成。
+            new Blob([wbout], {type: "application/octet-stream"}),
+            //设置导出文件名称
+            "网间结算收入.xlsx"
+          );
+        } catch (e) {
+          if (typeof console !== "undefined") console.log(e, wbout);
+        }
+        return wbout;
+      }
     }
+  }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
 
+    .operations {
+      height: 60px;
+      position: relative;
+      line-height: 60px;
+      margin-top: -10px;
+      width: 100%;
+
+
+      .el-breadcrumb {
+        display: inline-block;
+        position: absolute;
+        line-height: 60px;
+        left: 0;
+      }
+
+      .el-button {
+        display: inline-block;
+        position: absolute;
+        margin-top: 10px;
+        right: 0;
+      }
+    }
+
+    .el-card {
+      flex: 15;
+      flex-direction: column;
+      height: 90%;
+      width: 100%;
+
+
+      .el-table {
+        height: 100%;
+      }
+
+
+    }
+  }
 </style>
