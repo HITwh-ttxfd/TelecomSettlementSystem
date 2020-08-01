@@ -2,7 +2,7 @@ package com.backend.controller;
 /**
  * author:万宇成
  * date:2020-8-1
- * purpose:网间结算录入Mapper
+ * purpose:通知单收入Mapper
  */
 
 import com.backend.entity.RpBusinessFeeRecordT;
@@ -24,11 +24,19 @@ public class RpBusinessFeeRecordTController {
     @Autowired
     RpBusinessFeeRecordTMapper rpBusinessFeeRecordTMapper;
 
-    //找到网间通知单收入
+    //找到通知单收入
     @RequestMapping(value = "/selectAllRpBusinessFeeRecordT",method = {RequestMethod.GET})
     public List<RpBusinessFeeRecordT> selectAllRpBusinessFeeRecordT(){
         System.out.println("成功找到网间通知单收入");
         return rpBusinessFeeRecordTMapper.selectAllRpBusinessFeeRecordT();
+    }
+
+    //删除通知单收入
+    @RequestMapping(value = "/deleteRpBusinessFeeRecordT",method = {RequestMethod.GET})
+    public void deleteRpBusinessFeeRecordT(@RequestParam int[] ids){
+        rpBusinessFeeRecordTMapper.deleteRpBusinessFeeRecordT(ids);
+        System.out.println("成功删除通知单收入");
+
     }
 
     //增加一条通知单
@@ -46,6 +54,7 @@ public class RpBusinessFeeRecordTController {
         rpBusinessFeeRecordTMapper.addRpBusinessFeeRecordT(rpBusinessFeeRecordT);
 
         System.out.println("成功添加一条通知单");
-
     }
+
+    //删除一条通知单
 }

@@ -2,7 +2,7 @@ package com.backend.controller;
 /**
  * author:万宇成
  * date:2020-8-1
- * purpose:网间结算录入Mapper
+ * purpose:预存转收入Mapper
  */
 
 import com.backend.entity.RpNetBalanceRecordT;

@@ -2,7 +2,7 @@ package com.backend.controller;
 /**
  * author:万宇成
  * date:2020-7-31
- * purpose:网间结算录入Mapper
+ * purpose:城市编码Mapper
  */
 
 import com.backend.entity.RpCityCodeT;
