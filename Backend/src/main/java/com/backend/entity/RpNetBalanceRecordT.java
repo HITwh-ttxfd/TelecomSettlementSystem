@@ -4,17 +4,21 @@ package com.backend.entity;
  * date:2020-7-30
  * purpose:网间结算统一表
  */
-import java.util.Date;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.sql.Date;
+
 
 public class RpNetBalanceRecordT {
     private int ID;         //序号
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date balanceMonth; //结算月份
     private String cityCode;   //城市编码
     private String productCode;//产品编码
     private String balanceSpCode;//结算运营商编码
     private String balanceTypeCode;//结算类型编码
     private String recordOperator;//录入人员
-    private double balanceFee;  //结算金额
+    private Double balanceFee;  //结算金额
     private String checkStatus; //稽核状态
     private String checkPerson; //稽核人
     private Date checkTime;     //稽核时间
@@ -24,6 +28,9 @@ public class RpNetBalanceRecordT {
     private  RpBalanceTypeCodeT rpBalanceTypeCodeT;
     private  RpBalanceSpCodeT rpBalanceSpCodeT;
 
+    public void setBalanceFee(Double balanceFee) {
+        this.balanceFee = balanceFee;
+    }
 
     public RpCityCodeT getRpCityCodeT() {
         return rpCityCodeT;

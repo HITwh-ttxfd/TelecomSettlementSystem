@@ -1,6 +1,9 @@
 package com.backend.entity;
 
-import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.sql.Date;
 
 /**
  * author:孙宝臻
@@ -9,16 +12,48 @@ import java.util.Date;
  */
 public class RpPreFeeRecordT {
     private int ID;                //序号
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date recordDate;          //销账日期
     private String cityCode;          //城市编码
     private String productCode;       //产品编码
     private String writeOffTypeCode;  //销账类型编码
-    private double writeOffFee;       //销帐金额
+    private Double writeOffFee;       //销帐金额
     private String recordOperator;    //录入人员
     private String checkStatus;        //稽核状态
     private String checkPerson;       //稽核人
     private Date checkTime;            //稽核时间
 
+    private RpCityCodeT rpCityCodeT;
+    private RpProductCodeT rpProductCodeT;
+    private RpWriteOffTypeCodeT rpWriteOffTypeCodeT;
+
+    public void setWriteOffFee(Double writeOffFee) {
+        this.writeOffFee = writeOffFee;
+    }
+
+    public RpCityCodeT getRpCityCodeT() {
+        return rpCityCodeT;
+    }
+
+    public void setRpCityCodeT(RpCityCodeT rpCityCodeT) {
+        this.rpCityCodeT = rpCityCodeT;
+    }
+
+    public RpProductCodeT getRpProductCodeT() {
+        return rpProductCodeT;
+    }
+
+    public void setRpProductCodeT(RpProductCodeT rpProductCodeT) {
+        this.rpProductCodeT = rpProductCodeT;
+    }
+
+    public RpWriteOffTypeCodeT getRpWriteOffTypeCodeT() {
+        return rpWriteOffTypeCodeT;
+    }
+
+    public void setRpWriteOffTypeCodeT(RpWriteOffTypeCodeT rpWriteOffTypeCodeT) {
+        this.rpWriteOffTypeCodeT = rpWriteOffTypeCodeT;
+    }
 
     public int getID() {
         return ID;

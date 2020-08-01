@@ -2,29 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <!--
  * author:万宇成
- * data：2020/7/31
+ * data：2020/8/1
  * purpose:网间结算录入mapper.xml
 -->
 
-<mapper namespace="com.backend.mapper.RpNetBalanceRecordTMapper">
+<mapper namespace="com.backend.mapper.RpBusinessFeeRecordTMapper">
 
-<!--    增加一条网间收入-->
-    <insert id="addRpNetBalanceRecordT" parameterType="RpNetBalanceRecordT">
-        insert into rp_net_balance_record_t(balance_month,CITY_CODE,PRODUCT_CODE,balance_Sp_Code,balance_Type_Code,record_Operator,balance_Fee)
-                                     value (#{balanceMonth},#{cityCode},#{productCode},#{balanceSpCode},#{balanceTypeCode},#{recordOperator},#{balanceFee})
+<!--        增加一条通知单-->
+    <insert id="addRpBusinessFeeRecordT" parameterType="RpBusinessFeeRecordT">
+        insert into rp_business_fee_record_t(CITY_CODE,PRODUCT_CODE,BUSINESS_FEE_TYPE_CODE,BUSINESS_RECORD_DATE,BUSINESS_FEE,RECORD_OPERATOR)
+                                     value (#{cityCode},#{productCode},#{businessFeeTypeCode},#{business_record_date},#{businessFee},#{recordOperator})
     </insert>
 
 
-
-
-
-
-<!--    根据查询条件来获取查询结果-->
-    <resultMap type="RpNetBalanceRecordT" id="Search">
+    <!--    根据查询条件来获取查询结果-->
+    <resultMap type="RpBusinessFeeRecordT" id="Search2">
         <result property="ID" jdbcType="VARCHAR" column="ID"/>
-        <result property="balanceMonth" jdbcType="DATE" column="balance_month"/>
-        <result property="recordOperator" jdbcType="VARCHAR" column="RECORD_OPERATOR"/>
-        <result property="balanceFee" jdbcType="DOUBLE" column="balance_fee"/>
+        <result property="business_record_date" jdbcType="DATE" column="BUSINESS_RECORD_DATE"/>
+        <result property="businessFee" jdbcType="VARCHAR" column="BUSINESS_FEE"/>
+        <result property="recordOperator" jdbcType="DOUBLE" column="RECORD_OPERATOR"/>
         <result property="checkStatus" jdbcType="VARCHAR" column="CHECK_STATUS"/>
         <result property="checkPerson" jdbcType="VARCHAR" column="CHECK_PERSON"/>
         <result property="checkTime" jdbcType="DATE" column="CHECK_TIME"/>
@@ -34,16 +30,13 @@
         <association property="rpProductCodeT" javaType="RpProductCodeT">
             <result property="productName" jdbcType="VARCHAR" column="PRODUCT_NAME"/>
         </association>
-        <association property="rpBalanceSpCodeT" javaType="RpBalanceSpCodeT">
-            <result property="balanceSpName" jdbcType="VARCHAR" column="balance_Sp_Name"/>
-        </association>
-        <association property="rpBalanceTypeCodeT" javaType="RpBalanceTypeCodeT">
-            <result property="balanceTypeName" jdbcType="VARCHAR" column="balance_Type_Name"/>
+        <association property="rpBusinessFeeTypeCodeT" javaType="RpBusinessFeeTypeCodeT">
+            <result property="businessFeeTypeName" jdbcType="VARCHAR" column="BUSINESS_FEE_TYPE_NAME"/>
         </association>
     </resultMap>
-    <select id="selectAllRpNetBalanceRecordT"   resultMap="Search" >
-        select ID,CITY_NAME,balance_month,PRODUCT_NAME,balance_Sp_Name,balance_Type_Name,RECORD_OPERATOR,balance_fee,CHECK_STATUS,CHECK_PERSON,CHECK_TIME
-        from (((rp_net_balance_record_t natural join rp_city_code_t) natural join rp_Product_Code_T) natural join rp_Balance_Sp_Code_T) natural join rp_Balance_Type_Code_T
+    <select id="selectAllRpBusinessFeeRecordT"   resultMap="Search2" >
+        select ID,CITY_NAME,PRODUCT_NAME,BUSINESS_FEE_TYPE_NAME,BUSINESS_RECORD_DATE,BUSINESS_FEE,RECORD_OPERATOR,CHECK_STATUS,CHECK_PERSON,CHECK_TIME
+        from ((rp_business_fee_record_t natural join rp_city_code_t) natural join rp_Product_Code_T) natural join rp_business_fee_type_code_t
         <!--        <where>-->
         <!--            &lt;!&ndash; 对于字符串来说既要判断null，也要判断空字符串 &ndash;&gt;-->
         <!--            &lt;!&ndash; 在test属性中和＃{}中使用的是实体类（参数）中的数据域，不在这里的指的是表中的列名。 &ndash;&gt;-->

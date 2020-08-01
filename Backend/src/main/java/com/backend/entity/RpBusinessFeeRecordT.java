@@ -11,14 +11,53 @@ public class RpBusinessFeeRecordT {
     private int ID;                   //序号
     private  String productCode;          //产品编码
     private  String cityCode;             //城市编码
-    private String businessTypeCode;     //通知单类型编码
+    private String businessFeeTypeCode;     //通知单类型编码
     private Date business_record_date;   //营业收款日期
-    private double businessFee;          //营业收入金额
+    private Double businessFee;          //营业收入金额
     private String recordOperator;       //录入人员
     private String checkPerson;          //稽核人员
     private  Date checkTime;              //稽核时间
     private  String checkStatus;          //稽核状态
 
+    private RpCityCodeT rpCityCodeT;
+    private RpProductCodeT rpProductCodeT;
+    private RpBusinessFeeTypeCodeT rpBusinessFeeTypeCodeT;
+
+    public RpCityCodeT getRpCityCodeT() {
+        return rpCityCodeT;
+    }
+
+    public void setRpCityCodeT(RpCityCodeT rpCityCodeT) {
+        this.rpCityCodeT = rpCityCodeT;
+    }
+
+    public RpProductCodeT getRpProductCodeT() {
+        return rpProductCodeT;
+    }
+
+    public void setRpProductCodeT(RpProductCodeT rpProductCodeT) {
+        this.rpProductCodeT = rpProductCodeT;
+    }
+
+    public RpBusinessFeeTypeCodeT getRpBusinessFeeTypeCodeT() {
+        return rpBusinessFeeTypeCodeT;
+    }
+
+    public void setRpBusinessFeeTypeCodeT(RpBusinessFeeTypeCodeT rpBusinessFeeTypeCodeT) {
+        this.rpBusinessFeeTypeCodeT = rpBusinessFeeTypeCodeT;
+    }
+
+    public String getBusinessFeeTypeCode() {
+        return businessFeeTypeCode;
+    }
+
+    public void setBusinessFeeTypeCode(String businessFeeTypeCode) {
+        this.businessFeeTypeCode = businessFeeTypeCode;
+    }
+
+    public void setBusinessFee(Double businessFee) {
+        this.businessFee = businessFee;
+    }
 
     public int getID() {
         return ID;
@@ -44,13 +83,7 @@ public class RpBusinessFeeRecordT {
         this.cityCode = cityCode;
     }
 
-    public String getBusinessTypeCode() {
-        return businessTypeCode;
-    }
 
-    public void setBusinessTypeCode(String businessTypeCode) {
-        this.businessTypeCode = businessTypeCode;
-    }
 
     public Date getBusiness_record_date() {
         return business_record_date;
@@ -106,7 +139,7 @@ public class RpBusinessFeeRecordT {
                 "ID='" + ID + '\'' +
                 ", productCode='" + productCode + '\'' +
                 ", cityCode='" + cityCode + '\'' +
-                ", businessTypeCode='" + businessTypeCode + '\'' +
+                ", businessTypeCode='" + businessFeeTypeCode + '\'' +
                 ", business_record_date=" + business_record_date +
                 ", businessFee=" + businessFee +
                 ", recordOperator='" + recordOperator + '\'' +
