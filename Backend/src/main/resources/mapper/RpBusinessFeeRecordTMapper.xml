@@ -15,7 +15,7 @@
     </insert>
 
 
-<!--    批量删除-->
+<!--    批量删除通知单-->
     <delete id="deleteRpBusinessFeeRecordT" parameterType="java.lang.Integer" >
         delete from rp_business_fee_record_t
         where ID in

@@ -42,6 +42,15 @@
         <!--        </where>-->
     </select>
 
+    <!--    批量删除预存转收入-->
+    <delete id="deleteRpPreFeeRecordT" parameterType="java.lang.Integer" >
+        delete from rp_pre_fee_record_t
+        where ID in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
     <!--    增加一条预存转人-->
     <insert id="addRpPreFeeRecordT" parameterType="RpPreFeeRecordT">
         insert into rp_pre_fee_record_t(RECORD_DATE,CITY_CODE,PRODUCT_CODE,WRITE_OFF_TYPE_CODE,WRITE_OFF_FEE,RECORD_OPERATOR)
