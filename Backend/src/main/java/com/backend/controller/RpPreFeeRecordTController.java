@@ -47,8 +47,16 @@ public class RpPreFeeRecordTController {
         rpPreFeeRecordT.setRecordOperator(recordOperator);
         rpPreFeeRecordTMapper.addRpPreFeeRecordT(rpPreFeeRecordT);
         System.out.println("成功添加一条预存转录");
+    }
+
+    //删除预存转收入
+    @RequestMapping(value = "/deleteRpPreFeeRecordT",method = {RequestMethod.GET})
+    public void deleteRpPreFeeRecordT(@RequestParam int[] ids){
+        rpPreFeeRecordTMapper.deleteRpPreFeeRecordT(ids);
+        System.out.println("成功删除预存转收入");
 
     }
+
 
 
 }

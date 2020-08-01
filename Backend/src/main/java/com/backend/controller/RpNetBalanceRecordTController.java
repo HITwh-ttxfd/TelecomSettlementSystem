@@ -1,7 +1,7 @@
 package com.backend.controller;
 /**
  * author:万宇成
- * date:2020-7-31
+ * date:2020-8-1
  * purpose:网间结算录入Mapper
  */
 
@@ -40,6 +40,14 @@ public class RpNetBalanceRecordTController {
         rpNetBalanceRecordTMapper.addRpNetBalanceRecordT(rpNetBalanceRecordT);
         System.out.println("成功添加一条网间结算");
 
+
+    }
+
+    //删除网间结算收入
+    @RequestMapping(value = "/deleteRpNetBalanceRecordT",method = {RequestMethod.GET})
+    public void deleteRpNetBalanceRecordT(@RequestParam int[] ids){
+        rpNetBalanceRecordTMapper.deleteRpNetBalanceRecordT(ids);
+        System.out.println("成功删除网间结算收入");
 
     }
 

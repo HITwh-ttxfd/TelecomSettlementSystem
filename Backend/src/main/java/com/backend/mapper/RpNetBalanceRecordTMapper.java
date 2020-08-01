@@ -18,4 +18,7 @@ public interface RpNetBalanceRecordTMapper {
     // 根据查询条件来获取查询结果
     public List<RpNetBalanceRecordT> selectAllRpNetBalanceRecordT();
 
+    //批量删除网间收入
+    public void  deleteRpNetBalanceRecordT(int[] ids);
+
 }

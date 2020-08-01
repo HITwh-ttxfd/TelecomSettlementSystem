@@ -14,7 +14,14 @@
                                      value (#{balanceMonth},#{cityCode},#{productCode},#{balanceSpCode},#{balanceTypeCode},#{recordOperator},#{balanceFee})
     </insert>
 
-
+    <!--    批量删除网间收入-->
+    <delete id="deleteRpNetBalanceRecordT" parameterType="java.lang.Integer" >
+        delete from rp_net_balance_record_t
+        where ID in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 
 
 
