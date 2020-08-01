@@ -12,23 +12,6 @@
         <el-row>
           <el-col span="11">
             <el-form-item label="城市">
-              <!--<el-autocomplete
-                popper-class="my-autocomplete"
-                v-model="state"
-                :fetch-suggestions="querySearch"
-                placeholder="请输入.."
-                style="width: 100%"
-                @select="handleSelect">
-                <i
-                  class="el-icon-edit el-input__icon"
-                  slot="suffix"
-                  @click="handleIconClick">
-                </i>
-                <template slot-scope="{ item }">
-                  <div class="name">{{ item.value }}</div>
-                  <span class="addr">{{ item.address }}</span>
-                </template>
-              </el-autocomplete>-->
               <el-select style="width: 100%" v-model="form.inCity" filterable placeholder="请选择">
                 <el-option
                   v-for="item in options"
@@ -76,7 +59,7 @@
           <el-col style="display: flex; justify-content: left;">
             <el-button>查询</el-button>
             <el-button>录入</el-button>
-            <el-button>导出</el-button>
+            <el-button @click="exportXLS">导出</el-button>
             <el-button>导入</el-button>
             <el-button>批量删除</el-button>
           </el-col>
@@ -104,6 +87,7 @@
 </template>
 
 <script>
+  import XLSX from 'xlsx'
   export default {
     name: "inputAccount",
     data() {
@@ -181,32 +165,24 @@
       },
       batchDel(){
         //  批量删除
+      },
+      exportXLS() {
+        //  导出为xls
+        var data = this.tableData
+        // const header = {header: ['序号','城市','产品','出账类型','录入月份','录入金额','录入人'] }
+        // 空表头参数则直接使用默认Json的表头，声明只能对应
+        const header = {header: []}
+        var xlsxName = '测试'
+        const ws = XLSX.utils.json_to_sheet(data, header)
+        const wb = XLSX.utils.book_new()
+        XLSX.utils.book_append_sheet(wb, ws, xlsxName)
+        XLSX.writeFile(wb, xlsxName + ".xlsx")
       }
     }
   }
 </script>
 
 <style scoped>
-  .my-autocomplete {
 
-  li {
-    line-height: normal;
-    padding: 7px;
 
-  .name {
-    text-overflow: ellipsis;
-    overflow: hidden;
-  }
-
-  .addr {
-    font-size: 12px;
-    color: #b4b4b4;
-  }
-
-  .highlighted .addr {
-    color: #ddd;
-  }
-
-  }
-  }
 </style>
