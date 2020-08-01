@@ -123,7 +123,7 @@
     color: #333;
     flex: 4;
     text-align: center;
-    line-height: 160px;
+    /*line-height: 160px;*/
   }
 
   .el-container {
