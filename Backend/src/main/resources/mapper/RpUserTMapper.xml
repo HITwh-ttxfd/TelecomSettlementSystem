@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--
+author:孙宝臻
+date：2020-8-1
+purpose:提供用户创建、密码校验功能
+-->
+
+<mapper namespace="com.backend.mapper.RpUserTMapper">
+    <!-- 新建用户 亲测可用-->
+    <insert id="createRpUserT" parameterType="RpUserT">
+            INSERT INTO Rp_User_T
+            VALUE (#{userID},#{userName},#{passWord},#{tureName},#{sex},#{age},#{roleRight},#{locationNo}
+            ,#{dept},#{email},#{vipRight})
+    </insert>
+    <!--test url:  http://localhost:8080/RpUserT/createRpUserT?userName=awd&passWord=wdaw&tureName=牛玉磊&sex=男&age=20&roleRight=1&locationNo=054000&dept=经管&email=1w1w&vipRight=有 -->
+
+<!--    <resultMap type="RpUserT" id="User">-->
+<!--        <result property="userID" jdbcType="VARCHAR" column="USERID"/>-->
+<!--        <result property="userName" jdbcType="VARCHAR" column="USERNAME"/>-->
+<!--        <result property="passWord" jdbcType="VARCHAR" column="PASSWORD"/>-->
+<!--        <result property="tureName" jdbcType="VARCHAR" column="TURENAME"/>-->
+<!--        <result property="sex" jdbcType="VARCHAR" column="SEX"/>-->
+<!--        <result property="age" jdbcType="DECIMAL" column="AGE"/>-->
+<!--        <result property="roleRight" jdbcType="INT" column="ROLE_RIGHT"/>-->
+<!--        <result property="locationNo" jdbcType="VARCHAR" column="LOCATION_NO"/>-->
+<!--        <result property="dept" jdbcType="VARCHAR" column="DEPT"/>-->
+<!--        <result property="email" jdbcType="VARCHAR" column="EMAIL"/>-->
+<!--        <result property="vipRight" jdbcType="VARCHAR" column="VIP_RIGHT"/>-->
+<!--    </resultMap>-->
+
+    <!-- 登录校验 -->
+    <select id="loginRpUserT" parameterType="RpUserT" resultType="RpUserT">
+            select *
+            from rp_User_T
+            WHERE userid = #{userID}
+    </select>
+    <!--test url:  http://localhost:8080/RpUserT/loginRpUserT?userID=12345678&passWord=111 -->
+
+
+
+</mapper>
