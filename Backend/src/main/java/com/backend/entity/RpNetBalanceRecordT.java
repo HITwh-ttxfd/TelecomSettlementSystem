@@ -120,12 +120,8 @@ public class RpNetBalanceRecordT {
         this.recordOperator = recordOperator;
     }
 
-    public double getBalanceFee() {
+    public Double getBalanceFee() {
         return balanceFee;
-    }
-
-    public void setBalanceFee(double balanceFee) {
-        this.balanceFee = balanceFee;
     }
 
     public String getCheckStatus() {

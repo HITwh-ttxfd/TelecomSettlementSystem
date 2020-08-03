@@ -95,12 +95,8 @@ public class RpPreFeeRecordT {
         this.writeOffTypeCode = writeOffTypeCode;
     }
 
-    public double getWriteOffFee() {
+    public Double getWriteOffFee() {
         return writeOffFee;
-    }
-
-    public void setWriteOffFee(double writeOffFee) {
-        this.writeOffFee = writeOffFee;
     }
 
     public String getRecordOperator() {

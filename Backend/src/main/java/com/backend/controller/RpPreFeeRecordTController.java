@@ -7,6 +7,7 @@ package com.backend.controller;
 
 import com.backend.entity.RpNetBalanceRecordT;
 import com.backend.entity.RpPreFeeRecordT;
+import com.backend.form.RpPreFeeRecordTSelectFrom;
 import com.backend.mapper.RpNetBalanceRecordTMapper;
 import com.backend.mapper.RpPreFeeRecordTMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +27,16 @@ public class RpPreFeeRecordTController {
 
     //找到预存转录
     @RequestMapping(value = "/selectAllRpPreFeeRecordT",method = {RequestMethod.GET})
-    public List<RpPreFeeRecordT> selectAllRpPreFeeRecordT(){
+    public List<RpPreFeeRecordT> selectAllRpPreFeeRecordT(@RequestParam(required = false) Date recordDate,@RequestParam(required = false) String cityCode, @RequestParam(required = false) String productCode,
+                                                          @RequestParam(required = false) String writeOffTypeCode){
+
+        RpPreFeeRecordTSelectFrom rpPreFeeRecordTSelectFrom=new RpPreFeeRecordTSelectFrom();
+        rpPreFeeRecordTSelectFrom.setCityCode(cityCode);
+        rpPreFeeRecordTSelectFrom.setProductCode(productCode);
+        rpPreFeeRecordTSelectFrom.setRecordDate(recordDate);
+        rpPreFeeRecordTSelectFrom.setWriteOffTypeCode(writeOffTypeCode);
         System.out.println("成功找到预存转录");
-        System.out.println(rpPreFeeRecordTMapper.selectAllRpPreFeeRecordT());
-        System.out.println(rpPreFeeRecordTMapper.selectAllRpPreFeeRecordT());
-        System.out.println("成功找到预存转录");
-        return rpPreFeeRecordTMapper.selectAllRpPreFeeRecordT();
+        return rpPreFeeRecordTMapper.selectAllRpPreFeeRecordT(rpPreFeeRecordTSelectFrom);
     }
 
     //增加一条预存转录信息
@@ -54,7 +59,27 @@ public class RpPreFeeRecordTController {
     public void deleteRpPreFeeRecordT(@RequestParam int[] ids){
         rpPreFeeRecordTMapper.deleteRpPreFeeRecordT(ids);
         System.out.println("成功删除预存转收入");
+    }
 
+    //更新一条预存转录信息
+    @RequestMapping(value = "/updateRpPreFeeRecordT",method = {RequestMethod.GET})
+    public void updateRpPreFeeRecordT(@RequestParam(required = false) int ID,@RequestParam(required = false) Date recordDate,@RequestParam(required = false) String cityCode, @RequestParam(required = false) String productCode,
+                                      @RequestParam(required = false) String writeOffTypeCode, @RequestParam(required = false) Double writeOffFee, @RequestParam(required = false) String recordOperator,
+                                      @RequestParam(required = false) String checkStatus ,@RequestParam(required = false) String checkPerson,@RequestParam(required = false) Date checkTime
+                                      ){
+        RpPreFeeRecordT rpPreFeeRecordT =new RpPreFeeRecordT();
+        rpPreFeeRecordT.setID(ID);
+        rpPreFeeRecordT.setRecordDate(recordDate);
+        rpPreFeeRecordT.setCityCode(cityCode);
+        rpPreFeeRecordT.setProductCode(productCode);
+        rpPreFeeRecordT.setWriteOffFee(writeOffFee);
+        rpPreFeeRecordT.setWriteOffTypeCode(writeOffTypeCode);
+        rpPreFeeRecordT.setRecordOperator(recordOperator);
+        rpPreFeeRecordT.setCheckPerson(checkPerson);
+        rpPreFeeRecordT.setCheckTime(checkTime);
+        rpPreFeeRecordT.setCheckStatus(checkStatus);
+        rpPreFeeRecordTMapper.updateRpPreFeeRecordT(rpPreFeeRecordT);
+        System.out.println("成功更新一条预存转录");
     }
 
 
