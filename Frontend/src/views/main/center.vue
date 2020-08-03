@@ -1,7 +1,18 @@
 <template>
   <el-container>
     <el-header>
-      <span>电信结算系统</span>
+      <span class="title">电信结算系统</span>
+      <el-dropdown class="nav">
+        <span class="el-dropdown-link">{{user}}<i class="el-icon-arrow-down el-icon--right"></i></span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item>
+            <router-link to="/userInfo">个人信息</router-link>
+          </el-dropdown-item>
+          <el-dropdown-item>
+            <router-link :to="{name: 'login'}">退出登录</router-link>
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </el-header>
     <el-container>
       <el-aside>
@@ -11,12 +22,12 @@
           background-color="#343f51"
           text-color="#eee"
           active-text-color="#ffffff">
-          <el-menu-item index="/userInfo">用户中心</el-menu-item>
           <el-submenu :index="index1+''" :key="index1" v-for="(feature,index1) in features">
             <template slot="title">
               <span>{{feature.title}}</span>
             </template>
-            <el-menu-item :index="story.path" v-for="(story,index2) in feature.stories" :key="index2">{{story.title}}</el-menu-item>
+            <el-menu-item :index="story.path" v-for="(story,index2) in feature.stories" :key="index2">{{story.title}}
+            </el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>
@@ -32,6 +43,7 @@
     name: "center",
     data() {
       return {
+        user: '王大锤',
         features: [
           {
             title: '手工收入录入',
@@ -104,11 +116,25 @@
 <style lang="scss" scoped>
   .el-header {
     background-color: #1a2f4d;
-    box-shadow: 0px 0px 5px #333333;
-    color: #ffffff;
+    box-shadow: 0 0 5px #333333;
+    position: relative;
+    color: #e9eef2;
     /*text-align: center;*/
     line-height: 60px;
     height: 60px;
+
+    .title {
+      position: absolute;
+      left: auto;
+      font-size: 20px;
+    }
+
+    .nav {
+      position: absolute;
+      right: 20px;
+      color: #e9eef2;
+      font-size: 16px;
+    }
   }
 
   .el-aside {
