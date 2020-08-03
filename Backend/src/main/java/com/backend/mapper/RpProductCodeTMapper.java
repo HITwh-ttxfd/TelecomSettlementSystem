@@ -7,8 +7,10 @@ package com.backend.mapper;
 import com.backend.entity.RpCityCodeT;
 import com.backend.entity.RpProductCodeT;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
+@Repository
 @Mapper
 public interface RpProductCodeTMapper {
 
