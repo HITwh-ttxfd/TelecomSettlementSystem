@@ -101,7 +101,6 @@
                         AND str_to_date(BUSINESS_RECORD_DATE,'%Y-%m')=str_to_date(#{businessRecordDate},'%Y-%m')
                     </if>
 
-
                 </where>
     </select>
 

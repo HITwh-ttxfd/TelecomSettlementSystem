@@ -1,7 +1,7 @@
 package com.backend.mapper;
 /**
  * author:万宇成
- * date:2020-8-3
+ * date:2020-8-03
  * purpose:销账类型编码
  */
 import com.backend.entity.RpProductCodeT;
