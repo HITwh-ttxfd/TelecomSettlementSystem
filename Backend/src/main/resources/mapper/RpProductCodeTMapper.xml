@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.backend.mapper.RpProductCodeTMapper">
+
+    <resultMap type="RpProductCodeT" id="Test1">
+        <result property="productCode" jdbcType="VARCHAR" column="PRODUCT_CODE"/>
+        <result property="productName" jdbcType="VARCHAR" column="PRODUCT_NAME"/>
+    </resultMap>
+
+
+    <!-- 查询产品编码 -->
+    <select id="selectAllRpProductCodeT"   resultMap="Test1" >
+        select PRODUCT_CODE,PRODUCT_NAME
+        from rp_product_code_t
+    </select>
+
+</mapper>

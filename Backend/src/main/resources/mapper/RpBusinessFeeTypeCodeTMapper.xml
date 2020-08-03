@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.backend.mapper.RpBusinessFeeTypeCodeTMapper">
+
+    <resultMap type="RpBusinessFeeTypeCodeT" id="Test1">
+        <result property="businessFeeTypeCode" jdbcType="VARCHAR" column="BUSINESS_FEE_TYPE_CODE"/>
+        <result property="businessFeeTypeName" jdbcType="VARCHAR" column="BUSINESS_FEE_TYPE_NAME"/>
+    </resultMap>
+
+
+    <!-- 查询城市编码和城市名称 -->
+    <select id="selectAllRpBusinessFeeTypeCodeT"   resultMap="Test1" >
+        select BUSINESS_FEE_TYPE_CODE,BUSINESS_FEE_TYPE_NAME
+        from rp_business_fee_type_code_t
+    </select>
+
+</mapper>

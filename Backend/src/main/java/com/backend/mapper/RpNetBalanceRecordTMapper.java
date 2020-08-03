@@ -5,7 +5,9 @@ package com.backend.mapper;
  * purpose:网间结算录入Mapper
  */
 
+import com.backend.entity.RpBusinessFeeRecordT;
 import com.backend.entity.RpNetBalanceRecordT;
+import com.backend.form.RpNetBalanceRecordTSelectForm;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -17,9 +19,12 @@ public interface RpNetBalanceRecordTMapper {
     public void addRpNetBalanceRecordT(RpNetBalanceRecordT rpNetBalanceRecordT);
 
     // 根据查询条件来获取查询结果
-    public List<RpNetBalanceRecordT> selectAllRpNetBalanceRecordT();
+    public List<RpNetBalanceRecordT> selectAllRpNetBalanceRecordT(RpNetBalanceRecordTSelectForm rpNetBalanceRecordTSelectForm);
 
     //批量删除网间收入
     public void  deleteRpNetBalanceRecordT(int[] ids);
+
+    //更新网间收入
+    public void updateRpNetBalanceRecordT(RpNetBalanceRecordT rpNetBalanceRecordT);
 
 }

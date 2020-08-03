@@ -1,6 +1,9 @@
 package com.backend.entity;
 
-import java.util.Date;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.sql.Date;
+
 
 /**
  * author:孙宝臻
@@ -12,16 +15,27 @@ public class RpBusinessFeeRecordT {
     private  String productCode;          //产品编码
     private  String cityCode;             //城市编码
     private String businessFeeTypeCode;     //通知单类型编码
-    private Date business_record_date;   //营业收款日期
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date businessRecordDate;   //营业收款日期
     private Double businessFee;          //营业收入金额
     private String recordOperator;       //录入人员
     private String checkPerson;          //稽核人员
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private  Date checkTime;              //稽核时间
     private  String checkStatus;          //稽核状态
 
     private RpCityCodeT rpCityCodeT;
     private RpProductCodeT rpProductCodeT;
     private RpBusinessFeeTypeCodeT rpBusinessFeeTypeCodeT;
+
+
+    public Date getBusinessRecordDate() {
+        return businessRecordDate;
+    }
+
+    public void setBusinessRecordDate(Date businessRecordDate) {
+        this.businessRecordDate = businessRecordDate;
+    }
 
     public RpCityCodeT getRpCityCodeT() {
         return rpCityCodeT;
@@ -59,6 +73,10 @@ public class RpBusinessFeeRecordT {
         this.businessFee = businessFee;
     }
 
+    public Double getBusinessFee() {
+        return businessFee;
+    }
+
     public int getID() {
         return ID;
     }
@@ -84,22 +102,6 @@ public class RpBusinessFeeRecordT {
     }
 
 
-
-    public Date getBusiness_record_date() {
-        return business_record_date;
-    }
-
-    public void setBusiness_record_date(Date business_record_date) {
-        this.business_record_date = business_record_date;
-    }
-
-    public double getBusinessFee() {
-        return businessFee;
-    }
-
-    public void setBusinessFee(double businessFee) {
-        this.businessFee = businessFee;
-    }
 
     public String getRecordOperator() {
         return recordOperator;
@@ -140,7 +142,7 @@ public class RpBusinessFeeRecordT {
                 ", productCode='" + productCode + '\'' +
                 ", cityCode='" + cityCode + '\'' +
                 ", businessTypeCode='" + businessFeeTypeCode + '\'' +
-                ", business_record_date=" + business_record_date +
+                ", businessRecordDate" + businessRecordDate +
                 ", businessFee=" + businessFee +
                 ", recordOperator='" + recordOperator + '\'' +
                 ", checkPerson='" + checkPerson + '\'' +
