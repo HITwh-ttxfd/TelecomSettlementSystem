@@ -94,7 +94,7 @@
           <el-col style="display: flex; justify-content: left;">
             <el-button>查询</el-button>
             <el-button>录入</el-button>
-            <el-button>导出</el-button>
+            <el-button @click="exportXLS">导出</el-button>
             <el-button>导入</el-button>
             <el-button>批量删除</el-button>
           </el-col>
@@ -123,6 +123,8 @@
 </template>
 
 <script>
+  import XLSX from "xlsx";
+
   export default {
     name: "inputInternet",
     data() {
@@ -191,7 +193,30 @@
           label: '北京烤鸭'
         }],
       }
-    }
+    },
+    methods: {
+      search(){
+        //  查询函数
+      },
+      input(){
+        //  录入函数
+      },
+      batchDel(){
+        //  批量删除
+      },
+      exportXLS() {
+        //  导出为xls
+        var data = this.tableData
+        // const header = {header: ['序号','城市','产品','出账类型','录入月份','录入金额','录入人'] }
+        // 空表头参数则直接使用默认Json的表头，声明只能对应
+        const header = {header: []}
+        var xlsxName = '网间收入表'
+        const ws = XLSX.utils.json_to_sheet(data, header)
+        const wb = XLSX.utils.book_new()
+        XLSX.utils.book_append_sheet(wb, ws, xlsxName)
+        XLSX.writeFile(wb, xlsxName + ".xlsx")
+      }
+    },
   }
 </script>
 

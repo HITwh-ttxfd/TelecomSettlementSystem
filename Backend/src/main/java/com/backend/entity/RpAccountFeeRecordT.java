@@ -17,9 +17,32 @@ public class RpAccountFeeRecordT {
     private  String accountOperator;     //录入员工用户名
     private String checkStatus;         //稽核状态
     private String checkPerson;         //稽核人
-    private  String checkTime;           //稽核时间
+    private  Date checkTime;           //稽核时间
 
+    public RpAccountFeeRecordT() {
+    }
 
+    public RpAccountFeeRecordT(int ID, String cityCode, String productCode, String accountFeeTypeCode, Date accountRecordMonth, double accountFee, String accountOperator, String checkStatus, String checkPerson, Date checkTime) {
+        this.ID = ID;
+        this.cityCode = cityCode;
+        this.productCode = productCode;
+        this.accountFeeTypeCode = accountFeeTypeCode;
+        this.accountRecordMonth = accountRecordMonth;
+        this.accountFee = accountFee;
+        this.accountOperator = accountOperator;
+        this.checkStatus = checkStatus;
+        this.checkPerson = checkPerson;
+        this.checkTime = checkTime;
+    }
+
+    public RpAccountFeeRecordT(String cityCode, String productCode, String accountFeeTypeCode, Date accountRecordMonth, double accountFee, String accountOperator) {
+        this.cityCode = cityCode;
+        this.productCode = productCode;
+        this.accountFeeTypeCode = accountFeeTypeCode;
+        this.accountRecordMonth = accountRecordMonth;
+        this.accountFee = accountFee;
+        this.accountOperator = accountOperator;
+    }
     public int getID() {
         return ID;
     }
@@ -92,11 +115,11 @@ public class RpAccountFeeRecordT {
         this.checkPerson = checkPerson;
     }
 
-    public String getCheckTime() {
+    public Date getCheckTime() {
         return checkTime;
     }
 
-    public void setCheckTime(String checkTime) {
+    public void setCheckTime(Date checkTime) {
         this.checkTime = checkTime;
     }
 

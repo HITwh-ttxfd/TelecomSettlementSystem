@@ -80,11 +80,11 @@
         <!--按钮区域-->
         <el-form-item>
           <el-col style="display: flex; justify-content: left;">
-            <el-button>查询</el-button>
-            <el-button>录入</el-button>
-            <el-button>导出</el-button>
-            <el-button>导入</el-button>
-            <el-button>批量删除</el-button>
+            <el-button @click="search">查询</el-button>
+            <el-button @click="input">录入</el-button>
+            <el-button @click="common.exportXLS('预存转收入表', tableData)">导出</el-button>
+            <el-button @click="inputXLS">导入</el-button>
+            <el-button @click="batchDel">批量删除</el-button>
           </el-col>
         </el-form-item>
         <!--按钮区域结束-->
@@ -101,8 +101,8 @@
         <el-table-column label="销账金额" prop="inMoney" header-align="center" align="center"/>
         <el-table-column label="录入人" prop="inPerson" width="90" header-align="center" align="center"/>
         <el-table-column label="操作" header-align="center" align="center">
-          <el-button type="primary" icon="el-icon-edit" circle></el-button>
-          <el-button type="danger" icon="el-icon-delete" circle></el-button>
+          <el-button type="primary" icon="el-icon-edit" @click="editRecord" circle></el-button>
+          <el-button type="danger" icon="el-icon-delete" @click="delRecord" circle></el-button>
         </el-table-column>
       </el-table>
     </el-card>
@@ -110,6 +110,8 @@
 </template>
 
 <script>
+  import XLSX from "xlsx";
+
   export default {
     name: "inputTransfers",
     data() {
@@ -187,6 +189,15 @@
       },
       batchDel() {
         //  批量删除
+      },
+      inputXLS(){
+        //  从xls导入
+      },
+      editRecord(){
+        //  修改记录
+      },
+      delRecord(){
+        //  删除记录
       }
     }
   }
