@@ -6,6 +6,7 @@ package com.backend.controller;
  */
 
 import com.backend.entity.RpNetBalanceRecordT;
+import com.backend.form.RpNetBalanceRecordTSelectForm;
 import com.backend.mapper.RpNetBalanceRecordTMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -39,8 +40,6 @@ public class RpNetBalanceRecordTController {
         rpNetBalanceRecordT.setBalanceFee(balanceFee);
         rpNetBalanceRecordTMapper.addRpNetBalanceRecordT(rpNetBalanceRecordT);
         System.out.println("成功添加一条网间结算");
-
-
     }
 
     //删除网间结算收入
@@ -54,9 +53,39 @@ public class RpNetBalanceRecordTController {
 
     //找到网间结算收入
     @RequestMapping(value = "/selectAllRpNetBalanceRecordT",method = {RequestMethod.GET})
-    public List<RpNetBalanceRecordT> selectAllRpNetBalanceRecordT(){
+    public List<RpNetBalanceRecordT> selectAllRpNetBalanceRecordT(@RequestParam(required = false) Date balanceMonth, @RequestParam(required = false) String cityCode, @RequestParam(required = false) String productCode, @RequestParam(required = false) String balanceSpCode,
+                                                                  @RequestParam(required = false) String balanceTypeCode){
+        RpNetBalanceRecordTSelectForm rpNetBalanceRecordTSelectForm=new RpNetBalanceRecordTSelectForm();
+        rpNetBalanceRecordTSelectForm.setBalanceMonth(balanceMonth);
+        rpNetBalanceRecordTSelectForm.setBalanceSpCode(balanceSpCode);
+        rpNetBalanceRecordTSelectForm.setBalanceTypeCode(balanceTypeCode);
+        rpNetBalanceRecordTSelectForm.setProductCode(productCode);
+        rpNetBalanceRecordTSelectForm.setCityCode(cityCode);
         System.out.println("成功找到网间通知单收入");
-        return rpNetBalanceRecordTMapper.selectAllRpNetBalanceRecordT();
+        return rpNetBalanceRecordTMapper.selectAllRpNetBalanceRecordT(rpNetBalanceRecordTSelectForm);
+    }
+
+
+    //更新网间结算
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @RequestMapping(value = "/updateRpNetBalanceRecordT",method = {RequestMethod.GET})
+    public void updateRpNetBalanceRecordT(@RequestParam(required = false) int ID,@RequestParam(required = false)  Date balanceMonth, @RequestParam(required = false)  String cityCode, @RequestParam(required = false)  String productCode, @RequestParam(required = false)  String balanceSpCode,
+                                       @RequestParam(required = false)  String balanceTypeCode, @RequestParam(required = false)  String recordOperator, @RequestParam(required = false)  Double balanceFee,
+                                          @RequestParam(required = false) String checkStatus ,@RequestParam(required = false) String checkPerson,@RequestParam(required = false) Date checkTime){
+        RpNetBalanceRecordT rpNetBalanceRecordT=new RpNetBalanceRecordT();
+        rpNetBalanceRecordT.setID(ID);
+        rpNetBalanceRecordT.setBalanceMonth(balanceMonth);
+        rpNetBalanceRecordT.setCityCode(cityCode);
+        rpNetBalanceRecordT.setProductCode(productCode);
+        rpNetBalanceRecordT.setBalanceSpCode(balanceSpCode);
+        rpNetBalanceRecordT.setBalanceTypeCode(balanceTypeCode);
+        rpNetBalanceRecordT.setRecordOperator(recordOperator);
+        rpNetBalanceRecordT.setBalanceFee(balanceFee);
+        rpNetBalanceRecordT.setCheckStatus(checkStatus);
+        rpNetBalanceRecordT.setCheckPerson(checkPerson);
+        rpNetBalanceRecordT.setCheckTime(checkTime);
+        rpNetBalanceRecordTMapper.updateRpNetBalanceRecordT(rpNetBalanceRecordT);
+        System.out.println("成功更新一条网间结算");
     }
 
 
