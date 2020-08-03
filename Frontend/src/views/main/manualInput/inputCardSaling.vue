@@ -10,25 +10,8 @@
       <!--查询表单-->
       <el-form ref="form" :model="form" label-width="90px">
         <el-row>
-          <el-col span="11">
+          <el-col :span="11">
             <el-form-item label="城市">
-              <!--<el-autocomplete
-                popper-class="my-autocomplete"
-                v-model="state"
-                :fetch-suggestions="querySearch"
-                placeholder="请输入.."
-                style="width: 100%"
-                @select="handleSelect">
-                <i
-                  class="el-icon-edit el-input__icon"
-                  slot="suffix"
-                  @click="handleIconClick">
-                </i>
-                <template slot-scope="{ item }">
-                  <div class="name">{{ item.value }}</div>
-                  <span class="addr">{{ item.address }}</span>
-                </template>
-              </el-autocomplete>-->
               <el-select style="width: 100%" v-model="form.inCity" filterable placeholder="请选择">
                 <el-option
                   v-for="item in options"
@@ -39,7 +22,7 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col span="11">
+          <el-col :span="11">
             <el-form-item label="产品" label-width="100px">
               <el-select style="width: 100%" v-model="form.inPro" filterable placeholder="请选择">
                 <el-option
@@ -53,22 +36,22 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col span="11">
+          <el-col :span="11">
             <el-form-item label="卡销售数量">
               <el-input v-model="form.inNum" placeholder="请输入数量"></el-input>
             </el-form-item>
           </el-col>
-          <el-col span="11">
+          <el-col :span="11">
             <el-form-item label="面值金额" label-width="100px">
               <el-input v-model="form.inCardMoney" placeholder="请输入金额"></el-input>
             </el-form-item>
           </el-col>
-          <el-col span="11">
+          <el-col :span="11">
             <el-form-item label="卡总金额">
               <el-input v-model="form.inTotal" placeholder="计算得出"></el-input>
             </el-form-item>
           </el-col>
-          <el-col span="11">
+          <el-col :span="11">
             <el-form-item label="折扣后总金额" label-width="100px">
               <el-input v-model="form.inDiscount" placeholder="请输入折扣后总金额"></el-input>
             </el-form-item>
@@ -77,11 +60,11 @@
         <!--按钮区域-->
         <el-form-item>
           <el-col style="display: flex; justify-content: left;">
-            <el-button>查询</el-button>
-            <el-button>录入</el-button>
-            <el-button @click="exportXLS">导出</el-button>
-            <el-button>导入</el-button>
-            <el-button>批量删除</el-button>
+            <el-button @click="search">查询</el-button>
+            <el-button @click="input">录入</el-button>
+            <el-button @click="common.exportXLS('卡销售收入表', tableData)">导出</el-button>
+            <el-button @click="inputXLS">导入</el-button>
+            <el-button @click="batchDel">批量删除</el-button>
           </el-col>
         </el-form-item>
         <!--按钮区域结束-->
@@ -97,10 +80,11 @@
         <el-table-column label="面值金额" prop="inMonth" header-align="center" align="center"/>
         <el-table-column label="卡总金额" prop="inMoney" header-align="center" align="center"/>
         <el-table-column label="折扣后金额" prop="inMoney" header-align="center" align="center"/>
+        <el-table-column label="稽核" prop="inPerson" header-align="center" align="center"/>
         <el-table-column label="录入人" prop="inPerson" header-align="center" align="center"/>
         <el-table-column label="操作" width="120" header-align="center" align="center">
-          <el-button type="primary" icon="el-icon-edit" circle></el-button>
-          <el-button type="danger" icon="el-icon-delete" circle></el-button>
+          <el-button type="primary" icon="el-icon-edit" @click="editRecord" circle></el-button>
+          <el-button type="danger" icon="el-icon-delete" @click="delRecord" circle></el-button>
         </el-table-column>
       </el-table>
     </el-card>
@@ -189,17 +173,14 @@
       batchDel(){
         //  批量删除
       },
-      exportXLS() {
-        //  导出为xls
-        var data = this.tableData
-        // const header = {header: ['序号','城市','产品','出账类型','录入月份','录入金额','录入人'] }
-        // 空表头参数则直接使用默认Json的表头，声明只能对应
-        const header = {header: []}
-        var xlsxName = '卡销售收入表'
-        const ws = XLSX.utils.json_to_sheet(data, header)
-        const wb = XLSX.utils.book_new()
-        XLSX.utils.book_append_sheet(wb, ws, xlsxName)
-        XLSX.writeFile(wb, xlsxName + ".xlsx")
+      inputXLS(){
+        //  从xls导入
+      },
+      editRecord(){
+        //  修改记录
+      },
+      delRecord(){
+        //  删除记录
       }
     },
   }

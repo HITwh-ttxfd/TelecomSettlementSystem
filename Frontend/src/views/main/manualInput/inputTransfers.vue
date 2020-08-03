@@ -10,25 +10,8 @@
       <!--查询表单-->
       <el-form ref="form" :model="form" label-width="80px">
         <el-row>
-          <el-col span="11">
+          <el-col :span="11">
             <el-form-item label="城市">
-              <!--<el-autocomplete
-                popper-class="my-autocomplete"
-                v-model="state"
-                :fetch-suggestions="querySearch"
-                placeholder="请输入.."
-                style="width: 100%"
-                @select="handleSelect">
-                <i
-                  class="el-icon-edit el-input__icon"
-                  slot="suffix"
-                  @click="handleIconClick">
-                </i>
-                <template slot-scope="{ item }">
-                  <div class="name">{{ item.value }}</div>
-                  <span class="addr">{{ item.address }}</span>
-                </template>
-              </el-autocomplete>-->
               <el-select style="width: 100%" v-model="form.inCity" filterable placeholder="请选择">
                 <el-option
                   v-for="item in options"
@@ -39,7 +22,7 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col span="11">
+          <el-col :span="11">
             <el-form-item label="产品">
               <el-select style="width: 100%" v-model="form.inPro" filterable placeholder="请选择">
                 <el-option
@@ -53,7 +36,7 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col span="11">
+          <el-col :span="11">
             <el-form-item label="销账类型">
               <el-select style="width: 100%" v-model="form.inType" filterable placeholder="请选择">
                 <el-option
@@ -65,13 +48,13 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col span="11">
+          <el-col :span="11">
             <el-form-item label="销账日期">
               <el-date-picker v-model="form.inDate" type="date" style="width: 100%" placeholder="选择日期">
               </el-date-picker>
             </el-form-item>
           </el-col>
-          <el-col span="11">
+          <el-col :span="11">
             <el-form-item label="销账金额">
               <el-input v-model="form.inMoney" placeholder="请输入金额"></el-input>
             </el-form-item>
@@ -99,6 +82,7 @@
         <el-table-column label="销账类型" prop="outType" header-align="center" align="center"/>
         <el-table-column label="销账日期" prop="inMonth" header-align="center" align="center"/>
         <el-table-column label="销账金额" prop="inMoney" header-align="center" align="center"/>
+        <el-table-column label="稽核" prop="inPerson" header-align="center" align="center"/>
         <el-table-column label="录入人" prop="inPerson" width="90" header-align="center" align="center"/>
         <el-table-column label="操作" header-align="center" align="center">
           <el-button type="primary" icon="el-icon-edit" @click="editRecord" circle></el-button>
@@ -110,7 +94,6 @@
 </template>
 
 <script>
-  import XLSX from "xlsx";
 
   export default {
     name: "inputTransfers",
