@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.backend.mapper.RpWriteOffTypeCodeTMapper">
+
+    <resultMap type="RpWriteOffTypeCodeT" id="Test1">
+        <result property="writeOffTypeCode" jdbcType="VARCHAR" column="WRITE_OFF_TYPE_CODE"/>
+        <result property="writeOffTypeName" jdbcType="VARCHAR" column="WRITE_OFF_TYPE_NAME"/>
+    </resultMap>
+
+
+    <!-- 查询销账类型编码 -->
+    <select id="selectAllRpWriteOffTypeCodeT"   resultMap="Test1" >
+        select WRITE_OFF_TYPE_CODE,WRITE_OFF_TYPE_NAME
+        from rp_write_off_type_code_t
+    </select>
+
+</mapper>

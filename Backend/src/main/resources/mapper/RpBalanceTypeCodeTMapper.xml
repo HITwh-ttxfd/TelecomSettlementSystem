@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.backend.mapper.RpBalanceTypeCodeTMapper">
+
+    <resultMap type="RpBalanceTypeCodeT" id="Test1">
+        <result property="balanceTypeCode" jdbcType="VARCHAR" column=" BALANCE_TYPE_CODE"/>
+        <result property="balanceTypeName" jdbcType="VARCHAR" column="BALANCE_TYPE_NAME"/>
+    </resultMap>
+
+    <select id="selectAllRpBalanceTypeCodeT"   resultMap="Test1" >
+        select BALANCE_TYPE_CODE,BALANCE_TYPE_NAME
+        from rp_balance_type_code_t
+    </select>
+
+</mapper>

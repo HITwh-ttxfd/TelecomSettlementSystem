@@ -3,10 +3,49 @@
 <!--
  * author:万宇成
  * data：2020/8/1
- * purpose:网间结算录入mapper.xml
+ * purpose:预存转收入mapper.xml
 -->
 
 <mapper namespace="com.backend.mapper.RpPreFeeRecordTMapper">
+    <!--    更新预存转收入-->
+    <update id="updateRpPreFeeRecordT" parameterType="RpPreFeeRecordT">
+        UPDATE rp_pre_fee_record_t
+        <set>
+            <if test="productCode != null and productCode != ''">
+                PRODUCT_CODE=#{productCode},
+            </if>
+            <if test="cityCode != null and cityCode != ''">
+                CITY_CODE=#{cityCode},
+            </if>
+            <if test="writeOffTypeCode!= null and  writeOffTypeCode != ''">
+                WRITE_OFF_TYPE_CODE=#{writeOffTypeCode},
+            </if>
+            <if test="recordDate != null ">
+                RECORD_DATE=#{recordDate},
+            </if>
+            <if test="writeOffFee != null ">
+                WRITE_OFF_FEE=#{writeOffFee},
+            </if>
+            <if test="recordOperator != null and recordOperator != ''">
+                RECORD_OPERATOR=#{recordOperator},
+            </if>
+            <if test="checkPerson != null and checkPerson!= ''">
+                CHECK_PERSON=#{checkPerson},
+            </if>
+            <if test="checkStatus != null and checkStatus != ''">
+                CHECK_STATUS=#{checkStatus},
+            </if>
+            <if test="checkTime != null ">
+                CHECK_TIME=#{checkTime}
+            </if>
+        </set>
+        WHERE ID=#{ID}
+    </update>
+
+
+
+
+
 <!--        根据查询条件来获取查询结果-->
     <resultMap type="RpPreFeeRecordT" id="Search1">
         <result property="ID" jdbcType="VARCHAR" column="ID"/>
@@ -26,20 +65,23 @@
             <result property="writeOffTypeName" jdbcType="VARCHAR" column="WRITE_OFF_TYPE_NAME"/>
         </association>
     </resultMap>
-    <select id="selectAllRpPreFeeRecordT"   resultMap="Search1" >
+    <select id="selectAllRpPreFeeRecordT" parameterType="com.backend.form.RpPreFeeRecordTSelectFrom"  resultMap="Search1" >
         select ID,RECORD_DATE,CITY_NAME,PRODUCT_NAME,WRITE_OFF_TYPE_NAME,WRITE_OFF_FEE,RECORD_OPERATOR,CHECK_STATUS,CHECK_PERSON,CHECK_TIME
         from ((rp_pre_fee_record_t natural join rp_city_code_t) natural join rp_Product_Code_T) natural join rp_write_off_type_code_t
-        <!--        <where>-->
-        <!--            &lt;!&ndash; 对于字符串来说既要判断null，也要判断空字符串 &ndash;&gt;-->
-        <!--            &lt;!&ndash; 在test属性中和＃{}中使用的是实体类（参数）中的数据域，不在这里的指的是表中的列名。 &ndash;&gt;-->
-        <!--            <if test="cityCode != null and cityCode != '' ">-->
-        <!--                AND city_code=#{cityCode}-->
-        <!--            </if>-->
-        <!--            <if test="cityName != null and cityCode != '' ">-->
-        <!--                AND city_Name=#{cityName}-->
-        <!--            </if>-->
-
-        <!--        </where>-->
+        <where>
+        <if test="cityCode != null and cityCode != '' ">
+            AND city_code=#{cityCode}
+        </if>
+        <if test="productCode != null and cityCode != '' ">
+            AND PRODUCT_CODE=#{productCode}
+        </if>
+        <if test="writeOffTypeCode != null and writeOffTypeCode != '' ">
+            AND WRITE_OFF_TYPE_CODE=#{writeOffTypeCode}
+        </if>
+        <if test="recordDate != null  ">
+            AND str_to_date(RECORD_DATE,'%Y-%m')=str_to_date(#{recordDate},'%Y-%m')
+        </if>
+        </where>
     </select>
 
     <!--    批量删除预存转收入-->

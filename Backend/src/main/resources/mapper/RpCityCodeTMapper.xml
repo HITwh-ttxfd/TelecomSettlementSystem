@@ -13,15 +13,6 @@
     <select id="selectAll"   resultMap="Test1" >
         select CITY_NAME,CITY_CODE
         from rp_city_code_t
-<!--        <where>-->
-<!--            &lt;!&ndash; 对于字符串来说既要判断null，也要判断空字符串 &ndash;&gt;-->
-<!--            &lt;!&ndash; 在test属性中和＃{}中使用的是实体类（参数）中的数据域，不在这里的指的是表中的列名。 &ndash;&gt;-->
-<!--            <if test="cityCode != null and cityCode != '' ">-->
-<!--                AND city_code=#{cityCode}-->
-<!--            </if>-->
-<!--            <if test="cityName != null and cityCode != '' ">-->
-<!--                AND city_Name=#{cityName}-->
-<!--            </if>-->
     </select>
 
 </mapper>

@@ -3,10 +3,47 @@
 <!--
  * author:万宇成
  * data：2020/8/1
- * purpose:网间结算录入mapper.xml
+ * purpose:通知单mapper.xml
 -->
 
 <mapper namespace="com.backend.mapper.RpBusinessFeeRecordTMapper">
+
+<!--    更新通知单-->
+    <update id="updateRpBusinessFeeRecordT" parameterType="RpBusinessFeeRecordT">
+        UPDATE rp_business_fee_record_t
+        <set>
+            <if test="productCode != null and productCode != ''">
+            PRODUCT_CODE=#{productCode},
+        </if>
+            <if test="cityCode != null and cityCode != ''">
+            CITY_CODE=#{cityCode},
+        </if>
+            <if test="businessFeeTypeCode != null and businessFeeTypeCode != ''">
+            BUSINESS_FEE_TYPE_CODE=#{businessFeeTypeCode},
+        </if>
+            <if test="businessRecordDate != null ">
+            BUSINESS_RECORD_DATE=#{businessRecordDate},
+        </if>
+            <if test="businessFee != null ">
+            BUSINESS_FEE=#{businessFee},
+        </if>
+            <if test="recordOperator != null and recordOperator != ''">
+            RECORD_OPERATOR=#{recordOperator},
+        </if>
+            <if test="checkPerson != null and checkPerson!= ''">
+            CHECK_PERSON=#{checkPerson},
+        </if>
+            <if test="checkStatus != null and checkStatus != ''">
+            CHECK_STATUS=#{checkStatus},
+        </if>
+            <if test="checkTime != null ">
+            CHECK_TIME=#{checkTime}
+        </if>
+        </set>
+        WHERE ID=#{ID}
+    </update>
+
+
 
     <!--        增加一条通知单-->
     <insert id="addRpBusinessFeeRecordT" parameterType="RpBusinessFeeRecordT">
@@ -29,7 +66,7 @@
     <!--    根据查询条件来获取查询结果-->
     <resultMap type="RpBusinessFeeRecordT" id="Search2">
         <result property="ID" jdbcType="VARCHAR" column="ID"/>
-        <result property="business_record_date" jdbcType="DATE" column="BUSINESS_RECORD_DATE"/>
+        <result property="businessRecordDate" jdbcType="DATE" column="BUSINESS_RECORD_DATE"/>
         <result property="businessFee" jdbcType="VARCHAR" column="BUSINESS_FEE"/>
         <result property="recordOperator" jdbcType="DOUBLE" column="RECORD_OPERATOR"/>
         <result property="checkStatus" jdbcType="VARCHAR" column="CHECK_STATUS"/>
@@ -45,20 +82,27 @@
             <result property="businessFeeTypeName" jdbcType="VARCHAR" column="BUSINESS_FEE_TYPE_NAME"/>
         </association>
     </resultMap>
-    <select id="selectAllRpBusinessFeeRecordT"   resultMap="Search2" >
+    <select id="selectAllRpBusinessFeeRecordT"  parameterType="com.backend.form.RpBusinessFeeRecordTSelectForm"  resultMap="Search2" >
         select ID,CITY_NAME,PRODUCT_NAME,BUSINESS_FEE_TYPE_NAME,BUSINESS_RECORD_DATE,BUSINESS_FEE,RECORD_OPERATOR,CHECK_STATUS,CHECK_PERSON,CHECK_TIME
         from ((rp_business_fee_record_t natural join rp_city_code_t) natural join rp_Product_Code_T) natural join rp_business_fee_type_code_t
-        <!--        <where>-->
-        <!--            &lt;!&ndash; 对于字符串来说既要判断null，也要判断空字符串 &ndash;&gt;-->
-        <!--            &lt;!&ndash; 在test属性中和＃{}中使用的是实体类（参数）中的数据域，不在这里的指的是表中的列名。 &ndash;&gt;-->
-        <!--            <if test="cityCode != null and cityCode != '' ">-->
-        <!--                AND city_code=#{cityCode}-->
-        <!--            </if>-->
-        <!--            <if test="cityName != null and cityCode != '' ">-->
-        <!--                AND city_Name=#{cityName}-->
-        <!--            </if>-->
+                <where>
+                    <!-- 对于字符串来说既要判断null，也要判断空字符串 -->
+                    <!-- 在test属性中和＃{}中使用的是实体类（参数）中的数据域，不在这里的指的是表中的列名。 -->
+                    <if test="cityCode != null and cityCode != '' ">
+                        AND city_code=#{cityCode}
+                    </if>
+                    <if test="productCode != null and cityCode != '' ">
+                        AND PRODUCT_CODE=#{productCode}
+                    </if>
+                    <if test="businessFeeTypeCode != null and businessFeeTypeCode != '' ">
+                        AND BUSINESS_FEE_TYPE_CODE=#{businessFeeTypeCode}
+                    </if>
+                    <if test="businessRecordDate != null  ">
+                        AND str_to_date(BUSINESS_RECORD_DATE,'%Y-%m')=str_to_date(#{businessRecordDate},'%Y-%m')
+                    </if>
 
-        <!--        </where>-->
+
+                </where>
     </select>
 
 
