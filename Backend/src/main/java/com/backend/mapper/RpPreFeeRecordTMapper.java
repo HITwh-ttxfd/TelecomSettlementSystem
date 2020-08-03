@@ -1,8 +1,10 @@
 package com.backend.mapper;
 
+import com.backend.entity.RpAccountFeeRecordT;
 import com.backend.entity.RpNetBalanceRecordT;
 import com.backend.entity.RpPreFeeRecordT;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -11,7 +13,7 @@ import java.util.List;
  * date:2020-8-1
  * purpose:预存转收入Mapper
  */
-
+@Repository
 @Mapper
 public interface RpPreFeeRecordTMapper {
 
@@ -23,6 +25,5 @@ public interface RpPreFeeRecordTMapper {
 
     //批量删除预存转收入
     public void  deleteRpPreFeeRecordT(int[] ids);
-
 
 }

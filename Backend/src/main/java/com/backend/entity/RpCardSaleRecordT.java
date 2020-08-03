@@ -20,8 +20,38 @@ public class RpCardSaleRecordT {
     private String checkPerson;       //稽核人
     private Date checkTime;           //稽核时间
     private String totalFee;          //卡总金额
-    private Double discountFee;       //折扣后总金额
+    private double discountFee;       //折扣后总金额
 
+    public RpCardSaleRecordT() {
+    }
+
+    public RpCardSaleRecordT(int ID, String cityCode, String productCode, Date saleDate, double discountRate, double cardSaleAmount, double cardParValueFee, String recordOperator, String checkStatus, String checkPerson, Date checkTime, String totalFee, Double discountFee) {
+        this.ID = ID;
+        this.cityCode = cityCode;
+        this.productCode = productCode;
+        this.saleDate = saleDate;
+        this.discountRate = discountRate;
+        this.cardSaleAmount = cardSaleAmount;
+        this.cardParValueFee = cardParValueFee;
+        this.recordOperator = recordOperator;
+        this.checkStatus = checkStatus;
+        this.checkPerson = checkPerson;
+        this.checkTime = checkTime;
+        this.totalFee = totalFee;
+        this.discountFee = discountFee;
+    }
+
+    public RpCardSaleRecordT(String cityCode, String productCode, Date saleDate, double discountRate, double cardSaleAmount, double cardParValueFee, String recordOperator,  String totalFee, Double discountFee) {
+        this.cityCode = cityCode;
+        this.productCode = productCode;
+        this.saleDate = saleDate;
+        this.discountRate = discountRate;
+        this.cardSaleAmount = cardSaleAmount;
+        this.cardParValueFee = cardParValueFee;
+        this.recordOperator = recordOperator;
+        this.totalFee = totalFee;
+        this.discountFee = discountFee;
+    }
 
     public int getID() {
         return ID;

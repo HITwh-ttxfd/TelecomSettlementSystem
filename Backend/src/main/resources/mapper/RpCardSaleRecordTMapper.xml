@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--
+ * author:孙宝臻
+ * data：2020/8/3
+ * purpose:卡销售统一表mapper.xml
+-->
+
+<mapper namespace="com.backend.mapper.RpCardSaleRecordTMapper">
+
+    <!--  增加一条卡销售收入记录-->
+    <insert id="addRpCardSaleRecordT" parameterType="RpCardSaleRecordT">
+        insert into rp_card_sale_record_t
+        value (#{ID},#{cityCode},#{productCode},#{saleDate},#{discountRate},
+        #{cardSaleAmount},#{cardParValueFee},#{recordOperator},
+        '未稽核',#{checkPerson},#{checkTime}
+        ,#{totalFee},#{discountFee})
+    </insert>
+    <!--    test url:http://localhost:8080/RpCardSaleRecordT/createRpCardSaleRecordT/?cityCode=000&productCode=110101&saleDate=2015-08-11&discountRate=0.5&cardSaleAmount=100&cardParValueFee=50&recordOperator='孙宝臻'&totalFee=5000&discountFee=2500-->
+
+    <!-- 修改卡销售收入记录 -->
+    <update id="changeRpCardSaleRecordT" parameterType="RpCardSaleRecordT">
+        UPDATE rp_card_sale_record_t
+        <set>
+            <if test="cityCode != null and cityCode != ''">
+                city_code=#{cityCode},
+            </if>
+            <if test="productCode != null and productCode != ''">
+                product_code=#{productCode},
+            </if>
+            <if test="saleDate != null">
+                sale_date=#{saleDate},
+            </if>
+            <if test="discountRate != 0">
+                discount_rate=#{discountRate},
+            </if>
+            <if test="cardSaleAmount !=0">
+                card_sale_amount=#{cardSaleAmount},
+            </if>
+            <if test="cardParValueFee != 0">
+                card_par_value_fee=#{cardParValueFee},
+            </if>
+            <if test="recordOperator != null and recordOperator != ''">
+                record_operator=#{recordOperator},
+            </if>
+            <if test="checkStatus != null and checkStatus != ''">
+                check_status=#{checkStatus},
+            </if>
+            <if test="checkPerson != null and checkPerson != ''">
+                check_person=#{checkPerson},
+            </if>
+            <if test="checkTime != 0 ">
+                check_time=#{checkTime},
+            </if>
+            <if test="totalFee != null and totalFee != ''">
+                total_fee=#{totalFee},
+            </if>
+            <if test="discountFee != 0 ">
+                discount_fee=#{discountFee},
+            </if>
+        </set>
+        WHERE ID=#{ID}
+    </update>
+
+
+    <!--    批量删除卡销售收入-->
+    <delete id="deleteRpCardSaleRecordT" parameterType="java.lang.Integer" >
+        delete from rp_card_sale_record_t
+        where ID in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <!--    test url:http://localhost:8080/RpCardSaleRecordT/deleteRpCardSaleRecordT/?ids=2,3,4-->
+
+    <resultMap type="RpCardSaleRecordT" id="AccountTip1">
+        <result property="ID" jdbcType="VARCHAR" column="ID"/>
+        <result property="cityCode" jdbcType="VARCHAR" column="CITY_CODE"/>
+        <result property="productCode" jdbcType="VARCHAR" column="PRODUCT_CODE"/>
+        <result property="saleDate" jdbcType="DATE" column="SALE_DATE"/>
+        <result property="discountRate" jdbcType="DOUBLE" column="DISCOUNT_RATE"/>
+        <result property="cardSaleAmount" jdbcType="DOUBLE" column="CARD_SALE_AMOUNT"/>
+        <result property="cardParValueFee" jdbcType="DOUBLE" column="CARD_PAR_VALUE_FEE"/>
+        <result property="recordOperator" jdbcType="VARCHAR" column="RECORD_OPERATOR"/>
+        <result property="checkStatus" jdbcType="VARCHAR" column="CHECK_STATUS"/>
+        <result property="checkPerson" jdbcType="VARCHAR" column="CHECK_PERSON"/>
+        <result property="checkTime" jdbcType="DATE" column="CHECK_TIME"/>
+        <result property="totalFee" jdbcType="VARCHAR" column="TOTAL_FEE"/>
+        <result property="discountFee" jdbcType="DOUBLE" column="discount_fee"/>
+    </resultMap>
+    <!--    根据查询条件来获取查询结果-->
+    <select id="selectAllRpCardSaleRecordT"   resultMap="AccountTip1" >
+        select *
+        from rp_card_sale_record_t
+        <where>
+            <if test="ID != 0 ">
+                AND ID=#{ID}
+            </if>
+            <if test="cityCode != null and cityCode != ''">
+                AND city_code=#{cityCode}
+            </if>
+            <if test="productCode != null and productCode != ''">
+                AND product_code=#{productCode}
+            </if>
+            <if test="saleDate != null">
+                AND sale_date=#{saleDate}
+            </if>
+            <if test="discountRate != 0">
+                AND discount_rate=#{discountRate}
+            </if>
+            <if test="cardSaleAmount != 0">
+                AND card_sale_amount=#{cardSaleAmount}
+            </if>
+            <if test="cardParValueFee != 0">
+                AND card_par_value_fee=#{cardParValueFee}
+            </if>
+            <if test="recordOperator != null and recordOperator != ''">
+                AND record_operator=#{recordOperator}
+            </if>
+            <if test="checkStatus != null and checkStatus != ''">
+                AND check_status=#{checkStatus}
+            </if>
+            <if test="checkPerson != null and checkPerson != ''">
+                AND check_person=#{checkPerson}
+            </if>
+            <if test="checkTime !=null ">
+                AND check_time=#{checkTime}
+            </if>
+            <if test="totalFee != null and totalFee != ''">
+                AND total_fee=#{totalFee}
+            </if>
+            <if test="discountFee !=0 ">
+                AND discount_fee=#{discountFee}
+            </if>
+        </where>
+    </select>
+    <!--    test url:http://localhost:8080/RpCardSaleRecordT/selectAllRpCardSaleRecordT/?ID=1-->
+
+
+    <select id="getAllRpCardSaleRecordT"   resultType="RpCardSaleRecordT" >
+        select *
+        from rp_card_sale_record_t
+    </select>
+
+<!--    test url:http://localhost:8080/RpCardSaleRecordT/getAllRpCardSaleRecordT-->
+</mapper>
