@@ -11,6 +11,7 @@
           background-color="#343f51"
           text-color="#eee"
           active-text-color="#ffffff">
+          <el-menu-item index="/userInfo">用户中心</el-menu-item>
           <el-submenu :index="index1+''" :key="index1" v-for="(feature,index1) in features">
             <template slot="title">
               <span>{{feature.title}}</span>
