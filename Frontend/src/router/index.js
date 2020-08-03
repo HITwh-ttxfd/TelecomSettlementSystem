@@ -17,6 +17,7 @@ import inputInternet from "../views/main/manualInput/inputInternet";
 import inputNotice from "../views/main/manualInput/inputNotice";
 import inputTransfers from "../views/main/manualInput/inputTransfers";
 import ro from "element-ui/src/locale/lang/ro";
+import userInfo from "../views/main/userInfo/userInfo";
 
 Vue.use(Router)
 
@@ -38,7 +39,13 @@ let router = new Router({
       path: '/center',
       name: 'center',
       component: center,
+      redirect: '/userInfo',
       children: [
+        {
+          path: '/userInfo',
+          name: 'userInfo',
+          component: userInfo,
+        },
         {
           path: '/checkAudit/checkAccount',
           name: 'checkAccount',
