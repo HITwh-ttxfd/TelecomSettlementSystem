@@ -44,7 +44,7 @@
     name: "center",
     data() {
       return {
-        user: '王大锤',
+        user: '',
         features: [
           {
             title: '手工收入录入',
@@ -117,6 +117,19 @@
       auth(arr) {
         return arr.includes(parseInt(sessionStorage.auth));
       }
+    },
+    created() {
+      this.$axios({
+        method: 'GET',
+        url: 'http://localhost:8080/RpUserT/getRpUserT',
+        params: {
+          userID: sessionStorage.user
+        }
+      }).then(res => {
+        this.user = res.data.tureName
+      }).catch(e => {
+        this.user = sessionStorage.user;
+      });
     }
   }
 </script>
