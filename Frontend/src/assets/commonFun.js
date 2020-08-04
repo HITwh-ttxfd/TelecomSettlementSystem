@@ -14,8 +14,13 @@ export default {
   },
   getNowTime: function () {
     var nowDate = new Date()
-    var dateTime = nowDate.getFullYear() + '-' + nowDate.getMonth() + '-' + nowDate.getDay() + ' '
-      + nowDate.getHours() + ':' + nowDate.getMinutes() + ':' + nowDate.getSeconds()
+    var dateTime = nowDate.getFullYear() + '-' + this.PrefixInteger(nowDate.getMonth(), 2)
+      + '-' + this.PrefixInteger(nowDate.getDay(), 2) + ' '
+      + this.PrefixInteger(nowDate.getHours(), 2) + ':' + this.PrefixInteger(nowDate.getHours(), 2)
+      + ':' + nowDate.getSeconds()
     return dateTime
+  },
+  PrefixInteger: function (num, m) {
+    return (Array(m).join(0) + num).slice(-m);
   }
 }
