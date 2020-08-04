@@ -86,6 +86,7 @@
         }).then(res => {
           this.table = res.data.map(item => {
             item.cityCode = item.rpCityCodeT.cityName;
+            item.checkTime = new Date(item.checkTime).toLocaleDateString();
             item.balanceMonth = new Date(item.balanceMonth).toLocaleDateString();
             item.balanceType = item.rpBalanceTypeCodeT.balanceTypeName;
             item.cityName = item.rpCityCodeT.cityName;

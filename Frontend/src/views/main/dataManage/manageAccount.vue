@@ -80,6 +80,7 @@
           url: 'http://localhost:8080/RpAccountFeeRecordT/getAllRpAccountFeeRecordT',
         }).then(res=>{
           this.table = res.data.map(item=>{
+            item.checkTime = new Date(item.checkTime).toLocaleDateString();
             item.accountRecordMonth=new Date(item.accountRecordMonth).toLocaleDateString();
             return item;
           });

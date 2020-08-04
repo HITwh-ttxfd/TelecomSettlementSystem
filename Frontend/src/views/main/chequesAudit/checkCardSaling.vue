@@ -113,7 +113,9 @@
           url: 'http://localhost:8080/RpCardSaleRecordT/changeRpCardSaleRecordT/',
           params: {
             ID: row.id,
-            checkStatus: status
+            checkStatus: status,
+            checkPerson: sessionStorage.user,
+            checkTime: new Date().toLocaleDateString()
           }
         }).then(res => {
           this.$message.success('修改成功');

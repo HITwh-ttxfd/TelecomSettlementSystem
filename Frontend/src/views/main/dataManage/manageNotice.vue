@@ -81,6 +81,7 @@
         }).then(res => {
           this.table = res.data.map(item => {
             item.cityCode = item.rpCityCodeT.cityName;
+            item.checkTime = new Date(item.checkTime).toLocaleDateString();
             item.businessRecordDate = new Date(item.businessRecordDate).toLocaleDateString();
             item.businessTypeCode = item.rpBusinessFeeTypeCodeT.businessFeeTypeName;
             item.productCode = item.rpProductCodeT.productName;
