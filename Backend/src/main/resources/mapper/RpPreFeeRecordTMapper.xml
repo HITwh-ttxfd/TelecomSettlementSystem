@@ -79,7 +79,7 @@
             AND WRITE_OFF_TYPE_CODE=#{writeOffTypeCode}
         </if>
         <if test="recordDate != null  ">
-            AND str_to_date(RECORD_DATE,'%Y-%m')=str_to_date(#{recordDate},'%Y-%m')
+            AND  RECORD_DATE=#{recordDate}
         </if>
         </where>
     </select>
