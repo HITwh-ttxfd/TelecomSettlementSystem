@@ -67,7 +67,7 @@
         <result property="ID" jdbcType="VARCHAR" column="ID"/>
         <result property="cityCode" jdbcType="VARCHAR" column="CITY_NAME"/>
         <result property="productCode" jdbcType="VARCHAR" column="PRODUCT_NAME"/>
-        <result property="accountFeeTypeCode" jdbcType="VARCHAR" column="ACCOUNT_FEE_TYPE_NAME"/>
+        <result property="accountFeeTypeCode" jdbcType="VARCHAR" column="ACCOUNT_TYPE_NAME"/>
         <result property="accountRecordMonth" jdbcType="DATE" column="ACCOUNT_RECORD_MONTH"/>
         <result property="accountFee" jdbcType="DOUBLE" column="ACCOUNT_FEE"/>
         <result property="accountOperator" jdbcType="VARCHAR" column="ACCOUNT_OPERATOR"/>
@@ -77,7 +77,7 @@
     </resultMap>
     <select id="selectAllRpAccountFeeRecordT"   resultMap="AccountTip" >
         select *
-        from rp_account_fee_record_t natural join rp_account_type_code_t natural join rp_city_code_t natural join rp_product_code_t
+        from ((rp_account_fee_record_t inner join rp_account_type_code_t on rp_account_fee_record_t.account_fee_type_code = rp_account_type_code_t.account_type_code)natural join rp_city_code_t) natural join rp_product_code_t
         <where>
             <!-- 对于字符串来说既要判断null，也要判断空字符串 -->
             <!-- 在test属性中和＃{}中使用的是实体类（参数）中的数据域，不在这里的指的是表中的列名。 -->
@@ -118,6 +118,8 @@
 
     <select id="getAllRpAccountFeeRecordT"  resultMap="AccountTip" >
         select *
-        from rp_account_fee_record_t natural join rp_account_type_code_t natural join rp_city_code_t natural join rp_product_code_t
+        from ((rp_account_fee_record_t inner join rp_account_type_code_t on rp_account_fee_record_t.account_fee_type_code = rp_account_type_code_t.account_type_code)natural join rp_city_code_t) natural join rp_product_code_t
     </select>
+
+    <!--    test url:http://localhost:8080/RpAccountFeeRecordT/getAllRpAccountFeeRecordT-->
 </mapper>
