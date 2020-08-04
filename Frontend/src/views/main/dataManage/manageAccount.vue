@@ -8,7 +8,7 @@
       </el-breadcrumb>
       <el-button size="small" type="primary" @click="exportTable">导出</el-button>
     </div>
-    <el-card shadow="always">
+    <el-card shadow="always" v-loading="loading">
       <el-table :data="table" id="table1">
         <el-table-column
           align="center"
@@ -68,20 +68,27 @@
     name: "manageAccount",
     data() {
       return {
-        table: [{
-          cityCode: '123',
-          productCode: '123',
-          accountFeeTypeCode: '312',
-          accountRecordMonth: '312',
-          accountFee: '123',
-          accountOperator: '123',
-          checkStatus: 'dfs',
-          checkPerson: 'fds',
-          checkTime: 'fds'
-        }]
+        loading: true,
+        table: []
       }
     },
     methods: {
+      load(){
+        this.loading = true;
+        this.$axios({
+          method: 'GET',
+          url: 'http://localhost:8080/RpAccountFeeRecordT/getAllRpAccountFeeRecordT',
+        }).then(res=>{
+          this.table = res.data.map(item=>{
+            item.checkTime = new Date(item.checkTime).toLocaleDateString();
+            item.accountRecordMonth=new Date(item.accountRecordMonth).toLocaleDateString();
+            return item;
+          });
+          this.loading = false;
+        }).catch(e=>{
+          this.$message.error('无法连接到服务器');
+        })
+      },
       exportTable() {
         /* 从表生成工作簿对象 */
         var wb = XLSX.utils.table_to_book(document.querySelector("#table1"));
@@ -106,6 +113,9 @@
         }
         return wbout;
       }
+    },
+    beforeMount() {
+      this.load();
     }
   }
 </script>
@@ -166,6 +176,7 @@
       flex-direction: column;
       height: 90%;
       width: 100%;
+      overflow: scroll;
 
 
       .el-table {
