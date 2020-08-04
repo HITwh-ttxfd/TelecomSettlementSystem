@@ -160,6 +160,7 @@
       flex-direction: column;
       height: 90%;
       width: 100%;
+      overflow: scroll;
 
 
       .el-table {
