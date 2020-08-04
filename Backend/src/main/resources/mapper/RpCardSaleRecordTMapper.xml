@@ -75,8 +75,8 @@
 
     <resultMap type="RpCardSaleRecordT" id="AccountTip1">
         <result property="ID" jdbcType="VARCHAR" column="ID"/>
-        <result property="cityCode" jdbcType="VARCHAR" column="CITY_CODE"/>
-        <result property="productCode" jdbcType="VARCHAR" column="PRODUCT_CODE"/>
+        <result property="cityCode" jdbcType="VARCHAR" column="CITY_NAME"/>
+        <result property="productCode" jdbcType="VARCHAR" column="PRODUCT_NAME"/>
         <result property="saleDate" jdbcType="DATE" column="SALE_DATE"/>
         <result property="discountRate" jdbcType="DOUBLE" column="DISCOUNT_RATE"/>
         <result property="cardSaleAmount" jdbcType="DOUBLE" column="CARD_SALE_AMOUNT"/>
@@ -91,7 +91,7 @@
     <!--    根据查询条件来获取查询结果-->
     <select id="selectAllRpCardSaleRecordT"   resultMap="AccountTip1" >
         select *
-        from rp_card_sale_record_t
+        from rp_card_sale_record_t natural join rp_city_code_t natural join rp_product_code_t
         <where>
             <if test="ID != 0 ">
                 AND ID=#{ID}
@@ -137,9 +137,9 @@
     <!--    test url:http://localhost:8080/RpCardSaleRecordT/selectAllRpCardSaleRecordT/?ID=1-->
 
 
-    <select id="getAllRpCardSaleRecordT"   resultType="RpCardSaleRecordT" >
+    <select id="getAllRpCardSaleRecordT"   resultMap="AccountTip1" >
         select *
-        from rp_card_sale_record_t
+        from rp_card_sale_record_t natural join rp_city_code_t natural join rp_product_code_t
     </select>
 
 <!--    test url:http://localhost:8080/RpCardSaleRecordT/getAllRpCardSaleRecordT-->

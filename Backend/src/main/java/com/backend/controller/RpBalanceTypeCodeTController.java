@@ -24,9 +24,10 @@ public class RpBalanceTypeCodeTController {
     RpBalanceTypeCodeTMapper rpBalanceTypeCodeTMapper;
 
 
-    @RequestMapping(value = "/selectRpBalanceSpCodeT",method = {RequestMethod.GET})
+    @RequestMapping(value = "/selectRpBalanceTypeCodeT",method = {RequestMethod.GET})
     public List<RpBalanceTypeCodeT> selectAllRpBalanceSpCodeT(){
         System.out.println("成功找到结算类型编码");
         return rpBalanceTypeCodeTMapper.selectAllRpBalanceTypeCodeT();
     }
+
 }

@@ -69,7 +69,7 @@ public class RpNetBalanceRecordTController {
     //更新网间结算
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @RequestMapping(value = "/updateRpNetBalanceRecordT",method = {RequestMethod.GET})
-    public void updateRpNetBalanceRecordT(@RequestParam(required = false) int ID,@RequestParam(required = false)  Date balanceMonth, @RequestParam(required = false)  String cityCode, @RequestParam(required = false)  String productCode, @RequestParam(required = false)  String balanceSpCode,
+    public void updateRpNetBalanceRecordT(@RequestParam int ID,@RequestParam(required = false)  Date balanceMonth, @RequestParam(required = false)  String cityCode, @RequestParam(required = false)  String productCode, @RequestParam(required = false)  String balanceSpCode,
                                        @RequestParam(required = false)  String balanceTypeCode, @RequestParam(required = false)  String recordOperator, @RequestParam(required = false)  Double balanceFee,
                                           @RequestParam(required = false) String checkStatus ,@RequestParam(required = false) String checkPerson,@RequestParam(required = false) Date checkTime){
         RpNetBalanceRecordT rpNetBalanceRecordT=new RpNetBalanceRecordT();
