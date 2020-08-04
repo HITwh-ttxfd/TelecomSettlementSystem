@@ -7,16 +7,18 @@
 -->
 <mapper namespace="com.backend.mapper.RpAccountTypeCodeTMapper">
 
-    <resultMap type="RpAccountTypeCodeT" id="Test5">
-        <result property="accountTypeCode" jdbcType="VARCHAR" column="ACCOUNT_TYPE_CODE"/>
-        <result property="accountTypeName" jdbcType="VARCHAR" column="ACCOUNT_TYPE_NAME"/>
-    </resultMap>
+<!--    <resultMap type="RpAccountTypeCodeT" id="Five">-->
+<!--        <result property="accountTypeCode" jdbcType="VARCHAR" column="ACCOUNT_TYPE_CODE"/>-->
+<!--        <result property="accountTypeName" jdbcType="VARCHAR" column="ACCOUNT_TYPE_NAME"/>-->
+<!--    </resultMap>-->
 
 
 
-    <select id="selectAllRpAccountTypeCodeT"   resultMap="Test5" >
+    <select id="selectAllRpAccountTypeCodeT"   resultType="RpAccountTypeCodeT" >
         select *
         from rp_account_type_code_t
     </select>
+
+<!--    test url:http://localhost:8080/RpAccountTypeCodeT/selectRpAccountTypeCodeT-->
 
 </mapper>
