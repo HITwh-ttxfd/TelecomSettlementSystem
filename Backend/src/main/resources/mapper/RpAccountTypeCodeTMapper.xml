@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--
+ * author:孙宝臻
+ * data：2020/8/4
+ * purpose:出账收入编码
+-->
+<mapper namespace="com.backend.mapper.RpAccountTypeCodeTMapper">
+
+    <resultMap type="RpAccountTypeCodeT" id="Test5">
+        <result property="accountTypeCode" jdbcType="VARCHAR" column="ACCOUNT_TYPE_CODE"/>
+        <result property="accountTypeName" jdbcType="VARCHAR" column="ACCOUNT_TYPE_NAME"/>
+    </resultMap>
+
+
+
+    <select id="selectAllRpAccountTypeCodeT"   resultMap="Test5" >
+        select *
+        from rp_account_type_code_t
+    </select>
+
+</mapper>
