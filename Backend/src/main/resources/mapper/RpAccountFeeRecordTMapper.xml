@@ -5,16 +5,6 @@
  * data：2020/8/3
  * purpose:出帐统一表mapper.xml
 -->
-<!--        private int ID;                  //序号-->
-<!--        private String cityCode;           //城市编码-->
-<!--        private String productCode;        //产品编码-->
-<!--        private String accountFeeTypeCode;//出账类型编码-->
-<!--        private Date accountRecordMonth;   //出账月份-->
-<!--        private double accountFee;          //出账金额-->
-<!--        private  String accountOperator;     //录入员工用户名-->
-<!--        private String checkStatus;         //稽核状态-->
-<!--        private String checkPerson;         //稽核人-->
-<!--        private  String checkTime;           //稽核时间-->
 
 <mapper namespace="com.backend.mapper.RpAccountFeeRecordTMapper">
 
@@ -42,7 +32,7 @@
             <if test="accountRecordMonth != null">
                 account_record_month=#{accountRecordMonth},
             </if>
-            <if test="accountFee != null">
+            <if test="accountFee != 0">
                 account_fee=#{accountFee},
             </if>
             <if test="accountOperator != null and accountOperator != ''">
@@ -75,9 +65,9 @@
     <!--    根据查询条件来获取查询结果-->
     <resultMap type="RpAccountFeeRecordT" id="AccountTip">
         <result property="ID" jdbcType="VARCHAR" column="ID"/>
-        <result property="cityCode" jdbcType="VARCHAR" column="CITY_CODE"/>
-        <result property="productCode" jdbcType="VARCHAR" column="PRODUCT_CODE"/>
-        <result property="accountFeeTypeCode" jdbcType="VARCHAR" column="ACCOUNT_FEE_TYPE_CODE"/>
+        <result property="cityCode" jdbcType="VARCHAR" column="CITY_NAME"/>
+        <result property="productCode" jdbcType="VARCHAR" column="PRODUCT_NAME"/>
+        <result property="accountFeeTypeCode" jdbcType="VARCHAR" column="ACCOUNT_FEE_TYPE_NAME"/>
         <result property="accountRecordMonth" jdbcType="DATE" column="ACCOUNT_RECORD_MONTH"/>
         <result property="accountFee" jdbcType="DOUBLE" column="ACCOUNT_FEE"/>
         <result property="accountOperator" jdbcType="VARCHAR" column="ACCOUNT_OPERATOR"/>
@@ -87,11 +77,11 @@
     </resultMap>
     <select id="selectAllRpAccountFeeRecordT"   resultMap="AccountTip" >
         select *
-        from rp_account_fee_record_t
+        from rp_account_fee_record_t natural join rp_account_type_code_t natural join rp_city_code_t natural join rp_product_code_t
         <where>
             <!-- 对于字符串来说既要判断null，也要判断空字符串 -->
             <!-- 在test属性中和＃{}中使用的是实体类（参数）中的数据域，不在这里的指的是表中的列名。 -->
-            <if test="ID != null ">
+            <if test="ID != 0 ">
                 AND ID=#{ID}
             </if>
             <if test="cityCode != null and cityCode != '' ">
@@ -104,9 +94,9 @@
                 AND account_fee_type_code=#{accountFeeTypeCode}
             </if>
             <if test="accountRecordMonth != null  ">
-                AND account_record_month=#{accountRecordMonth}
+                AND str_to_date(account_record_month,'%Y-%m')=str_to_date(#{accountRecordMonth},'%Y-%m')
             </if>
-            <if test="accountFee != null ">
+            <if test="accountFee != 0">
                 AND account_fee=#{accountFee}
             </if>
             <if test="accountOperator != null and accountOperator != '' ">
@@ -125,4 +115,9 @@
     </select>
 <!--    test url:http://localhost:8080/RpAccountFeeRecordT/selectAllRpAccountFeeRecordT/?cityCode=750&ID=0&accountFee=1102-->
 
+
+    <select id="getAllRpAccountFeeRecordT"  resultMap="AccountTip" >
+        select *
+        from rp_account_fee_record_t natural join rp_account_type_code_t natural join rp_city_code_t natural join rp_product_code_t
+    </select>
 </mapper>

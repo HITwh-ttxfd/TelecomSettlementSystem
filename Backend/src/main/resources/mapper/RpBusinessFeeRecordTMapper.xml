@@ -48,7 +48,7 @@
     <!--        增加一条通知单-->
     <insert id="addRpBusinessFeeRecordT" parameterType="RpBusinessFeeRecordT">
         insert into rp_business_fee_record_t(CITY_CODE,PRODUCT_CODE,BUSINESS_FEE_TYPE_CODE,BUSINESS_RECORD_DATE,BUSINESS_FEE,RECORD_OPERATOR)
-                                     value (#{cityCode},#{productCode},#{businessFeeTypeCode},#{business_record_date},#{businessFee},#{recordOperator})
+                                     value (#{cityCode},#{productCode},#{businessFeeTypeCode},#{businessRecordDate},#{businessFee},#{recordOperator})
     </insert>
 
 
@@ -98,7 +98,7 @@
                         AND BUSINESS_FEE_TYPE_CODE=#{businessFeeTypeCode}
                     </if>
                     <if test="businessRecordDate != null  ">
-                        AND str_to_date(BUSINESS_RECORD_DATE,'%Y-%m')=str_to_date(#{businessRecordDate},'%Y-%m')
+                        AND BUSINESS_RECORD_DATE=#{businessRecordDate}
                     </if>
 
                 </where>

@@ -7,7 +7,7 @@
         <el-breadcrumb-item>网间结算收入</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <el-card shadow="always">
+    <el-card shadow="always" v-loading="loading">
       <el-table :data="table">
         <el-table-column
           align="center"
@@ -22,17 +22,17 @@
         <el-table-column
           align="center"
           label="产品"
-          prop="productCode">
+          prop="product">
         </el-table-column>
         <el-table-column
           align="center"
           label="运营商"
-          prop="balanceSpCode">
+          prop="balanceSp">
         </el-table-column>
         <el-table-column
           align="center"
           label="结算类型编码"
-          prop="balanceTypeCode">
+          prop="balanceType">
         </el-table-column>
         <el-table-column
           align="center"
@@ -46,16 +46,22 @@
         </el-table-column>
         <el-table-column align="center" label="稽核状态" width="150px">
           <template slot-scope="scope">
-            <el-button
-              size="mini"
-              type="success"
-              @click="pass(scope.$index, scope.row)">通过
-            </el-button>
-            <el-button
-              size="mini"
-              type="danger"
-              @click="reject(scope.$index, scope.row)">拒绝
-            </el-button>
+            <div v-if="!scope.row.checkStatus">
+              <el-button
+                size="mini"
+                type="success"
+                @click="edit(scope.$index, scope.row,'已通过')">通过
+              </el-button>
+              <el-button
+                size="mini"
+                type="danger"
+                @click="edit(scope.$index, scope.row,'已拒绝')">拒绝
+              </el-button>
+            </div>
+            <span v-else
+                  :class="{'status':true,'passed':scope.row.checkStatus!=='已拒绝','rejected':scope.row.checkStatus==='已拒绝'}">
+              {{scope.row.checkStatus}}
+            </span>
           </template>
         </el-table-column>
       </el-table>
@@ -68,27 +74,53 @@
     name: "checkInternet",
     data() {
       return {
-        table: [{
-          balanceMonth: '21',
-          cityCode: '123',
-          productCode: '123',
-          balanceSpCode: '312',
-          balanceTypeCode: '312',
-          balanceFee: '123',
-          recordOperator: '123',
-          checkStatus: 'dfs',
-          checkPerson: 'fds',
-          checkTime: 'fds'
-        }]
+        loading: true,
+        table: []
       }
     },
     methods: {
-      pass() {
-
+      load() {
+        this.loading = true;
+        this.$axios({
+          method: 'GET',
+          url: 'http://localhost:8080/RpNetBalanceRecordT/selectAllRpNetBalanceRecordT',
+        }).then(res => {
+          this.table = res.data.map(item => {
+            if (item.checkStatus === '未稽核')
+              item.checkStatus = null;
+            item.cityCode = item.rpCityCodeT.cityName;
+            item.balanceMonth = new Date(item.balanceMonth).toLocaleDateString();
+            item.balanceType = item.rpBalanceTypeCodeT.balanceTypeName;
+            item.cityName = item.rpCityCodeT.cityName;
+            item.product = item.rpProductCodeT.productName;
+            item.balanceSp = item.rpBalanceSpCodeT.balanceSpName;
+            return item;
+          });
+          this.loading = false;
+        }).catch(e => {
+          this.$message.error('无法连接到服务器');
+        })
       },
-      reject() {
-
-      }
+      edit(index, row, status) {
+        this.$axios({
+          method: 'GET',
+          url: 'http://localhost:8080/RpNetBalanceRecordT/updateRpNetBalanceRecordT',
+          params: {
+            ID: row.id,
+            checkStatus: status,
+            checkPerson: sessionStorage.user,
+            checkTime: new Date().toLocaleDateString()
+          }
+        }).then(res => {
+          this.$message.success('修改成功');
+          this.load();
+        }).catch(e => {
+          this.$message.error('修改失败');
+        })
+      },
+    },
+    beforeMount() {
+      this.load();
     }
   }
 </script>
@@ -130,10 +162,23 @@
       flex-direction: column;
       height: 90%;
       width: 100%;
+      overflow: scroll;
 
 
       .el-table {
         height: 100%;
+
+        .status {
+          margin: 0;
+        }
+
+        .passed {
+          color: #67c23a;
+        }
+
+        .rejected {
+          color: #f46c6c;
+        }
       }
 
 

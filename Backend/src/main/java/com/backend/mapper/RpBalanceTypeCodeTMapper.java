@@ -7,9 +7,10 @@ package com.backend.mapper;
 import com.backend.entity.RpBalanceSpCodeT;
 import com.backend.entity.RpBalanceTypeCodeT;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 @Mapper
 public interface RpBalanceTypeCodeTMapper {
     public List<RpBalanceTypeCodeT> selectAllRpBalanceTypeCodeT();

@@ -4,6 +4,7 @@ import com.backend.entity.RpNetBalanceRecordT;
 import com.backend.entity.RpPreFeeRecordT;
 import com.backend.form.RpPreFeeRecordTSelectFrom;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  * date:2020-8-1
  * purpose:预存转收入Mapper
  */
-
+@Repository
 @Mapper
 public interface RpPreFeeRecordTMapper {
 

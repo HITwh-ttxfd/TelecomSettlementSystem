@@ -22,7 +22,7 @@ public class RpBusinessFeeTypeCodeTController {
 
     @RequestMapping(value = "/selectRpBusinessFeeTypeCodeT",method = {RequestMethod.GET})
     public List<RpBusinessFeeTypeCodeT> selectAllRpBusinessFeeTypeCodeT(){
-        System.out.println("成功找到所有产品编码和城市名称");
+        System.out.println("成功找到所有通知单类型编码");
         return rpBusinessFeeTypeCodeTMapper.selectAllRpBusinessFeeTypeCodeT();
     }
 }

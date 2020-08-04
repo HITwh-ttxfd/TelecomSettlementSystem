@@ -9,9 +9,10 @@ import com.backend.entity.RpBusinessFeeRecordT;
 import com.backend.entity.RpNetBalanceRecordT;
 import com.backend.form.RpNetBalanceRecordTSelectForm;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 @Mapper
 public interface RpNetBalanceRecordTMapper {
     //增加一条网间收入记录

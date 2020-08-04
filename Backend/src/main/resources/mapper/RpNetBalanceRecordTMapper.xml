@@ -104,10 +104,10 @@
                         AND BALANCE_SP_CODE=#{balanceSpCode}
                     </if>
                     <if test="balanceMonth != null  ">
-                        AND BALANCE_MONTH=#{balanceMonth}
+                        AND str_to_date(BALANCE_MONTH,'%Y-%m')=str_to_date(#{balanceMonth},'%Y-%m')
                     </if>
                     <if test="balanceTypeCode != null and balanceTypeCode != '' ">
-                        AND str_to_date(BALANCE_TYPE_CODE,'%Y-%m')=str_to_date(#{balanceTypeCode},'%Y-%m')
+                        AND  BALANCE_TYPE_CODE=#{balanceTypeCode}
                     </if>
 
                 </where>
