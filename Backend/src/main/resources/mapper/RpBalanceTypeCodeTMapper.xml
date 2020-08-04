@@ -4,7 +4,7 @@
 <mapper namespace="com.backend.mapper.RpBalanceTypeCodeTMapper">
 
     <resultMap type="RpBalanceTypeCodeT" id="Test1">
-        <result property="balanceTypeCode" jdbcType="VARCHAR" column=" BALANCE_TYPE_CODE"/>
+        <result property="balanceTypeCode" jdbcType="VARCHAR" column="BALANCE_TYPE_CODE"/>
         <result property="balanceTypeName" jdbcType="VARCHAR" column="BALANCE_TYPE_NAME"/>
     </resultMap>
 
