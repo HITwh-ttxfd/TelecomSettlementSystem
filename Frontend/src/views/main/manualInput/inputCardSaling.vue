@@ -144,22 +144,8 @@
             inPerson: '张三',
           }
         ],
-        options: [{
-          value: '000',
-          label: '江西本部'
-        }, {
-          value: '选项2',
-          label: '江西景德镇'
-        }, {
-          value: '选项3',
-          label: '江西南昌'
-        }, {
-          value: '选项4',
-          label: '江西吉安'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
-        }],
+        optionsPro: [],
+        optionsCity: [],
         value: ''
       }
     },
@@ -181,7 +167,34 @@
       },
       delRecord(){
         //  删除记录
+      },
+      loadInfo(){
+        //  加载信息
+        //  加载产品信息
+        this.$axios.get('http://localhost:8080/RpProductCodeTController/selectRpProductCodeT').then(res=>{
+          var tmp = new Array(res.data.length)
+          for(var i in res.data){
+            tmp[i] = {}
+            tmp[i].value = res.data[i].productCode
+            tmp[i].label = res.data[i].productName
+          }
+          this.optionsPro = tmp
+          console.log(tmp)
+        })
+        //  加载城市信息
+        this.$axios.get('http://localhost:8080/RpCityCodeT/selectRpCityCodeT').then(res=>{
+          var tmp = new Array(res.data.length)
+          for(var i in res.data){
+            tmp[i] = {}
+            tmp[i].value = res.data[i].cityName
+            tmp[i].label = res.data[i].cityCode
+          }
+          this.optionsCity = tmp
+        })
       }
+    },
+    mounted() {
+      this.loadInfo()
     },
   }
 </script>

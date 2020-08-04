@@ -88,7 +88,7 @@
 </template>
 
 <script>
-  import XLSX from 'xlsx'
+
   export default {
     name: "inputAccount",
     data() {
@@ -145,61 +145,73 @@
         optionsOut: [],
       }
     },
-    methods:{
-      search(){
+    methods: {
+      search() {
         //  查询函数
       },
-      input(){
+      input() {
         //  录入函数
+        var data = this.form
+        var dateTime = this.common.getNowTime()
+        console.log(dateTime)
+        // data.inDate = nowDate.format('yyyy-MM-dd hh:mm:ss.S').toString()
+        // console.log((new Date()).format('yyyy-MM-dd hh:mm:ss.S'))
+        /*this.$axios.get('http://localhost:8080/RpAccountFeeRecordT/createRpAccountFeeRecordT/' +
+          '?cityCode=' + data.inCity + '&productCode=' + data.inPro + '&accountFeeTypeCode=' + data.inType +
+          '&accountRecordMonttemp=' + data.inDate + '&accountFee=' + data.inMoney + '&accountOperator=' + data.inPerson)
+          .then(res => {
+
+        })*/
       },
-      batchDel(){
+      batchDel() {
         //  批量删除
       },
-      inputXLS(){
+      inputXLS() {
         //  导入xls
       },
-      editRecord(){
+      editRecord() {
         //  修改记录
       },
-      delRecord(){
+      delRecord() {
         //  删除记录
       },
-      loadInfo(){
+      loadInfo() {
         //  加载信息
         //  加载产品信息
-        this.$axios.get('http://localhost:8080/RpProductCodeTController/selectRpProductCodeT').then(res=>{
+        this.$axios.get('http://localhost:8080/RpProductCodeTController/selectRpProductCodeT').then(res => {
           var tmp = new Array(res.data.length)
-          for(var i in res.data){
+          for (var i in res.data) {
             tmp[i] = {}
-            tmp[i].value = res.data.productCode
-            tmp[i].label = res.data.productName
+            tmp[i].value = res.data[i].productCode
+            tmp[i].label = res.data[i].productName
           }
           this.optionsPro = tmp
+          console.log(tmp)
         })
         //  加载城市信息
-        this.$axios.get('http://localhost:8080/RpCityCodeT/selectRpCityCodeT').then(res=>{
+        this.$axios.get('http://localhost:8080/RpCityCodeT/selectRpCityCodeT').then(res => {
           var tmp = new Array(res.data.length)
-          for(var i in res.data){
+          for (var i in res.data) {
             tmp[i] = {}
-            tmp[i].value = res.data.cityName
-            tmp[i].label = res.data.cityCode
+            tmp[i].value = res.data[i].cityName
+            tmp[i].label = res.data[i].cityCode
           }
           this.optionsCity = tmp
         })
-        //  加载出账类型信息
-        this.$axios.get().then(res=>{
-          var tmp = new Array(res.data.length)
-          for(var i in res.data){
-            tmp[i] = {}
-            tmp[i].value = res.data
-            tmp[i].label = res.data
-          }
-          this.optionsOut = tmp
-        })
+        /* //  加载出账类型信息
+         this.$axios.get().then(res=>{
+           var tmp = new Array(res.data.length)
+           for(var i in res.data){
+             tmp[i] = {}
+             tmp[i].value = res.data
+             tmp[i].label = res.data
+           }
+           this.optionsOut = tmp
+         })*/
       }
     },
     mounted() {
-
+      this.loadInfo()
     }
   }
 </script>

@@ -11,5 +11,11 @@ export default {
     const wb = XLSX.utils.book_new()
     XLSX.utils.book_append_sheet(wb, ws, xlsxName)
     XLSX.writeFile(wb, xlsxName + ".xlsx")
+  },
+  getNowTime: function () {
+    var nowDate = new Date()
+    var dateTime = nowDate.getFullYear() + '-' + nowDate.getMonth() + '-' + nowDate.getDay() + ' '
+      + nowDate.getHours() + ':' + nowDate.getMinutes() + ':' + nowDate.getSeconds()
+    return dateTime
   }
 }
