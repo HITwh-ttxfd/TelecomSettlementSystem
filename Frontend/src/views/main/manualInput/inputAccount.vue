@@ -14,7 +14,7 @@
             <el-form-item label="城市">
               <el-select style="width: 100%" v-model="form.inCity" filterable placeholder="请选择">
                 <el-option
-                  v-for="item in options"
+                  v-for="item in optionsCity"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value">
@@ -26,7 +26,7 @@
             <el-form-item label="产品">
               <el-select style="width: 100%" v-model="form.inPro" filterable placeholder="请选择">
                 <el-option
-                  v-for="item in options"
+                  v-for="item in optionsPro"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value">
@@ -40,7 +40,7 @@
             <el-form-item label="出账类型">
               <el-select style="width: 100%" v-model="form.inType" filterable placeholder="请选择">
                 <el-option
-                  v-for="item in options"
+                  v-for="item in optionsOut"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value">
@@ -140,22 +140,9 @@
           }
         ],
         check: false,
-        options: [{
-          value: '000',
-          label: '江西本部'
-        }, {
-          value: '选项2',
-          label: '江西景德镇'
-        }, {
-          value: '选项3',
-          label: '江西南昌'
-        }, {
-          value: '选项4',
-          label: '江西吉安'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
-        }],
+        optionsPro: [],
+        optionsCity: [],
+        optionsOut: [],
       }
     },
     methods:{
@@ -176,7 +163,43 @@
       },
       delRecord(){
         //  删除记录
+      },
+      loadInfo(){
+        //  加载信息
+        //  加载产品信息
+        this.$axios.get('http://localhost:8080/RpProductCodeTController/selectRpProductCodeT').then(res=>{
+          var tmp = new Array(res.data.length)
+          for(var i in res.data){
+            tmp[i] = {}
+            tmp[i].value = res.data.productCode
+            tmp[i].label = res.data.productName
+          }
+          this.optionsPro = tmp
+        })
+        //  加载城市信息
+        this.$axios.get('http://localhost:8080/RpCityCodeT/selectRpCityCodeT').then(res=>{
+          var tmp = new Array(res.data.length)
+          for(var i in res.data){
+            tmp[i] = {}
+            tmp[i].value = res.data.cityName
+            tmp[i].label = res.data.cityCode
+          }
+          this.optionsCity = tmp
+        })
+        //  加载出账类型信息
+        this.$axios.get().then(res=>{
+          var tmp = new Array(res.data.length)
+          for(var i in res.data){
+            tmp[i] = {}
+            tmp[i].value = res.data
+            tmp[i].label = res.data
+          }
+          this.optionsOut = tmp
+        })
       }
+    },
+    mounted() {
+
     }
   }
 </script>
