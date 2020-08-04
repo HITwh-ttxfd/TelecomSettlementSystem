@@ -4,7 +4,7 @@
       <div class="ms-title">电信结算系统</div>
       <el-form :model="param" :rules="rules" ref="login" label-width="0px" class="ms-content">
         <el-form-item prop="username">
-          <el-input v-model="param.username" placeholder="请输入身份证号或手机号" @keyup.enter.native="submitForm()">
+          <el-input v-model="param.username" placeholder="请输入用户名" @keyup.enter.native="submitForm()">
             <el-button slot="prepend" icon="el-icon-user"/>
           </el-input>
         </el-form-item>
@@ -43,12 +43,10 @@
         param: {
           username: '',
           password: '',
-          // radio: ''
         },
         rules: {
           username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
           password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
-          // radio: [{ required:true, message:' ', trigger:'change'}]
         }
       };
     },
@@ -56,12 +54,38 @@
       submitForm() {
         this.$refs.login.validate((valid) => {
           if (valid) {
-            this.$router.push('/center')
+            this.$axios({
+              method: 'GET',
+              url: 'http://localhost:8080/RpUserT/loginRpUserT',
+              params: {
+                userID: this.param.username,
+                passWord: this.param.password
+              }
+            }).then(res=>{
+              if (res.data===1) {
+                sessionStorage.user = this.param.username;
+                this.$axios({
+                  method: 'GET',
+                  url: 'http://localhost:8080/RpUserT/roleRight',
+                  params: {
+                    userID: sessionStorage.user
+                  }
+                }).then(res=>{
+                  this.$message.success('登录成功');
+                  sessionStorage.auth = res.data;
+                  this.$router.push('/center');
+                }).catch(e=>{
+                  this.$message.error('预期之外的错误');
+                })
+              }
+              else
+                this.$message.error('用户名或密码错误');
+            }).catch(e=>{
+              this.$message.error('无法连接至服务器');
+            })
           }
           else {
             this.$message.error('请输入用户名密码');
-            // console.log('error submit!!');
-            // return false;
           }
         });
       },

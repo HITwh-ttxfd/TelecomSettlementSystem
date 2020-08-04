@@ -8,8 +8,8 @@
       </el-breadcrumb>
       <el-button size="small" type="primary" @click="exportTable">导出</el-button>
     </div>
-    <el-card shadow="always">
-      <el-table :data="table" id="table1" v-loading="loading">
+    <el-card shadow="always" v-loading="loading">
+      <el-table :data="table" id="table1">
         <el-table-column
           align="center"
           label="城市编码"

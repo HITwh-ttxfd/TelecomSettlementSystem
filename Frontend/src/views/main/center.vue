@@ -22,7 +22,8 @@
           background-color="#343f51"
           text-color="#eee"
           active-text-color="#ffffff">
-          <el-submenu :index="index1+''" :key="index1" v-for="(feature,index1) in features">
+          <el-submenu v-if="auth(feature.auth)" :index="index1+''" :key="index1"
+                      v-for="(feature,index1) in features">
             <template slot="title">
               <span>{{feature.title}}</span>
             </template>
@@ -47,6 +48,7 @@
         features: [
           {
             title: '手工收入录入',
+            auth: [1, 4, 6, 7],
             stories: [
               {
                 title: '出账收入',
@@ -67,6 +69,7 @@
             ]
           }, {
             title: '收款稽核',
+            auth: [2, 4, 5, 7],
             stories: [
               {
                 title: '出账收入',
@@ -87,6 +90,7 @@
             ]
           }, {
             title: '数据归集',
+            auth: [3, 5, 6, 7],
             stories: [
               {
                 title: '出账收入',
@@ -109,7 +113,11 @@
         ]
       }
     },
-    methods: {}
+    methods: {
+      auth(arr) {
+        return arr.includes(parseInt(sessionStorage.auth));
+      }
+    }
   }
 </script>
 

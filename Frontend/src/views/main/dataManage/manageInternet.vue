@@ -8,8 +8,8 @@
       </el-breadcrumb>
       <el-button size="small" type="primary" @click="exportTable">导出</el-button>
     </div>
-    <el-card shadow="always">
-      <el-table :data="table" id="table3" v-loading="loading">
+    <el-card shadow="always" v-loading="loading">
+      <el-table :data="table" id="table3">
         <el-table-column
           align="center"
           label="结算月份"

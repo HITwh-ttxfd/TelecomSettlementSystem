@@ -7,8 +7,8 @@
         <el-breadcrumb-item>通知单收入</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <el-card shadow="always">
-      <el-table :data="table" v-loading="loading">
+    <el-card shadow="always" v-loading="loading">
+      <el-table :data="table">
         <el-table-column
           align="center"
           label="城市"
