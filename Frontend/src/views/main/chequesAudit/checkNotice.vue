@@ -8,7 +8,7 @@
       </el-breadcrumb>
     </div>
     <el-card shadow="always">
-      <el-table :data="table">
+      <el-table :data="table" v-loading="loading">
         <el-table-column
           align="center"
           label="城市"
@@ -27,7 +27,7 @@
         <el-table-column
           align="center"
           label="收款日期"
-          prop="business_record_date">
+          prop="businessRecordDate">
         </el-table-column>
         <el-table-column
           align="center"
@@ -39,33 +39,24 @@
           label="录入人员"
           prop="recordOperator">
         </el-table-column>
-        <el-table-column
-          align="center"
-          label="稽核状态"
-          prop="checkStatus">
-        </el-table-column>
-        <el-table-column
-          align="center"
-          label="稽核人"
-          prop="checkPerson">
-        </el-table-column>
-        <el-table-column
-          align="center"
-          label="稽核时间"
-          prop="checkTime">
-        </el-table-column>
         <el-table-column align="center" label="稽核状态" width="150px">
           <template slot-scope="scope">
-            <el-button
-              size="mini"
-              type="success"
-              @click="pass(scope.$index, scope.row)">通过
-            </el-button>
-            <el-button
-              size="mini"
-              type="danger"
-              @click="reject(scope.$index, scope.row)">拒绝
-            </el-button>
+            <div v-if="!scope.row.checkStatus">
+              <el-button
+                size="mini"
+                type="success"
+                @click="edit(scope.$index, scope.row,'已通过')">通过
+              </el-button>
+              <el-button
+                size="mini"
+                type="danger"
+                @click="edit(scope.$index, scope.row,'已拒绝')">拒绝
+              </el-button>
+            </div>
+            <span v-else
+                  :class="{'status':true,'passed':scope.row.checkStatus!=='已拒绝','rejected':scope.row.checkStatus==='已拒绝'}">
+              {{scope.row.checkStatus}}
+            </span>
           </template>
         </el-table-column>
       </el-table>
@@ -78,26 +69,49 @@
     name: "checkNotice",
     data() {
       return {
-        table: [{
-          cityCode: '123',
-          productCode: '123',
-          businessTypeCode: '312',
-          business_record_date: '312',
-          businessFee: '123',
-          recordOperator: '123',
-          checkStatus: 'dfs',
-          checkPerson: 'fds',
-          checkTime: 'fds'
-        }]
+        loading: true,
+        table: []
       }
     },
     methods: {
-      pass() {
-
+      load() {
+        this.loading = true;
+        this.$axios({
+          method: 'GET',
+          url: 'http://localhost:8080/RpBusinessFeeRecordT/selectAllRpBusinessFeeRecordT',
+        }).then(res => {
+          this.table = res.data.map(item => {
+            if (item.checkStatus === '未稽核')
+              item.checkStatus = null;
+            item.cityCode = item.rpCityCodeT.cityName;
+            item.businessRecordDate = new Date(item.businessRecordDate).toLocaleDateString();
+            item.businessTypeCode = item.rpBusinessFeeTypeCodeT.businessFeeTypeName;
+            item.productCode = item.rpProductCodeT.productName;
+            return item;
+          });
+          this.loading = false;
+        }).catch(e => {
+          this.$message.error('无法连接到服务器');
+        })
       },
-      reject() {
-
-      }
+      edit(index, row, status) {
+        this.$axios({
+          method: 'GET',
+          url: 'http://localhost:8080/RpBusinessFeeRecordT/updateRpBusinessFeeRecordT',
+          params: {
+            ID: row.id,
+            checkStatus: status
+          }
+        }).then(res => {
+          this.$message.success('修改成功');
+          this.load();
+        }).catch(e => {
+          this.$message.error('修改失败');
+        })
+      },
+    },
+    beforeMount() {
+      this.load();
     }
   }
 </script>
@@ -143,6 +157,18 @@
 
       .el-table {
         height: 100%;
+
+        .status {
+          margin: 0;
+        }
+
+        .passed {
+          color: #67c23a;
+        }
+
+        .rejected {
+          color: #f46c6c;
+        }
       }
 
 

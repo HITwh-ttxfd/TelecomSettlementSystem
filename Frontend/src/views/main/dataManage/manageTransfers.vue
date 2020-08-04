@@ -9,7 +9,7 @@
       <el-button size="small" type="primary" @click="exportTable">导出</el-button>
     </div>
     <el-card shadow="always">
-      <el-table :data="table" id="table5">
+      <el-table :data="table" id="table5" v-loading="loading">
         <el-table-column
           align="center"
           label="城市编码"
@@ -68,20 +68,29 @@
     name: "manageTransfers",
     data() {
       return {
-        table: [{
-          cityCode: '123',
-          productCode: '123',
-          recordDate: '312',
-          writeOffTypeCode: '312',
-          writeOffFee: '123',
-          recordOperator: '123',
-          checkStatus: 'dfs',
-          checkPerson: 'fds',
-          checkTime: 'fds'
-        }]
+        loading: false,
+        table: []
       }
     },
     methods: {
+      load() {
+        this.loading = true;
+        this.$axios({
+          method: 'GET',
+          url: 'http://localhost:8080/RpPreFeeRecordT/selectAllRpPreFeeRecordT',
+        }).then(res => {
+          this.table = res.data.map(item => {
+            item.cityCode = item.rpCityCodeT.cityName;
+            item.recordDate = new Date(item.recordDate).toLocaleDateString();
+            item.writeOffTypeCode = item.rpWriteOffTypeCodeT.writeOffTypeName;
+            item.productCode = item.rpProductCodeT.productName;
+            return item;
+          });
+          this.loading = false;
+        }).catch(e => {
+          this.$message.error('无法连接到服务器');
+        })
+      },
       exportTable() {
         /* 从表生成工作簿对象 */
         var wb = XLSX.utils.table_to_book(document.querySelector("#table5"));
@@ -106,6 +115,9 @@
         }
         return wbout;
       }
+    },
+    beforeMount() {
+      this.load();
     }
   }
 </script>

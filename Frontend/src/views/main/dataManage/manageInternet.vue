@@ -9,7 +9,7 @@
       <el-button size="small" type="primary" @click="exportTable">导出</el-button>
     </div>
     <el-card shadow="always">
-      <el-table :data="table" id="table3">
+      <el-table :data="table" id="table3" v-loading="loading">
         <el-table-column
           align="center"
           label="结算月份"
@@ -17,23 +17,23 @@
         </el-table-column>
         <el-table-column
           align="center"
-          label="城市编码"
+          label="城市"
           prop="cityCode">
         </el-table-column>
         <el-table-column
           align="center"
-          label="产品编码"
-          prop="productCode">
+          label="产品"
+          prop="product">
         </el-table-column>
         <el-table-column
           align="center"
-          label="运营商编码"
-          prop="balanceSpCode">
+          label="运营商"
+          prop="balanceSp">
         </el-table-column>
         <el-table-column
           align="center"
-          label="结算类型编码"
-          prop="balanceTypeCode">
+          label="结算类型"
+          prop="balanceType">
         </el-table-column>
         <el-table-column
           align="center"
@@ -73,21 +73,31 @@
     name: "manageInternet",
     data() {
       return {
-        table: [{
-          balanceMonth: '21',
-          cityCode: '123',
-          productCode: '123',
-          balanceSpCode: '312',
-          balanceTypeCode: '312',
-          balanceFee: '123',
-          recordOperator: '123',
-          checkStatus: 'dfs',
-          checkPerson: 'fds',
-          checkTime: 'fds'
-        }]
+        loading: false,
+        table: []
       }
     },
     methods: {
+      load() {
+        this.loading = true;
+        this.$axios({
+          method: 'GET',
+          url: 'http://localhost:8080/RpNetBalanceRecordT/selectAllRpNetBalanceRecordT',
+        }).then(res => {
+          this.table = res.data.map(item => {
+            item.cityCode = item.rpCityCodeT.cityName;
+            item.balanceMonth = new Date(item.balanceMonth).toLocaleDateString();
+            item.balanceType = item.rpBalanceTypeCodeT.balanceTypeName;
+            item.cityName = item.rpCityCodeT.cityName;
+            item.product = item.rpProductCodeT.productName;
+            item.balanceSp = item.rpBalanceSpCodeT.balanceSpName;
+            return item;
+          });
+          this.loading = false;
+        }).catch(e => {
+          this.$message.error('无法连接到服务器');
+        })
+      },
       exportTable() {
         /* 从表生成工作簿对象 */
         var wb = XLSX.utils.table_to_book(document.querySelector("#table3"));
@@ -112,6 +122,9 @@
         }
         return wbout;
       }
+    },
+    beforeMount() {
+      this.load();
     }
   }
 </script>

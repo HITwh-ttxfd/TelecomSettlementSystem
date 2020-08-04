@@ -1,0 +1,37 @@
+[
+  {
+    "balanceMonth": "2020-08-14",
+    "cityCode": null,
+    "productCode": null,
+    "balanceSpCode": null,
+    "balanceTypeCode": null,
+    "recordOperator": null,
+    "balanceFee": null,
+    "checkStatus": "未稽核",
+    "checkPerson": null,
+    "checkTime": null,
+    "rpCityCodeT": {
+      "cityCode": null,
+      "cityName": "江西南昌"
+    },
+    "rpProductCodeT": {
+      "productCode": null,
+      "productName": "固话-基础业务-普通电话",
+      "useFlag": null,
+      "useAccount": null,
+      "useCardSale": null,
+      "useBalance": null,
+      "usePreFee": null,
+      "useBusinessFee": null
+    },
+    "rpBalanceTypeCodeT": {
+      "balanceTypeCode": null,
+      "balanceTypeName": "结算收入"
+    },
+    "rpBalanceSpCodeT": {
+      "balanceSpCode": null,
+      "balanceSpName": "电信"
+    },
+    "id": 7
+  }
+]

@@ -9,7 +9,7 @@
       <el-button size="small" type="primary" @click="exportTable">导出</el-button>
     </div>
     <el-card shadow="always">
-      <el-table :data="table" id="table4">
+      <el-table :data="table" id="table4" v-loading="loading">
         <el-table-column
           align="center"
           label="城市编码"
@@ -28,7 +28,7 @@
         <el-table-column
           align="center"
           label="营业收款日期"
-          prop="business_record_date">
+          prop="businessRecordDate">
         </el-table-column>
         <el-table-column
           align="center"
@@ -68,20 +68,29 @@
     name: "manageNotice",
     data() {
       return {
-        table: [{
-          cityCode: '123',
-          productCode: '123',
-          businessTypeCode: '312',
-          business_record_date: '312',
-          businessFee: '123',
-          recordOperator: '123',
-          checkStatus: 'dfs',
-          checkPerson: 'fds',
-          checkTime: 'fds'
-        }]
+        loading: false,
+        table: []
       }
     },
     methods: {
+      load() {
+        this.loading = true;
+        this.$axios({
+          method: 'GET',
+          url: 'http://localhost:8080/RpBusinessFeeRecordT/selectAllRpBusinessFeeRecordT',
+        }).then(res => {
+          this.table = res.data.map(item => {
+            item.cityCode = item.rpCityCodeT.cityName;
+            item.businessRecordDate = new Date(item.businessRecordDate).toLocaleDateString();
+            item.businessTypeCode = item.rpBusinessFeeTypeCodeT.businessFeeTypeName;
+            item.productCode = item.rpProductCodeT.productName;
+            return item;
+          });
+          this.loading = false;
+        }).catch(e => {
+          this.$message.error('无法连接到服务器');
+        })
+      },
       exportTable() {
         /* 从表生成工作簿对象 */
         var wb = XLSX.utils.table_to_book(document.querySelector("#table4"));
@@ -106,6 +115,9 @@
         }
         return wbout;
       }
+    },
+    beforeMount() {
+      this.load();
     }
   }
 </script>

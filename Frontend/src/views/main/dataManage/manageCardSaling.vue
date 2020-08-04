@@ -9,7 +9,7 @@
       <el-button size="small" type="primary" @click="exportTable">导出</el-button>
     </div>
     <el-card shadow="always">
-      <el-table :data="table" id="table2">
+      <el-table :data="table" id="table2" v-loading="loading">
         <el-table-column
           align="center"
           label="城市编码"
@@ -19,11 +19,6 @@
           align="center"
           label="产品编码"
           prop="productCode">
-        </el-table-column>
-        <el-table-column
-          align="center"
-          label="录入日期"
-          prop="saleDate">
         </el-table-column>
         <el-table-column
           align="center"
@@ -44,6 +39,11 @@
           align="center"
           label="录入人员"
           prop="recordOperator">
+        </el-table-column>
+        <el-table-column
+          align="center"
+          label="录入日期"
+          prop="saleDate">
         </el-table-column>
         <el-table-column
           align="center"
@@ -83,23 +83,27 @@
     name: "manageCardSaling",
     data() {
       return {
-        table: [{
-          cityCode: '123',
-          productCode: '123',
-          saleDate: '312',
-          discountRate: '312',
-          cardSaleAmount: '123',
-          cardParValueFee: '123',
-          recordOperator: '123',
-          totalFee: '123',
-          discountFee: '123',
-          checkStatus: 'dfs',
-          checkPerson: 'fds',
-          checkTime: 'fds'
-        }]
+        loading: false,
+        table: []
       }
     },
     methods: {
+      load() {
+        this.loading = true;
+        this.$axios({
+          method: 'GET',
+          url: 'http://localhost:8080/RpCardSaleRecordT/getAllRpCardSaleRecordT',
+        }).then(res => {
+          this.table = res.data.map(item => {
+            item.discountRate = new Date(item.discountRate).toLocaleDateString();
+            item.saleDate = new Date(item.saleDate).toLocaleDateString();
+            return item;
+          });
+          this.loading = false;
+        }).catch(e => {
+          this.$message.error('无法连接到服务器');
+        })
+      },
       exportTable() {
         /* 从表生成工作簿对象 */
         var wb = XLSX.utils.table_to_book(document.querySelector("#table2"));
@@ -124,6 +128,9 @@
         }
         return wbout;
       }
+    },
+    beforeMount() {
+      this.load();
     }
   }
 </script>
