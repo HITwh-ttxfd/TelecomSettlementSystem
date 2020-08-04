@@ -28,4 +28,7 @@ public interface RpAccountFeeRecordTMapper {
     // 根据查询条件来获取查询结果
     public List<RpAccountFeeRecordT> selectAllRpAccountFeeRecordT(RpAccountFeeRecordT rpAccountFeeRecordT);
 
+    // 根据查询条件来获取查询结果
+    public List<RpAccountFeeRecordT> getAllRpAccountFeeRecordT();
+
 }

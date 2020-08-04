@@ -9,9 +9,10 @@ package com.backend.mapper;
 import com.backend.entity.RpBalanceSpCodeT;
 import com.backend.entity.RpBusinessFeeTypeCodeT;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 @Mapper
 public interface RpBalanceSpCodeTMapper {
     public List<RpBalanceSpCodeT>  selectAllRpBalanceSpCodeT();

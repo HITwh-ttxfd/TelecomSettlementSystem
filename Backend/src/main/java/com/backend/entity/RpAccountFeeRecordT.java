@@ -43,6 +43,8 @@ public class RpAccountFeeRecordT {
         this.accountFee = accountFee;
         this.accountOperator = accountOperator;
     }
+
+
     public int getID() {
         return ID;
     }

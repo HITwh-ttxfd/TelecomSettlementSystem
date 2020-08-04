@@ -16,8 +16,8 @@ import inputCardSaling from "../views/main/manualInput/inputCardSaling";
 import inputInternet from "../views/main/manualInput/inputInternet";
 import inputNotice from "../views/main/manualInput/inputNotice";
 import inputTransfers from "../views/main/manualInput/inputTransfers";
-import ro from "element-ui/src/locale/lang/ro";
 import userInfo from "../views/main/userInfo/userInfo";
+import login from "../views/auth/login";
 
 Vue.use(Router)
 
@@ -32,8 +32,7 @@ let router = new Router({
     {
       path: '/',
       name: 'login',
-      // component: main,
-      redirect: center
+      component: login
     },
     {
       path: '/center',

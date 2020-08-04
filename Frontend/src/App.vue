@@ -10,7 +10,7 @@
   }
 </script>
 
-<style>
+<style lang="scss">
   #app {
     /*font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -23,5 +23,14 @@
     left: 0;
     width: 100%;
     height: 100%;
+  }
+
+  a {
+    text-decoration: none;
+    color: #606266;
+
+    &:hover {
+      color: #409eff;
+    }
   }
 </style>

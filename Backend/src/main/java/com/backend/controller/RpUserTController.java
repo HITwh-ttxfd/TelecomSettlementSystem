@@ -25,9 +25,9 @@ public class RpUserTController {
     @Autowired
     RpUserTMapper rpUserTMapper;
 
-    //新建用户    除了uesrID，其他都要传 ,返回1表明成功创建账号
+    //新建用户    除了uesrID，其他都要传 ,返回ID表明成功创建账号
     @RequestMapping(value = "/createRpUserT",method = {RequestMethod.GET})
-    public int createRpUserT( @RequestParam String userName, @RequestParam String passWord,
+    public String createRpUserT( @RequestParam String userName, @RequestParam String passWord,
                               @RequestParam String tureName,@RequestParam String sex, @RequestParam double age ,
                               @RequestParam int roleRight,@RequestParam String locationNo, @RequestParam String dept,
                               @RequestParam String email, @RequestParam String vipRight){
@@ -45,7 +45,7 @@ public class RpUserTController {
         RpUserT rpUserT1=new RpUserT(userID, userName,passWord,tureName, sex, age, roleRight,  locationNo, dept,email,vipRight);
         rpUserTMapper.createRpUserT(rpUserT1);
         System.out.println("成功创建帐户");
-        return 1;
+        return userID;
     }
 
     //密码校验   检验成功返回1，密码错误返回0，无此帐号返回-1
