@@ -102,7 +102,7 @@
             ID: row.id,
             checkStatus: status,
             checkPerson: sessionStorage.user,
-            checkTime: new Date().toLocaleDateString()
+            checkTime: new Date().toLocaleDateString().replace(/\//g, '-')
           }
         }).then(res => {
           this.$message.success('修改成功');
