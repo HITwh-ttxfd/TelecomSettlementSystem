@@ -11,6 +11,15 @@ public class RpPreFeeRecordTSelectFrom {
     private  String cityCode;
     private  String productCode;
     private  String writeOffTypeCode;
+    private String checkStatus;
+
+    public String getCheckStatus() {
+        return checkStatus;
+    }
+
+    public void setCheckStatus(String checkStatus) {
+        this.checkStatus = checkStatus;
+    }
 
     public Date getRecordDate() {
         return recordDate;

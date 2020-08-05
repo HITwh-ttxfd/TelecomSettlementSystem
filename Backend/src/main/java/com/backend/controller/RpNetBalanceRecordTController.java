@@ -54,13 +54,15 @@ public class RpNetBalanceRecordTController {
     //找到网间结算收入
     @RequestMapping(value = "/selectAllRpNetBalanceRecordT",method = {RequestMethod.GET})
     public List<RpNetBalanceRecordT> selectAllRpNetBalanceRecordT(@RequestParam(required = false) Date balanceMonth, @RequestParam(required = false) String cityCode, @RequestParam(required = false) String productCode, @RequestParam(required = false) String balanceSpCode,
-                                                                  @RequestParam(required = false) String balanceTypeCode){
+                                                                  @RequestParam(required = false) String balanceTypeCode,@RequestParam(required = false) String checkStatus){
         RpNetBalanceRecordTSelectForm rpNetBalanceRecordTSelectForm=new RpNetBalanceRecordTSelectForm();
         rpNetBalanceRecordTSelectForm.setBalanceMonth(balanceMonth);
         rpNetBalanceRecordTSelectForm.setBalanceSpCode(balanceSpCode);
         rpNetBalanceRecordTSelectForm.setBalanceTypeCode(balanceTypeCode);
         rpNetBalanceRecordTSelectForm.setProductCode(productCode);
         rpNetBalanceRecordTSelectForm.setCityCode(cityCode);
+        rpNetBalanceRecordTSelectForm.setCheckStatus(checkStatus);
+
         System.out.println("成功找到网间通知单收入");
         return rpNetBalanceRecordTMapper.selectAllRpNetBalanceRecordT(rpNetBalanceRecordTSelectForm);
     }

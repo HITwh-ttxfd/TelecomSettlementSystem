@@ -100,6 +100,9 @@
                     <if test="businessRecordDate != null  ">
                         AND BUSINESS_RECORD_DATE=#{businessRecordDate}
                     </if>
+                    <if test="checkStatus != null and checkStatus != '' ">
+                        AND  CHECK_STATUS=#{checkStatus}
+                    </if>
 
                 </where>
     </select>

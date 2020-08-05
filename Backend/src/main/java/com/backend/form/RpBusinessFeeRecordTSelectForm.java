@@ -11,6 +11,15 @@ public class RpBusinessFeeRecordTSelectForm {
    private String productCode;
    private String businessFeeTypeCode;
    private Date businessRecordDate;
+   private String checkStatus;
+
+    public String getCheckStatus() {
+        return checkStatus;
+    }
+
+    public void setCheckStatus(String checkStatus) {
+        this.checkStatus = checkStatus;
+    }
 
     public String getCityCode() {
         return cityCode;

@@ -29,12 +29,13 @@ public class RpBusinessFeeRecordTController {
 
     //找到通知单收入
     @RequestMapping(value = "/selectAllRpBusinessFeeRecordT",method = {RequestMethod.GET})
-    public List<RpBusinessFeeRecordT> selectAllRpBusinessFeeRecordT(@RequestParam(required = false) String cityCode, @RequestParam(required = false) String productCode, @RequestParam(required = false) String businessFeeTypeCode, @RequestParam(required = false) Date businessRecordDate){
+    public List<RpBusinessFeeRecordT> selectAllRpBusinessFeeRecordT(@RequestParam(required = false) String cityCode, @RequestParam(required = false) String productCode, @RequestParam(required = false) String businessFeeTypeCode, @RequestParam(required = false) Date businessRecordDate,@RequestParam(required = false) String checkStatus){
         RpBusinessFeeRecordTSelectForm rpBusinessFeeRecordTSelectForm=new RpBusinessFeeRecordTSelectForm();
         rpBusinessFeeRecordTSelectForm.setBusinessFeeTypeCode(businessFeeTypeCode);
         rpBusinessFeeRecordTSelectForm.setBusinessRecordDate(businessRecordDate);
         rpBusinessFeeRecordTSelectForm.setCityCode(cityCode);
         rpBusinessFeeRecordTSelectForm.setProductCode(productCode);
+        rpBusinessFeeRecordTSelectForm.setCheckStatus(checkStatus);
         System.out.println("成功找到网间通知单收入");
         return rpBusinessFeeRecordTMapper.selectAllRpBusinessFeeRecordT(rpBusinessFeeRecordTSelectForm);
     }

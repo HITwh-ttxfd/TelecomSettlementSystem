@@ -78,6 +78,9 @@
         this.$axios({
           method: 'GET',
           url: 'http://localhost:8080/RpBusinessFeeRecordT/selectAllRpBusinessFeeRecordT',
+          params: {
+            checkStatus: '已通过'
+          }
         }).then(res => {
           this.table = res.data.map(item => {
             item.cityCode = item.rpCityCodeT.cityName;
