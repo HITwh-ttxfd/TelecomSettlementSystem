@@ -7,7 +7,11 @@
     </el-breadcrumb>
     <el-card>
       <div class="outerDiv">
-        <p style="font-size: 30px">欢迎，{{userInfo.userName}}</p>
+        <div slot="header">
+              <span style="font-size: 30px; line-height: 90px">欢迎你，{{userInfo.tureName}}</span>
+              <el-button style="float: right; position: relative; left: 300%; top: 80%"
+                         type="text" @click="drawer=true">修改信息</el-button>
+        </div>
       </div>
       <el-divider><i class="el-icon-user"></i></el-divider>
       <div class="infoDiv">
@@ -28,7 +32,7 @@
                 地区：{{userInfo.locationNo}}
               </el-col>
               <el-col>
-                权限：{{userInfo.eRight}}
+                权限：{{userInfo.roleRight}}
               </el-col>
               <el-col>
                 查询特权：{{userInfo.vipRight}}
@@ -37,7 +41,7 @@
             <!--右边栏-->
             <el-col :span="7" style="text-align: left; line-height: 50px; padding-left: 0px">
               <el-col>
-                姓名：{{userInfo.trueName}}
+                姓名：{{userInfo.tureName}}
               </el-col>
               <el-col>
                 性别：{{userInfo.sex}}
@@ -58,6 +62,13 @@
         </div>-->
       </div>
     </el-card>
+    <el-drawer
+      title="修改信息"
+      :visible.sync="drawer"
+      direction="rtl"
+      :before-close="handleClose">
+      <span>我来啦!</span>
+    </el-drawer>
   </div>
 </template>
 
@@ -66,8 +77,8 @@
     name: "userInfo",
     data() {
       return {
-        userInfo: {
-          userID: '',     //编号
+        userInfo: {},
+        /*userID: '',     //编号
           userName: '',   //用户名
           passWord: '',   //密码
           trueName: '',   //姓名
@@ -77,10 +88,54 @@
           locationNo: '', //所属地区编号 需转换
           dept: '',       //所属部门
           email: '',      //邮箱
-          vipRight: ''    //查询特权 需转换
-        },
-        imgurl: 'http://39.98.48.34:2233/userImg/userinfo.png'
+          vipRight: ''    //查询特权 需转换*/
+        imgurl: 'http://39.98.48.34:2233/userImg/userinfo.png',
+        drawer: false,
+
       }
+    },
+    methods: {
+      loadInfo() {
+        this.$axios.get('http://localhost:8080/RpUserT/getRpUserT?userID=' + sessionStorage.getItem('user'))
+          .then(res => {
+            this.userInfo = res.data
+            if (this.userInfo.roleRight === 0) {
+              this.userInfo.roleRight = '无权限'
+            }
+            if (this.userInfo.roleRight === 1) {
+              this.userInfo.roleRight = '录入权限'
+            }
+            if (this.userInfo.roleRight === 2) {
+              this.userInfo.roleRight = '稽查权限'
+            }
+            if (this.userInfo.roleRight === 3) {
+              this.userInfo.roleRight = '归集权限'
+            }
+            if (this.userInfo.roleRight === 4) {
+              this.userInfo.roleRight = '录入|稽查权限'
+            }
+            if (this.userInfo.roleRight === 5) {
+              this.userInfo.roleRight = '归集|稽查权限'
+            }
+            if (this.userInfo.roleRight === 6) {
+              this.userInfo.roleRight = '录入|归集权限'
+            }
+            if (this.userInfo.roleRight === 7) {
+              this.userInfo.roleRight = '录入|稽查|归集权限'
+            }
+          })
+      },
+      handleClose(done) {
+        this.$confirm('确认关闭？')
+          .then(_ => {
+            done();
+          })
+          .catch(_ => {});
+      }
+    },
+    mounted() {
+      this.userInfo.userID = sessionStorage.getItem('user')
+      this.loadInfo()
     }
   }
 </script>
@@ -104,4 +159,5 @@
     padding-left: 30px;
     padding-top: 40px
   }
+
 </style>
