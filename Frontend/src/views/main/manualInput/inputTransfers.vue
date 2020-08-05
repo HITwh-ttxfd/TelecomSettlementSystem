@@ -76,17 +76,21 @@
       <!--显示表格-->
       <el-table border style="width: 100%;" max-height="300" :data="tableData">
         <el-table-column type="selection" width="55" header-align="center" align="center"/>
-        <el-table-column label="序号" prop="index" width="70" header-align="center" align="center"/>
-        <el-table-column label="城市" prop="city" header-align="center" align="center"/>
-        <el-table-column label="产品" prop="product" header-align="center" align="center"/>
-        <el-table-column label="销账类型" prop="outType" header-align="center" align="center"/>
-        <el-table-column label="销账日期" prop="inMonth" header-align="center" align="center"/>
-        <el-table-column label="销账金额" prop="inMoney" header-align="center" align="center"/>
-        <el-table-column label="稽核" prop="inPerson" header-align="center" align="center"/>
-        <el-table-column label="录入人" prop="inPerson" width="90" header-align="center" align="center"/>
+        <el-table-column label="序号" prop="id" width="70" header-align="center" align="center"/>
+        <el-table-column label="城市" prop="rpCityCodeT.cityName" header-align="center" align="center"/>
+        <el-table-column label="产品" prop="rpProductCodeT.productName" header-align="center" align="center"/>
+        <el-table-column label="销账类型" prop="rpWriteOffTypeCodeT.writeOffTypeName" header-align="center" align="center"/>
+        <el-table-column label="销账日期" prop="recordDate" header-align="center" align="center"/>
+        <el-table-column label="销账金额" prop="writeOffFee" header-align="center" align="center"/>
+        <el-table-column label="稽核" prop="checkStatus" header-align="center" align="center"/>
+        <el-table-column label="录入人" prop="recordOperator" width="90" header-align="center" align="center"/>
         <el-table-column label="操作" header-align="center" align="center">
-          <el-button type="primary" icon="el-icon-edit" @click="editRecord" circle></el-button>
-          <el-button type="danger" icon="el-icon-delete" @click="delRecord" circle></el-button>
+          <template slot-scope="scope">
+            <el-button :disabled="scope.row.checkStatus==='已通过'?true:false" type="primary" icon="el-icon-edit"
+                       @click="editRecord(scope.row)" circle></el-button>
+            <el-button :disabled="scope.row.checkStatus==='已通过'?true:false" type="danger" icon="el-icon-delete"
+                       @click="delRecord(scope.row)" circle></el-button>
+          </template>
         </el-table-column>
       </el-table>
     </el-card>
@@ -107,44 +111,7 @@
           inMoney: '',    // 销账金额
           inPerson: '',   // 录入人
         },
-        tableData: [
-          {
-            index: 1,
-            city: '哈尔滨',
-            product: '产品A',
-            outType: '已出账',
-            inMonth: '录入月份',
-            inMoney: '录入金额',
-            inPerson: '张三',
-          },
-          {
-            index: 1,
-            city: '哈尔滨',
-            product: '产品A',
-            outType: '已出账',
-            inMonth: '录入月份',
-            inMoney: '录入金额',
-            inPerson: '张三',
-          },
-          {
-            index: 1,
-            city: '哈尔滨',
-            product: '产品A',
-            outType: '已出账',
-            inMonth: '录入月份',
-            inMoney: '录入金额',
-            inPerson: '张三',
-          },
-          {
-            index: 1,
-            city: '哈尔滨',
-            product: '产品A',
-            outType: '已出账',
-            inMonth: '录入月份',
-            inMoney: '录入金额',
-            inPerson: '张三',
-          }
-        ],
+        tableData: [],
         options: [{
           value: '000',
           label: '江西本部'
@@ -173,15 +140,31 @@
       batchDel() {
         //  批量删除
       },
-      inputXLS(){
+      inputXLS() {
         //  从xls导入
       },
-      editRecord(){
+      editRecord(row) {
         //  修改记录
       },
-      delRecord(){
+      delRecord(row) {
         //  删除记录
-      }
+      },
+      loadInfo() {
+
+        /*http://localhost:8080/RpPreFeeRecordT/selectAllRpPreFeeRecordT*/
+
+      },
+      loadTable() {
+        //  加载表格数据
+        this.$axios.get('http://localhost:8080/RpPreFeeRecordT/selectAllRpPreFeeRecordT').then(res => {
+          this.tableData = res.data
+          console.log(res.data)
+        })
+      },
+    },
+    mounted() {
+      this.loadInfo()
+      this.loadTable()
     }
   }
 </script>

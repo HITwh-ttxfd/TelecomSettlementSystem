@@ -92,8 +92,9 @@
         </el-table-column>
       </el-table>
     </el-card>
+    <!--修改弹窗-->
     <el-dialog
-      title="修改记录"
+      :title="logTitle"
       :visible.sync="centerDialogVisible"
       width="50%"
       center>
@@ -144,8 +145,24 @@
           </el-col>
           <el-col :span="11">
             <el-form-item label="录入月份">
-              <el-date-picker v-model="editIndex.accountRecordMonth" type="date" style="width: 100%" placeholder="选择日期">
+              <el-date-picker v-model="editIndex.accountRecordMonth" value-format="yyyy-MM-dd"
+                              type="date" style="width: 100%" placeholder="选择日期">
               </el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :span="11">
+            <el-form-item label="序号">
+              <el-input :disabled="check" v-model="editIndex.id" placeholder="请输入序号"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="11">
+            <el-form-item label="录入人">
+              <el-input :disabled="check" v-model="editIndex.accountOperator" placeholder="请输入录入人"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="11">
+            <el-form-item label="稽核">
+              <el-input :disabled="check" v-model="editIndex.checkStatus" placeholder="请输入稽核状态"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -173,7 +190,8 @@
           inPerson: '', // 录入人
         },
         tableData: [],
-        check: false,
+        check: true,
+        logTitle: '',
         optionsPro: [],
         optionsCity: [],
         optionsOut: [],
@@ -185,6 +203,10 @@
     methods: {
       search() {
         //  查询函数
+        this.check = false
+        this.editIndex = {}
+        this.logTitle = '查询记录'
+        this.centerDialogVisible = true
       },
       input() {
         //  录入函数
@@ -236,9 +258,11 @@
       },
       editRecord(row) {
         //  修改记录
-        this.centerDialogVisible = true
+        this.logTitle = '修改记录'
         this.editIndex = row
-        console.log(this.editIndex)
+        this.check = true
+        this.centerDialogVisible = true
+        // console.log(this.editIndex)
       },
       handleSelectionChange(val) {
         //  选中表格事件 val表示选中的元组数组
@@ -289,7 +313,6 @@
         this.$axios.get('http://localhost:8080/RpUserT/getRpUserT?userID=' + sessionStorage.getItem('user'))
           .then(res => {
             this.form.inPerson = res.data.userName
-            // console.log(this.form)
           })
       },
       loadTable() {
@@ -309,10 +332,69 @@
         else
           return true
       },
-      confirmEdit(){
-        //  编辑记录提交
+      confirmEdit() {
+        //  弹窗提交
+        if (this.check) {
+          //  修改记录
+          //  修改为编码
+          /*for (var i in this.editIndex) {
+            if (this.editIndex[i] === null && i !== 'checkPerson') {
+              this.$message.error('不能修改记录属性为空值！')
+              return
+            }
+            if (this.editIndex[i] === null &&  i !== 'checkTime') {
+              this.$message.error('不能修改记录属性为空值！')
+              return
+            }
+          }*/
+          for (var i in this.optionsOut) {
+            if (this.editIndex.accountFeeTypeCode === this.optionsOut[i].label) {
+              this.editIndex.accountFeeTypeCode = this.optionsOut[i].value
+              break
+            }
+          }
+          for (var i in this.optionsCity) {
+            if (this.editIndex.cityCode === this.optionsCity[i].label) {
+              this.editIndex.cityCode = this.optionsCity[i].value
+              break
+            }
+          }
+          for (var i in this.optionsPro) {
+            if (this.editIndex.productCode === this.optionsPro[i].label) {
+              this.editIndex.productCode = this.optionsPro[i].value
+              break
+            }
+          }
+          // console.log(this.editIndex)
+          this.$axios.get('http://localhost:8080/RpAccountFeeRecordT/changeRpAccountFeeRecordT/?' +
+            'ID=' + this.editIndex.id + '&cityCode=' + this.editIndex.cityCode + '&productCode=' + this.editIndex.productCode +
+            '&accountFeeTypeCode=' + this.editIndex.accountFeeTypeCode + '&accountRecordMonth=' + this.editIndex.accountRecordMonth +
+            '&accountFee=' + this.editIndex.accountFee + '&accountOperator=' + this.editIndex.accountOperator +
+            '&checkStatus=' + this.editIndex.checkStatus).then(res => {
+          })
+          this.reload()
+        } else {
+          //  查询记录
+          var url = 'http://localhost:8080/RpAccountFeeRecordT/selectAllRpAccountFeeRecordT/?'
+          for (var i in this.editIndex) {
+            if (i === 'id') {
+              url = url + 'ID' + '=' + this.editIndex[i] + '&'
+            } else {
+              url = url + i + '=' + this.editIndex[i] + '&'
+            }
+          }
+          url = url.substring(0, url.length - 1)
+          this.$axios.get(url).then(res => {
+            if (res.data.length === 0) {
+              this.$message.warning('未查询到符合条件的记录.')
+              this.reload()
+            } else {
+              this.$message.success('查询记录成功！')
+              this.tableData = res.data
+            }
+          })
+        }
         this.centerDialogVisible = false
-        console.log(this.editIndex)
       }
     },
     mounted() {
