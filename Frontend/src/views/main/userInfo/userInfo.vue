@@ -7,11 +7,8 @@
     </el-breadcrumb>
     <el-card>
       <div class="outerDiv">
-        <div slot="header">
-              <span style="font-size: 30px; line-height: 90px">欢迎你，{{userInfo.tureName}}</span>
-              <el-button style="float: right; position: relative; left: 300%; top: 80%"
-                         type="text" @click="drawer=true">修改信息</el-button>
-        </div>
+          <span>欢迎你，{{userInfo.tureName}}</span>
+          <el-button type="text" @click="drawer=true">修改信息</el-button>
       </div>
       <el-divider><i class="el-icon-user"></i></el-divider>
       <div class="infoDiv">
@@ -130,7 +127,8 @@
           .then(_ => {
             done();
           })
-          .catch(_ => {});
+          .catch(_ => {
+          });
       }
     },
     mounted() {
@@ -140,11 +138,28 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  .el-card {
+    padding: 10px;
+  }
+
   .outerDiv {
-    display: flex;
-    justify-content: left;
+    position: relative;
     padding-left: 50px;
+    min-height: 90px;
+
+    span {
+      font-size: 30px;
+      line-height: 90px;
+      position: absolute;
+      left: 0;
+    }
+
+    .el-button {
+      position: absolute;
+      right: 10px;
+      line-height: 90px;
+    }
   }
 
   .infoDiv {
