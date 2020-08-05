@@ -92,7 +92,10 @@
         this.loading = true;
         this.$axios({
           method: 'GET',
-          url: 'http://localhost:8080/RpCardSaleRecordT/getAllRpCardSaleRecordT',
+          url: 'http://localhost:8080/RpCardSaleRecordT/selectAllRpCardSaleRecordT/',
+          params: {
+            checkStatus: '已通过'
+          }
         }).then(res => {
           this.table = res.data.map(item => {
             item.checkTime = new Date(item.checkTime).toLocaleDateString();
