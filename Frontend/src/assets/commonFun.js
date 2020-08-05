@@ -13,11 +13,9 @@ export default {
     XLSX.writeFile(wb, xlsxName + ".xlsx")
   },
   getNowTime: function () {
-    var nowDate = new Date()
-    var dateTime = nowDate.getFullYear() + '-' + this.PrefixInteger(nowDate.getMonth(), 2)
-      + '-' + this.PrefixInteger(nowDate.getDay(), 2) + ' '
-      + this.PrefixInteger(nowDate.getHours(), 2) + ':' + this.PrefixInteger(nowDate.getHours(), 2)
-      + ':' + nowDate.getSeconds()
+    var nowDate = new Date().toLocaleDateString()
+    var index = nowDate.split('/')
+    var dateTime = index[0]+'-'+this.PrefixInteger(index[1],2)+'-'+this.PrefixInteger(index[2],2)
     return dateTime
   },
   PrefixInteger: function (num, m) {
