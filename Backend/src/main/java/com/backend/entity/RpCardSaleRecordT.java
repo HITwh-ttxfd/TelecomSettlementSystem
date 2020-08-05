@@ -1,6 +1,6 @@
 package com.backend.entity;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * author:孙宝臻
