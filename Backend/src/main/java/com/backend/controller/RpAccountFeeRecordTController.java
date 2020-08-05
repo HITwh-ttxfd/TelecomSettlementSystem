@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -38,13 +38,13 @@ public class RpAccountFeeRecordTController {
     //新建出账收入  除了ID，其他都需要  v  ***注意日期传的格式为string类型，形如2020-01-20
     @RequestMapping(value = "/createRpAccountFeeRecordT",method = {RequestMethod.GET})
     public void createRpAccountFeeRecordT(@RequestParam String cityCode, @RequestParam String productCode
-            ,@RequestParam String accountFeeTypeCode,@RequestParam String accountRecordMonttemp,
+            ,@RequestParam String accountFeeTypeCode,@RequestParam Date accountRecordMonttemp,
             @RequestParam double accountFee,@RequestParam String accountOperator) throws ParseException {
-        //修改日期格式
-        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-        Date accountRecordMonth = sf.parse(accountRecordMonttemp);
+//        //修改日期格式
+//        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+//        Date accountRecordMonth = sf.parse(accountRecordMonttemp);
 
-        RpAccountFeeRecordT Rp=new RpAccountFeeRecordT(cityCode,productCode,accountFeeTypeCode,accountRecordMonth,accountFee,accountOperator);
+        RpAccountFeeRecordT Rp=new RpAccountFeeRecordT(cityCode,productCode,accountFeeTypeCode,accountRecordMonttemp,accountFee,accountOperator);
         Rp.toString();
         rpAccountFeeRecordT.addRpAccountFeeRecordT(Rp);
         System.out.println("成功新建出账收入");
