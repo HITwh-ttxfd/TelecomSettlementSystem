@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 /**
  * author:孙宝臻
@@ -28,13 +28,13 @@ public class RpCardSaleRecordTController {
     //新建卡销售收入  除了ID，其他都需要  v  ***注意日期传的格式为string类型，形如2020-01-20
     @RequestMapping(value = "/createRpCardSaleRecordT",method = {RequestMethod.GET})
     public void createAllRpCardSaleRecordT(@RequestParam String cityCode, @RequestParam String productCode
-            , @RequestParam String saleDate,@RequestParam double discountRate,@RequestParam double cardSaleAmount
+            , @RequestParam Date saleDate,@RequestParam double discountRate,@RequestParam double cardSaleAmount
             ,@RequestParam double cardParValueFee,@RequestParam String recordOperator,@RequestParam String totalFee,@RequestParam Double discountFee) throws ParseException {
-        //修改日期格式
-        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-        Date temp = sf.parse(saleDate);
+//        //修改日期格式
+//        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+//        Date temp = sf.parse(saleDate);
 
-        RpCardSaleRecordT Rp=new RpCardSaleRecordT(cityCode,productCode,temp, discountRate,cardSaleAmount,cardParValueFee,recordOperator,totalFee,discountFee);
+        RpCardSaleRecordT Rp=new RpCardSaleRecordT(cityCode,productCode,saleDate, discountRate,cardSaleAmount,cardParValueFee,recordOperator,totalFee,discountFee);
         rpCardSaleRecordT.addRpCardSaleRecordT(Rp);
         System.out.println("成功新建出账收入");
     }
@@ -44,15 +44,15 @@ public class RpCardSaleRecordTController {
     //可以通过这个修改值，也可以通过这个修改稽核状态
     @RequestMapping(value = "/changeRpCardSaleRecordT",method = {RequestMethod.GET})
     public void changeRpCardSaleRecordT(@RequestParam  int ID,@RequestParam(required=false) String cityCode, @RequestParam(required=false) String productCode
-            ,@RequestParam(required=false) String saleDate,@RequestParam(required=false) String discountRate,
+            ,@RequestParam(required=false) Date saleDate,@RequestParam(required=false) String discountRate,
             @RequestParam(required=false) String cardSaleAmount,@RequestParam(required=false) String cardParValueFee,
             @RequestParam(required=false) String recordOperator,@RequestParam(required=false) String totalFee,
             @RequestParam(required=false) String discountFee,
-            @RequestParam(required=false) String checkStatus,@RequestParam(required=false) String checkPerson,@RequestParam(required=false) String checkTime) throws ParseException {
+            @RequestParam(required=false) String checkStatus,@RequestParam(required=false) String checkPerson,@RequestParam(required=false) Date checkTime) throws ParseException {
         RpCardSaleRecordT Rp=new RpCardSaleRecordT();
         Rp.setID(ID);
-        //修改日期格式
-        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+//        //修改日期格式
+//        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 
         if(cityCode != null&&cityCode != "")
             Rp.setCityCode(cityCode);
@@ -60,8 +60,8 @@ public class RpCardSaleRecordTController {
             Rp.setProductCode(productCode);
         if(saleDate != null)
         {
-            Date temp1 = sf.parse(saleDate);
-            Rp.setSaleDate(temp1);
+//            Date temp1 = sf.parse(saleDate);
+            Rp.setSaleDate(saleDate);
         }
         if(discountRate != null)
             Rp.setDiscountRate(Double.parseDouble(discountRate));
@@ -81,8 +81,8 @@ public class RpCardSaleRecordTController {
             Rp.setCheckPerson(checkPerson);
         if(checkTime != null)
         {
-            Date temp2 = sf.parse(checkTime);
-            Rp.setCheckTime(temp2);
+//            Date temp2 = sf.parse(checkTime);
+            Rp.setCheckTime(checkTime);
         }
         rpCardSaleRecordT.changeRpCardSaleRecordT(Rp);
         System.out.println("成功修改出账收入");
@@ -98,14 +98,14 @@ public class RpCardSaleRecordTController {
     //根据查询条件来获取查询结果  随便传条件，需要啥传啥
     @RequestMapping(value = "/selectAllRpCardSaleRecordT",method = {RequestMethod.GET})
     public List<RpCardSaleRecordT> selectAllRpCardSaleRecordT(@RequestParam(required=false) String ID,@RequestParam(required=false) String cityCode, @RequestParam(required=false) String productCode
-            ,@RequestParam(required=false) String saleDate,@RequestParam(required=false) String discountRate,
+            ,@RequestParam(required=false) Date saleDate,@RequestParam(required=false) String discountRate,
                                                                   @RequestParam(required=false) String cardSaleAmount,@RequestParam(required=false) String cardParValueFee,
                                                                   @RequestParam(required=false) String recordOperator,@RequestParam(required=false) String totalFee,
                                                                   @RequestParam(required=false) String discountFee,
-                                                                  @RequestParam(required=false) String checkStatus,@RequestParam(required=false) String checkPerson,@RequestParam(required=false) String checkTime) throws ParseException {
+                                                                  @RequestParam(required=false) String checkStatus,@RequestParam(required=false) String checkPerson,@RequestParam(required=false) Date checkTime) throws ParseException {
         RpCardSaleRecordT Rp=new RpCardSaleRecordT();
-        //修改日期格式
-        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+//        //修改日期格式
+//        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
         if(ID != null)
             Rp.setID(Integer.parseInt( ID ));
         if(cityCode != null&&cityCode != "")
@@ -114,8 +114,8 @@ public class RpCardSaleRecordTController {
             Rp.setProductCode(productCode);
         if(saleDate != null)
         {
-            Date temp1 = sf.parse(saleDate);
-            Rp.setSaleDate(temp1);
+//            Date temp1 = sf.parse(saleDate);
+            Rp.setSaleDate(saleDate);
         }
         if(discountRate != null)
             Rp.setDiscountRate(Double.parseDouble(discountRate ));
@@ -135,8 +135,8 @@ public class RpCardSaleRecordTController {
             Rp.setCheckPerson(checkPerson);
         if(checkTime != null)
         {
-            Date temp2 = sf.parse(checkTime);
-            Rp.setCheckTime(temp2);
+//            Date temp2 = sf.parse(checkTime);
+            Rp.setCheckTime(checkTime);
         }
         return rpCardSaleRecordT.selectAllRpCardSaleRecordT(Rp);
     }
