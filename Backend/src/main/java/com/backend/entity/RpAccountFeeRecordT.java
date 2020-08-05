@@ -5,7 +5,7 @@ package com.backend.entity;
  * purpose:出帐统一表
  */
 
-import java.util.Date;
+import java.sql.Date;
 
 public class RpAccountFeeRecordT {
     private int ID;                  //序号
