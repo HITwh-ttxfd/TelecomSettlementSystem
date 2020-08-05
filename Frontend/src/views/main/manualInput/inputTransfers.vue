@@ -123,6 +123,23 @@
       },
       input() {
         //  录入函数
+        var data = this.form
+        // data.inDate = this.common.getNowTime().substring(0, 10)
+        data.inDate = this.common.getNowTime()
+        for (var i in data) {
+          if (data[i] === '') {
+            this.$message.error('请将录入项都补充完整')
+            return
+          }
+        }
+        /*this.$axios.get('http://localhost:8080/RpCardSaleRecordT/createRpCardSaleRecordT/?' +
+          'cityCode=' + data.inCity + '&productCode=' + data.inPro + '&saleDate=' + data.inDate +
+          '&discountRate=' + (parseFloat(data.inDiscount) / parseFloat(data.inTotal).toFixed(2)) +
+          '&cardSaleAmount=' + data.inNum + '&cardParValueFee=' + data.inCardMoney +
+          '&recordOperator=' + data.inPerson + '&totalFee=' + data.inTotal + '&discountFee=' + data.inDiscount).then(res => {
+          this.$message.success('录入记录成功！')
+          this.reload()
+        })*/
       },
       batchDel() {
         //  批量删除
@@ -177,7 +194,6 @@
         //  加载表格数据
         this.$axios.get('http://localhost:8080/RpPreFeeRecordT/selectAllRpPreFeeRecordT').then(res => {
           this.tableData = res.data
-          console.log(res.data)
         })
       },
     },

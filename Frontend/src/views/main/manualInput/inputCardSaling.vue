@@ -355,7 +355,7 @@
             }
           }
           console.log(this.editIndex)
-          /*this.$axios.get('http://localhost:8080/RpCardSaleRecordT/changeRpCardSaleRecordT/?' +
+          this.$axios.get('http://localhost:8080/RpCardSaleRecordT/changeRpCardSaleRecordT/?' +
             'ID=' + this.editIndex.id + '&cityCode=' + this.editIndex.cityCode + '&productCode=' + this.editIndex.productCode +
             '&saleDate=' + this.editIndex.saleDate + '&discountRate=' + this.editIndex.discountRate +
             '&cardSaleAmount=' + this.editIndex.cardSaleAmount + '&cardParValueFee=' + this.editIndex.cardParValueFee +
@@ -363,7 +363,7 @@
             '&discountFee=' + this.editIndex.discountFee).then(res => {
             this.$message.success('修改记录成功！')
             this.reload()
-          })*/
+          })
         } else {
           //  查询记录
           var url = 'http://localhost:8080/RpCardSaleRecordT/selectAllRpCardSaleRecordT/?'

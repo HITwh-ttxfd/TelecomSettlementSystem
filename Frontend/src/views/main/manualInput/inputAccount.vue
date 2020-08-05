@@ -337,16 +337,6 @@
         if (this.check) {
           //  修改记录
           //  修改为编码
-          /*for (var i in this.editIndex) {
-            if (this.editIndex[i] === null && i !== 'checkPerson') {
-              this.$message.error('不能修改记录属性为空值！')
-              return
-            }
-            if (this.editIndex[i] === null &&  i !== 'checkTime') {
-              this.$message.error('不能修改记录属性为空值！')
-              return
-            }
-          }*/
           for (var i in this.optionsOut) {
             if (this.editIndex.accountFeeTypeCode === this.optionsOut[i].label) {
               this.editIndex.accountFeeTypeCode = this.optionsOut[i].value
@@ -371,8 +361,9 @@
             '&accountFeeTypeCode=' + this.editIndex.accountFeeTypeCode + '&accountRecordMonth=' + this.editIndex.accountRecordMonth +
             '&accountFee=' + this.editIndex.accountFee + '&accountOperator=' + this.editIndex.accountOperator +
             '&checkStatus=' + this.editIndex.checkStatus).then(res => {
+            this.$message.success('修改记录成功！')
+            this.reload()
           })
-          this.reload()
         } else {
           //  查询记录
           var url = 'http://localhost:8080/RpAccountFeeRecordT/selectAllRpAccountFeeRecordT/?'
