@@ -107,7 +107,7 @@
         <el-row>
           <el-col :span="11">
             <el-form-item label="城市">
-              <el-select style="width: 100%" v-model="this.editIndex.rpCityCodeT.cityName" filterable placeholder="请选择">
+              <el-select style="width: 100%" v-model="editIndex.cityCode" filterable placeholder="请选择">
                 <el-option
                   v-for="item in optionsCity"
                   :key="item.value"
@@ -120,7 +120,7 @@
           <el-col :span="11">
             <el-form-item label="产品">
               <!--.productName-->
-              <el-select style="width: 100%" v-model="this.editIndex.rpProductCodeT.productName" filterable placeholder="请选择">
+              <el-select style="width: 100%" v-model="editIndex.productCode" filterable placeholder="请选择">
                 <el-option
                   v-for="item in optionsPro"
                   :key="item.value"
@@ -131,17 +131,17 @@
             </el-form-item>
           </el-col>
           <el-col :span="11">
-          <el-form-item label="销账类型">
-            <!--.writeOffTypeName-->
-            <el-select style="width: 100%" v-model="this.editIndex.rpWriteOffTypeCodeT.writeOffTypeName" filterable placeholder="请选择">
-              <el-option
-                v-for="item in optionsOut"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
+            <el-form-item label="销账类型">
+              <!--.writeOffTypeName-->
+              <el-select style="width: 100%" v-model="editIndex.writeOffTypeCode" filterable placeholder="请选择">
+                <el-option
+                  v-for="item in optionsOut"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
           <el-col :span="11">
             <el-form-item label="销账日期">
@@ -154,22 +154,22 @@
         <el-row>
           <el-col :span="11">
             <el-form-item label="销账金额">
-              <el-input v-model="editIndex.writeOffFee" placeholder="请输入金额"></el-input>
+              <el-input :disabled="check2" v-model="editIndex.writeOffFee" placeholder="请输入金额"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="11">
             <el-form-item label="序号">
-              <el-input :disabled="check" v-model="editIndex.id" placeholder="请输入序号"></el-input>
+              <el-input :disabled="check||check2" v-model="editIndex.id" placeholder="请输入序号"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="11">
             <el-form-item label="录入人">
-              <el-input :disabled="check" v-model="editIndex.recordOperator" placeholder="请输入录入人"></el-input>
+              <el-input :disabled="check||check2" v-model="editIndex.recordOperator" placeholder="请输入录入人"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="11">
             <el-form-item label="稽核">
-              <el-input :disabled="check" v-model="editIndex.checkStatus" placeholder="请输入稽核状态"></el-input>
+              <el-input :disabled="check||check2" v-model="editIndex.checkStatus" placeholder="请输入稽核状态"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -203,6 +203,7 @@
         delList: [],
         logTitle: '',
         check: false,
+        check2: false,
         centerDialogVisible: false,
         editIndex: {},
       }
@@ -211,15 +212,18 @@
       search() {
         //  查询函数
         this.check = false
+        this.check2 = true
         this.editIndex = {}
+        /*recordDate: '',
+          cityCode: '',
+          productCode: '',
+          writeOffTypeCode: '',*/
         this.logTitle = '查询记录'
         this.centerDialogVisible = true
       },
       input() {
         //  录入函数
         var data = this.form
-        // data.inDate = this.common.getNowTime().substring(0, 10)
-        data.inDate = this.common.getNowTime()
         for (var i in data) {
           if (data[i] === '') {
             this.$message.error('请将录入项都补充完整')
@@ -260,9 +264,11 @@
         //  修改记录
         this.logTitle = '修改记录'
         this.editIndex = row
-        console.log(this.editIndex)
-        console.log(this.editIndex.rpCityCodeT.cityName)
+        this.editIndex.cityCode = this.editIndex.rpCityCodeT.cityName
+        this.editIndex.productCode = this.editIndex.rpProductCodeT.productName
+        this.editIndex.writeOffTypeCode = this.editIndex.rpWriteOffTypeCodeT.writeOffTypeName
         this.check = true
+        this.check2 = false
         this.centerDialogVisible = true
       },
       delRecord(row) {
@@ -358,19 +364,24 @@
               break
             }
           }
+          for (var i in this.optionsOut) {
+            if (this.editIndex.writeOffTypeCode === this.optionsOut[i].label) {
+              this.editIndex.writeOffTypeCode = this.optionsOut[i].value
+              break
+            }
+          }
           console.log(this.editIndex)
-          /*this.$axios.get('http://localhost:8080/RpCardSaleRecordT/changeRpCardSaleRecordT/?' +
+          this.$axios.get('http://localhost:8080/RpPreFeeRecordT/updateRpPreFeeRecordT?' +
             'ID=' + this.editIndex.id + '&cityCode=' + this.editIndex.cityCode + '&productCode=' + this.editIndex.productCode +
-            '&saleDate=' + this.editIndex.saleDate + '&discountRate=' + this.editIndex.discountRate +
-            '&cardSaleAmount=' + this.editIndex.cardSaleAmount + '&cardParValueFee=' + this.editIndex.cardParValueFee +
-            '&checkStatus=' + this.editIndex.checkStatus + '&totalFee=' + this.editIndex.totalFee +
-            '&discountFee=' + this.editIndex.discountFee).then(res => {
+            '&recordDate=' + this.editIndex.recordDate + '&writeOffTypeCode=' + this.editIndex.writeOffTypeCode +
+            '&writeOffFee=' + this.editIndex.writeOffFee + '&recordOperator=' + this.editIndex.recordOperator +
+            '&checkStatus=' + this.editIndex.checkStatus).then(res => {
             this.$message.success('修改记录成功！')
             this.reload()
-          })*/
+          })
         } else {
           //  查询记录
-          var url = 'http://localhost:8080/RpCardSaleRecordT/selectAllRpCardSaleRecordT/?'
+          var url = 'http://localhost:8080/RpPreFeeRecordT/selectAllRpPreFeeRecordT?'
           for (var i in this.editIndex) {
             if (i === 'id') {
               url = url + 'ID' + '=' + this.editIndex[i] + '&'
@@ -380,6 +391,7 @@
           }
           url = url.substring(0, url.length - 1)
           this.$axios.get(url).then(res => {
+            console.log(res)
             if (res.data.length === 0) {
               this.$message.warning('未查询到符合条件的记录.')
               this.reload()
