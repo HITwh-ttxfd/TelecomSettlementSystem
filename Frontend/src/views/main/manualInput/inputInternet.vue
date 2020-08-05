@@ -102,9 +102,11 @@
         <el-table-column label="录入人" prop="recordOperator" width="90" header-align="center" align="center"/>
         <el-table-column label="操作" width="120" header-align="center" align="center">
           <template slot-scope="scope">
-            <el-button :disabled="scope.row.checkStatus==='已通过'?true:false" type="primary" icon="el-icon-edit"
+            <el-button :disabled="(scope.row.checkStatus==='已通过')||(form.inPerson!==scope.row.recordOperator)"
+                       type="primary" icon="el-icon-edit"
                        @click="editRecord(scope.row)" circle></el-button>
-            <el-button :disabled="scope.row.checkStatus==='已通过'?true:false" type="danger" icon="el-icon-delete"
+            <el-button :disabled="(scope.row.checkStatus==='已通过')||(form.inPerson!==scope.row.recordOperator)"
+                       type="danger" icon="el-icon-delete"
                        @click="delRecord(scope.row)" circle></el-button>
           </template>
         </el-table-column>
@@ -347,10 +349,7 @@
           this.optionsBal = tmp
         })
         //  加载用户名
-        this.$axios.get('http://localhost:8080/RpUserT/getRpUserT?userID=' + sessionStorage.getItem('user'))
-          .then(res => {
-            this.form.inPerson = res.data.userName
-          })
+        this.form.inPerson = sessionStorage.getItem('name')
       },
       loadTable() {
         //  加载表格信息
