@@ -99,7 +99,6 @@
         }).then(res => {
           this.table = res.data.map(item => {
             item.checkTime = new Date(item.checkTime).toLocaleDateString();
-            item.discountRate = new Date(item.discountRate).toLocaleDateString();
             item.saleDate = new Date(item.saleDate).toLocaleDateString();
             return item;
           });
