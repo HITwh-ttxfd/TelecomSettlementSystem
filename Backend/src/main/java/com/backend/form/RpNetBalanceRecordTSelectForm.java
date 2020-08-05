@@ -14,6 +14,15 @@ public class RpNetBalanceRecordTSelectForm {
     private String productCode;
     private String balanceSpCode;
     private String balanceTypeCode;
+    private String checkStatus;
+
+    public String getCheckStatus() {
+        return checkStatus;
+    }
+
+    public void setCheckStatus(String checkStatus) {
+        this.checkStatus = checkStatus;
+    }
 
     public Date getBalanceMonth() {
         return balanceMonth;

@@ -109,6 +109,9 @@
                     <if test="balanceTypeCode != null and balanceTypeCode != '' ">
                         AND  BALANCE_TYPE_CODE=#{balanceTypeCode}
                     </if>
+                    <if test="checkStatus != null and checkStatus != '' ">
+                        AND  CHECK_STATUS=#{checkStatus}
+                    </if>
 
                 </where>
     </select>

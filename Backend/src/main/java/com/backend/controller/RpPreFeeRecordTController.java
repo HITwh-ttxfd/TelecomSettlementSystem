@@ -28,13 +28,14 @@ public class RpPreFeeRecordTController {
     //找到预存转录
     @RequestMapping(value = "/selectAllRpPreFeeRecordT",method = {RequestMethod.GET})
     public List<RpPreFeeRecordT> selectAllRpPreFeeRecordT(@RequestParam(required = false) Date recordDate,@RequestParam(required = false) String cityCode, @RequestParam(required = false) String productCode,
-                                                          @RequestParam(required = false) String writeOffTypeCode){
+                                                          @RequestParam(required = false) String writeOffTypeCode,@RequestParam(required = false) String checkStatus){
 
         RpPreFeeRecordTSelectFrom rpPreFeeRecordTSelectFrom=new RpPreFeeRecordTSelectFrom();
         rpPreFeeRecordTSelectFrom.setCityCode(cityCode);
         rpPreFeeRecordTSelectFrom.setProductCode(productCode);
         rpPreFeeRecordTSelectFrom.setRecordDate(recordDate);
         rpPreFeeRecordTSelectFrom.setWriteOffTypeCode(writeOffTypeCode);
+        rpPreFeeRecordTSelectFrom.setCheckStatus(checkStatus);
         System.out.println("成功找到预存转录");
         return rpPreFeeRecordTMapper.selectAllRpPreFeeRecordT(rpPreFeeRecordTSelectFrom);
     }
