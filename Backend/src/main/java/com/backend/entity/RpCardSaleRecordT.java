@@ -1,5 +1,7 @@
 package com.backend.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.sql.Date;
 
 /**
@@ -11,6 +13,7 @@ public class RpCardSaleRecordT {
     private int ID;                //序号
     private String cityCode;           //城市编码
     private String productCode;       //产品编码
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date saleDate;            //录入日期
     private double discountRate;      //折扣率
     private double cardSaleAmount;    //卡销售数量
@@ -18,6 +21,7 @@ public class RpCardSaleRecordT {
     private String recordOperator;    //录入人员
     private String checkStatus;       //稽核状态
     private String checkPerson;       //稽核人
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date checkTime;           //稽核时间
     private String totalFee;          //卡总金额
     private double discountFee;       //折扣后总金额
