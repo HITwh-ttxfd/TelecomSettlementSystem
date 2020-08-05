@@ -367,7 +367,7 @@
             'ID=' + this.editIndex.id + '&cityCode=' + this.editIndex.cityCode + '&productCode=' + this.editIndex.productCode +
             '&businessFeeTypeCode=' + this.editIndex.businessFeeTypeCode + '&businessRecordDate=' + this.editIndex.businessRecordDate +
             '&businessFee=' + this.editIndex.businessFee + '&recordOperator=' + this.editIndex.recordOperator +
-            '&checkStatus=' + this.editIndex.checkStatus).then(res => {
+            '&checkStatus=' + '未稽核').then(res => {
             this.$message.success('修改记录成功！')
             this.reload()
           })

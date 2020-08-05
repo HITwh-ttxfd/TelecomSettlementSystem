@@ -28,25 +28,25 @@
 
 <script>
   export default {
-    data: function() {
+    data: function () {
       return {
         dialogFormVisible: false,
         formLabelWidth: '70px',
-        registration:{
-          username:'',
-          password:'',
-          name:'',
-          phoneNumber:'',
-          id:'',
-          radio:''
+        registration: {
+          username: '',
+          password: '',
+          name: '',
+          phoneNumber: '',
+          id: '',
+          radio: ''
         },
         param: {
           username: '',
           password: '',
         },
         rules: {
-          username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-          password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+          username: [{required: true, message: '请输入用户名', trigger: 'blur'}],
+          password: [{required: true, message: '请输入密码', trigger: 'blur'}],
         }
       };
     },
@@ -61,8 +61,8 @@
                 userID: this.param.username,
                 passWord: this.param.password
               }
-            }).then(res=>{
-              if (res.data===1) {
+            }).then(res => {
+              if (res.data === 1) {
                 sessionStorage.user = this.param.username;
                 this.$axios({
                   method: 'GET',
@@ -70,21 +70,24 @@
                   params: {
                     userID: sessionStorage.user
                   }
-                }).then(res=>{
+                }).then(res => {
                   this.$message.success('登录成功');
                   sessionStorage.auth = res.data;
+                  //  加载用户名
+                  this.$axios.get('http://localhost:8080/RpUserT/getRpUserT?userID=' + sessionStorage.getItem('user'))
+                    .then(res => {
+                      sessionStorage.name = res.data.userName
+                    })
                   this.$router.push('/center');
-                }).catch(e=>{
+                }).catch(e => {
                   this.$message.error('预期之外的错误');
                 })
-              }
-              else
+              } else
                 this.$message.error('用户名或密码错误');
-            }).catch(e=>{
+            }).catch(e => {
               this.$message.error('无法连接至服务器');
             })
-          }
-          else {
+          } else {
             this.$message.error('请输入用户名密码');
           }
         });
@@ -99,9 +102,10 @@
     width: 100%;
     height: 100%;
     background-size: 100%;
-    background: url("../../assets/725413ef4836c6415e9e481dcbecb964.jpg") no-repeat center ;
+    background: url("../../assets/725413ef4836c6415e9e481dcbecb964.jpg") no-repeat center;
     background-size: cover;
   }
+
   .ms-title {
     width: 100%;
     line-height: 50px;
@@ -110,6 +114,7 @@
     color: #fff;
     border-bottom: 1px solid #dddddd;
   }
+
   .ms-login {
     position: absolute;
     left: 50%;
@@ -120,30 +125,37 @@
     background: rgba(175, 176, 177, 0.75);
     overflow: hidden;
   }
+
   .ms-content {
     padding: 30px 30px;
     text-align: center;
   }
-  .btn{
+
+  .btn {
     text-align: center;
   }
+
   .btn button {
     width: 100%;
     height: 36px;
     margin-bottom: 10px;
   }
-  .el-dialog{
+
+  .el-dialog {
     width: 30%;
   }
-  .el-dialog .el-form-item{
+
+  .el-dialog .el-form-item {
     margin-left: 5%;
     width: 60%;
   }
-  .el-dialog{
+
+  .el-dialog {
     /*float: left;*/
     text-align: center;
   }
-  .el-dialog .radio{
+
+  .el-dialog .radio {
     margin-right: 30%;
   }
 </style>

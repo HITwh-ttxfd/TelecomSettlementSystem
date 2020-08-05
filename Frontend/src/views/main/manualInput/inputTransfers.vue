@@ -342,16 +342,6 @@
         if (this.check) {
           //  修改记录
           //  修改为编码
-          /*for (var i in this.editIndex) {
-            if (this.editIndex[i] === null && i !== 'checkPerson') {
-              this.$message.error('不能修改记录属性为空值！')
-              return
-            }
-            if (this.editIndex[i] === null &&  i !== 'checkTime') {
-              this.$message.error('不能修改记录属性为空值！')
-              return
-            }
-          }*/
           for (var i in this.optionsCity) {
             if (this.editIndex.cityCode === this.optionsCity[i].label) {
               this.editIndex.cityCode = this.optionsCity[i].value
@@ -375,7 +365,7 @@
             'ID=' + this.editIndex.id + '&cityCode=' + this.editIndex.cityCode + '&productCode=' + this.editIndex.productCode +
             '&recordDate=' + this.editIndex.recordDate + '&writeOffTypeCode=' + this.editIndex.writeOffTypeCode +
             '&writeOffFee=' + this.editIndex.writeOffFee + '&recordOperator=' + this.editIndex.recordOperator +
-            '&checkStatus=' + this.editIndex.checkStatus).then(res => {
+            '&checkStatus=' + '未稽核').then(res => {
             this.$message.success('修改记录成功！')
             this.reload()
           })

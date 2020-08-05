@@ -84,9 +84,9 @@
         <el-table-column label="录入人" prop="accountOperator" width="90" header-align="center" align="center"/>
         <el-table-column label="操作" header-align="center" align="center">
           <template slot-scope="scope">
-            <el-button :disabled="scope.row.checkStatus==='已通过'?true:false" type="primary" icon="el-icon-edit"
+            <el-button :disabled="scope.row.checkStatus==='已通过'" type="primary" icon="el-icon-edit"
                        @click="editRecord(scope.row)" circle></el-button>
-            <el-button :disabled="scope.row.checkStatus==='已通过'?true:false" type="danger" icon="el-icon-delete"
+            <el-button :disabled="scope.row.checkStatus==='已通过'" type="danger" icon="el-icon-delete"
                        @click="delRecord(scope.row)" circle></el-button>
           </template>
         </el-table-column>
@@ -360,7 +360,7 @@
             'ID=' + this.editIndex.id + '&cityCode=' + this.editIndex.cityCode + '&productCode=' + this.editIndex.productCode +
             '&accountFeeTypeCode=' + this.editIndex.accountFeeTypeCode + '&accountRecordMonth=' + this.editIndex.accountRecordMonth +
             '&accountFee=' + this.editIndex.accountFee + '&accountOperator=' + this.editIndex.accountOperator +
-            '&checkStatus=' + this.editIndex.checkStatus).then(res => {
+            '&checkStatus=' + '未稽核').then(res => {
             this.$message.success('修改记录成功！')
             this.reload()
           })
@@ -391,6 +391,7 @@
     mounted() {
       this.loadInfo()
       this.loadTable()
+      console.log(sessionStorage.getItem('name'))
     }
   }
 </script>

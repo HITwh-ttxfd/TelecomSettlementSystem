@@ -411,7 +411,7 @@
             'ID=' + this.editIndex.id + '&cityCode=' + this.editIndex.cityCode + '&productCode=' + this.editIndex.productCode +
             '&balanceMonth=' + this.editIndex.balanceMonth + '&balanceSpCode=' + this.editIndex.balanceSpCode +
             '&balanceTypeCode=' + this.editIndex.balanceTypeCode + '&recordOperator=' + this.editIndex.recordOperator +
-            '&checkStatus=' + this.editIndex.checkStatus + '&balanceFee=' + this.editIndex.balanceFee).then(res => {
+            '&checkStatus=' + '未稽核' + '&balanceFee=' + this.editIndex.balanceFee).then(res => {
             this.$message.success('修改记录成功！')
             this.reload()
           })
