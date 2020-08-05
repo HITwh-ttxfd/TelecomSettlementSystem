@@ -8,7 +8,7 @@
     </el-breadcrumb>
     <el-card>
       <!--查询表单-->
-      <el-form ref="form" :model="form" label-width="80px">
+      <el-form ref="form" :model="editIndex" label-width="80px">
         <el-row>
           <el-col :span="11">
             <el-form-item label="城市">
@@ -50,7 +50,8 @@
           </el-col>
           <el-col :span="11">
             <el-form-item label="销账日期">
-              <el-date-picker v-model="form.inDate" type="date" style="width: 100%" placeholder="选择日期">
+              <el-date-picker v-model="form.inDate" type="date" style="width: 100%" value-format="yyyy-MM-dd"
+                              placeholder="选择日期">
               </el-date-picker>
             </el-form-item>
           </el-col>
@@ -64,6 +65,7 @@
         <el-form-item>
           <el-col style="display: flex; justify-content: left;">
             <el-button @click="search">查询</el-button>
+            <el-button @click="reload">重置</el-button>
             <el-button @click="input">录入</el-button>
             <el-button @click="common.exportXLS('预存转收入表', tableData)">导出</el-button>
             <el-button @click="inputXLS">导入</el-button>
@@ -74,8 +76,9 @@
       </el-form>
       <!--查询表单结束-->
       <!--显示表格-->
-      <el-table border style="width: 100%;" max-height="300" :data="tableData">
-        <el-table-column type="selection" width="55" header-align="center" align="center"/>
+      <el-table border style="width: 100%;" max-height="270" :data="tableData"
+                @selection-change="handleSelectionChange">
+        <el-table-column type="selection" :selectable="selectJudge" width="55" header-align="center" align="center"/>
         <el-table-column label="序号" prop="id" width="70" header-align="center" align="center"/>
         <el-table-column label="城市" prop="rpCityCodeT.cityName" header-align="center" align="center"/>
         <el-table-column label="产品" prop="rpProductCodeT.productName" header-align="center" align="center"/>
@@ -94,6 +97,88 @@
         </el-table-column>
       </el-table>
     </el-card>
+    <!--修改弹窗-->
+    <el-dialog
+      :title="logTitle"
+      :visible.sync="centerDialogVisible"
+      width="50%"
+      center>
+      <el-form ref="form" :model="editIndex" label-width="100px">
+        <el-row>
+          <el-col :span="11">
+            <el-form-item label="城市">
+              <el-select style="width: 100%" v-model="this.editIndex.rpCityCodeT.cityName" filterable placeholder="请选择">
+                <el-option
+                  v-for="item in optionsCity"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="11">
+            <el-form-item label="产品">
+              <!--.productName-->
+              <el-select style="width: 100%" v-model="this.editIndex.rpProductCodeT.productName" filterable placeholder="请选择">
+                <el-option
+                  v-for="item in optionsPro"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="11">
+          <el-form-item label="销账类型">
+            <!--.writeOffTypeName-->
+            <el-select style="width: 100%" v-model="this.editIndex.rpWriteOffTypeCodeT.writeOffTypeName" filterable placeholder="请选择">
+              <el-option
+                v-for="item in optionsOut"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          </el-col>
+          <el-col :span="11">
+            <el-form-item label="销账日期">
+              <el-date-picker v-model="editIndex.recordDate" type="date" style="width: 100%" value-format="yyyy-MM-dd"
+                              placeholder="选择日期">
+              </el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="11">
+            <el-form-item label="销账金额">
+              <el-input v-model="editIndex.writeOffFee" placeholder="请输入金额"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="11">
+            <el-form-item label="序号">
+              <el-input :disabled="check" v-model="editIndex.id" placeholder="请输入序号"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="11">
+            <el-form-item label="录入人">
+              <el-input :disabled="check" v-model="editIndex.recordOperator" placeholder="请输入录入人"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="11">
+            <el-form-item label="稽核">
+              <el-input :disabled="check" v-model="editIndex.checkStatus" placeholder="请输入稽核状态"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="centerDialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="confirmEdit">确 定</el-button>
+  </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -115,11 +200,20 @@
         optionsPro: [],
         optionsCity: [],
         optionsOut: [],
+        delList: [],
+        logTitle: '',
+        check: false,
+        centerDialogVisible: false,
+        editIndex: {},
       }
     },
     methods: {
       search() {
         //  查询函数
+        this.check = false
+        this.editIndex = {}
+        this.logTitle = '查询记录'
+        this.centerDialogVisible = true
       },
       input() {
         //  录入函数
@@ -132,26 +226,52 @@
             return
           }
         }
-        /*this.$axios.get('http://localhost:8080/RpCardSaleRecordT/createRpCardSaleRecordT/?' +
-          'cityCode=' + data.inCity + '&productCode=' + data.inPro + '&saleDate=' + data.inDate +
-          '&discountRate=' + (parseFloat(data.inDiscount) / parseFloat(data.inTotal).toFixed(2)) +
-          '&cardSaleAmount=' + data.inNum + '&cardParValueFee=' + data.inCardMoney +
-          '&recordOperator=' + data.inPerson + '&totalFee=' + data.inTotal + '&discountFee=' + data.inDiscount).then(res => {
+        this.$axios.get('http://localhost:8080/RpPreFeeRecordT/addRpPreFeeRecordT?' +
+          'cityCode=' + data.inCity + '&productCode=' + data.inPro + '&recordDate=' + data.inDate +
+          '&writeOffTypeCode=' + data.inType + '&recordOperator=' + data.inPerson +
+          '&writeOffFee=' + data.inMoney).then(res => {
           this.$message.success('录入记录成功！')
           this.reload()
-        })*/
+        })
       },
       batchDel() {
         //  批量删除
+        if (this.delList.length === 0) {
+          this.$message.warning('请选择要删除的记录.')
+          return
+        }
+        var url = 'http://localhost:8080/RpPreFeeRecordT/deleteRpPreFeeRecordT?ids='
+        for (var i in this.delList) {
+          url = url + this.delList[i].id
+          if (i < (this.delList.length - 1)) {
+            url = url + ','
+          }
+        }
+        this.$axios.get(url).then(res => {
+          this.$message.success('删除记录成功！')
+          this.delList = []
+          this.reload()
+        })
       },
       inputXLS() {
         //  从xls导入
       },
       editRecord(row) {
         //  修改记录
+        this.logTitle = '修改记录'
+        this.editIndex = row
+        console.log(this.editIndex)
+        console.log(this.editIndex.rpCityCodeT.cityName)
+        this.check = true
+        this.centerDialogVisible = true
       },
       delRecord(row) {
         //  删除记录
+        this.$axios.get('http://localhost:8080/RpPreFeeRecordT/deleteRpPreFeeRecordT?ids=' + row.id)
+          .then(res => {
+            this.$message.success('删除记录成功！')
+            this.loadTable()
+          })
       },
       loadInfo() {
         //  加载产品信息
@@ -180,7 +300,7 @@
             this.form.inPerson = res.data.userName
           })
         //  加载销账类型
-        this.$axios.get('http://localhost:8080/RpWriteOffTypeCodeT/selectRpWriteOffTypeCodeT').then(res=>{
+        this.$axios.get('http://localhost:8080/RpWriteOffTypeCodeT/selectRpWriteOffTypeCodeT').then(res => {
           var tmp = new Array(res.data.length)
           for (var i in res.data) {
             tmp[i] = {}
@@ -196,6 +316,81 @@
           this.tableData = res.data
         })
       },
+      reload() {
+        this.loadInfo()
+        this.loadTable()
+      },
+      handleSelectionChange(val) {
+        //  选中表格事件 val表示选中的元组数组
+        this.delList = val
+      },
+      selectJudge(row, index) {
+        //  可选择判断
+        if (row.checkStatus === '已通过')
+          return false
+        else
+          return true
+      },
+      confirmEdit() {
+        //  弹窗提交
+        if (this.check) {
+          //  修改记录
+          //  修改为编码
+          /*for (var i in this.editIndex) {
+            if (this.editIndex[i] === null && i !== 'checkPerson') {
+              this.$message.error('不能修改记录属性为空值！')
+              return
+            }
+            if (this.editIndex[i] === null &&  i !== 'checkTime') {
+              this.$message.error('不能修改记录属性为空值！')
+              return
+            }
+          }*/
+          for (var i in this.optionsCity) {
+            if (this.editIndex.cityCode === this.optionsCity[i].label) {
+              this.editIndex.cityCode = this.optionsCity[i].value
+              break
+            }
+          }
+          for (var i in this.optionsPro) {
+            if (this.editIndex.productCode === this.optionsPro[i].label) {
+              this.editIndex.productCode = this.optionsPro[i].value
+              break
+            }
+          }
+          console.log(this.editIndex)
+          /*this.$axios.get('http://localhost:8080/RpCardSaleRecordT/changeRpCardSaleRecordT/?' +
+            'ID=' + this.editIndex.id + '&cityCode=' + this.editIndex.cityCode + '&productCode=' + this.editIndex.productCode +
+            '&saleDate=' + this.editIndex.saleDate + '&discountRate=' + this.editIndex.discountRate +
+            '&cardSaleAmount=' + this.editIndex.cardSaleAmount + '&cardParValueFee=' + this.editIndex.cardParValueFee +
+            '&checkStatus=' + this.editIndex.checkStatus + '&totalFee=' + this.editIndex.totalFee +
+            '&discountFee=' + this.editIndex.discountFee).then(res => {
+            this.$message.success('修改记录成功！')
+            this.reload()
+          })*/
+        } else {
+          //  查询记录
+          var url = 'http://localhost:8080/RpCardSaleRecordT/selectAllRpCardSaleRecordT/?'
+          for (var i in this.editIndex) {
+            if (i === 'id') {
+              url = url + 'ID' + '=' + this.editIndex[i] + '&'
+            } else {
+              url = url + i + '=' + this.editIndex[i] + '&'
+            }
+          }
+          url = url.substring(0, url.length - 1)
+          this.$axios.get(url).then(res => {
+            if (res.data.length === 0) {
+              this.$message.warning('未查询到符合条件的记录.')
+              this.reload()
+            } else {
+              this.$message.success('查询记录成功！')
+              this.tableData = res.data
+            }
+          })
+        }
+        this.centerDialogVisible = false
+      }
     },
     mounted() {
       this.loadInfo()
