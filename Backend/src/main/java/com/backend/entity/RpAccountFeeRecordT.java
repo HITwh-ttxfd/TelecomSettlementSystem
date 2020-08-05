@@ -5,6 +5,8 @@ package com.backend.entity;
  * purpose:出帐统一表
  */
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.sql.Date;
 
 public class RpAccountFeeRecordT {
@@ -12,11 +14,13 @@ public class RpAccountFeeRecordT {
     private String cityCode;           //城市编码
     private String productCode;        //产品编码
     private String accountFeeTypeCode;//出账类型编码
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date accountRecordMonth;   //出账月份
     private double accountFee;          //出账金额
     private  String accountOperator;     //录入员工用户名
     private String checkStatus;         //稽核状态
     private String checkPerson;         //稽核人
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private  Date checkTime;           //稽核时间
 
     public RpAccountFeeRecordT() {
